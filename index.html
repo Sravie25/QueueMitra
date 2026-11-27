@@ -7,194 +7,256 @@
 <title>QueueMitra - Voice Queue Assistant</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f0f5ff;
-  color:#173b79;
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #edf4ff, #f8fbff);
+  color: #173b75;
 }
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:22px 6%;
-  flex-wrap:wrap;
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 6%;
+  flex-wrap: wrap;
+  gap: 15px;
 }
-.brand{
-  font-size:30px;
-  font-weight:bold;
-  color:#155eef;
+
+.logo {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1658db;
 }
-.brand span{color:#00a884}
-.tagline{color:#60748f;margin-top:5px}
-main{
-  max-width:1250px;
-  margin:35px auto;
-  background:white;
-  padding:35px;
-  border-radius:28px;
-  box-shadow:0 10px 40px #dce6f5;
+
+.logo span { color: #00a887; }
+
+header p { margin: 5px 0; color: #667894; }
+
+main {
+  max-width: 1500px;
+  margin: auto;
+  padding: 20px;
 }
-.hero{text-align:center}
-.hero h1{font-size:38px}
-.hero p{font-size:19px;color:#60748f}
-.services{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-  margin:30px 0;
+
+.container {
+  background: white;
+  border-radius: 28px;
+  padding: 35px;
+  box-shadow: 0 15px 50px rgba(30, 60, 120, 0.08);
 }
-.service{
-  border:2px solid #e1e8f2;
-  border-radius:20px;
-  padding:20px;
-  text-align:center;
-  cursor:pointer;
-  background:#f8fafc;
-  transition:.2s;
+
+.hero { text-align: center; padding: 25px 10px; }
+
+.hero h1 {
+  font-size: 42px;
+  color: #17449b;
 }
-.service:hover,.service.active{
-  border-color:#155eef;
-  background:#eef5ff;
-  transform:translateY(-2px);
+
+.hero p {
+  color: #62758f;
+  font-size: 20px;
+  line-height: 1.7;
 }
-.service .emoji{font-size:35px}
-.service h3{margin-bottom:8px}
-.service p{color:#60748f;font-size:14px}
-.examples{
-  background:#f8fafc;
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:25px;
+
+.language-select {
+  display: block;
+  margin: 15px auto;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #d0dbe9;
+  font-size: 16px;
 }
-.examples h3{margin-top:0}
-.example-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin: 35px 0;
 }
-.example{
-  border:1px solid #cbd8eb;
-  background:white;
-  padding:10px 14px;
-  border-radius:25px;
-  cursor:pointer;
-  color:#17447f;
+
+.service-card {
+  background: #f7faff;
+  border: 2px solid #e0e8f3;
+  border-radius: 22px;
+  padding: 25px 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.example:hover{background:#e9f2ff}
-.conversation-title{
-  text-align:center;
-  color:#155eef;
-  font-size:28px;
-  margin:35px 0 20px;
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: #2563eb;
 }
-#conversation{
-  min-height:180px;
-  max-height:400px;
-  overflow-y:auto;
-  padding:15px;
-  background:#fafcff;
-  border-radius:20px;
+
+.service-card.active {
+  border: 3px solid #2162ff;
+  background: #eef5ff;
 }
-.message{
-  padding:15px 20px;
-  margin:12px 0;
-  border-radius:18px;
-  line-height:1.6;
-  font-size:17px;
-  max-width:90%;
-  white-space:pre-wrap;
+
+.service-card .emoji { font-size: 45px; }
+
+.service-card h3 { font-size: 23px; }
+
+.service-card p { color: #64758b; }
+
+.conversation-title {
+  text-align: center;
+  font-size: 30px;
+  color: #2162ff;
+  margin: 40px 0 25px;
 }
-.bot{
-  background:#edf4ff;
-  margin-right:auto;
+
+.chat-box {
+  background: #f8fafc;
+  border-radius: 25px;
+  padding: 25px;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 25px;
 }
-.user{
-  background:#e4fff3;
-  margin-left:auto;
-  color:#087b58;
+
+.message {
+  padding: 20px 25px;
+  margin: 15px 0;
+  border-radius: 22px;
+  font-size: 19px;
+  line-height: 1.6;
+  max-width: 90%;
+  word-wrap: break-word;
 }
-.controls{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
+
+.bot {
+  background: #eaf2ff;
+  color: #173b75;
+  margin-right: auto;
 }
-input{
-  flex:1;
-  min-width:0;
-  padding:17px;
-  font-size:17px;
-  border:2px solid #ccd6e4;
-  border-radius:15px;
+
+.user {
+  background: #e1fff2;
+  color: #007d61;
+  margin-left: auto;
 }
-button{
-  cursor:pointer;
-  border:none;
-  border-radius:15px;
-  padding:15px 22px;
-  font-size:17px;
-  font-weight:bold;
+
+.input-area {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-.send{
-  background:#155eef;
-  color:white;
+
+input {
+  flex: 1;
+  min-width: 200px;
+  padding: 20px;
+  font-size: 19px;
+  border: 2px solid #d0dbe9;
+  border-radius: 18px;
+  outline: none;
 }
-.voice{
-  background:#00a884;
-  color:white;
+
+input:focus { border-color: #2563eb; }
+
+button {
+  border: none;
+  padding: 18px 28px;
+  border-radius: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.voice.listening{
-  background:#e53935;
+
+button:hover { transform: translateY(-2px); }
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
-.reset{
-  background:#eef2f7;
-  color:#334e70;
+
+.send-btn { background: #2162ff; color: white; }
+
+.voice-btn { background: #00a887; color: white; }
+
+.reset-btn {
+  display: block;
+  margin: 25px auto;
+  background: #edf2f8;
+  color: #355274;
 }
-.token{
-  background:#ecfff6;
-  border:2px solid #8ce9c1;
-  border-radius:25px;
-  padding:30px;
-  margin-top:25px;
-  text-align:center;
+
+.status {
+  text-align: center;
+  color: #00866c;
+  font-weight: bold;
+  min-height: 30px;
+  margin: 15px;
 }
-.token-number{
-  font-size:65px;
-  font-weight:bold;
-  color:#00976b;
+
+.ticket {
+  display: none;
+  text-align: center;
+  background: #eafcf4;
+  border: 2px solid #96f0c8;
+  border-radius: 25px;
+  padding: 35px;
+  margin-top: 30px;
 }
-.token-stats{
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:20px;
+
+.ticket h2 { color: #00876a; }
+
+.token-number {
+  font-size: 65px;
+  color: #009875;
+  font-weight: bold;
+  margin: 20px;
 }
-.stat{
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  min-width:150px;
+
+.ticket-info {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 25px;
 }
-.cancel{
-  background:#e52525;
-  color:white;
-  margin-top:20px;
+
+.info-card {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  min-width: 180px;
 }
-.notice{
-  text-align:center;
-  color:#687b95;
-  font-size:14px;
-  margin-top:30px;
+
+.info-card h3 { color: #64758b; }
+
+.info-card p {
+  font-size: 28px;
+  color: #00876a;
+  font-weight: bold;
 }
-.hidden{display:none}
-@media(max-width:600px){
-  main{margin:15px;padding:20px}
-  .hero h1{font-size:28px}
-  header{padding:15px}
-  .controls{flex-wrap:wrap}
-  .controls button{width:100%}
-  .token-number{font-size:45px}
+
+.cancel-btn {
+  background: #e52626;
+  color: white;
+  margin-top: 20px;
+}
+
+.notice {
+  text-align: center;
+  color: #667894;
+  margin: 30px 0;
+  line-height: 1.7;
+}
+
+@media(max-width:700px) {
+  .container { padding: 18px; }
+  .hero h1 { font-size: 30px; }
+  .chat-box { height: 350px; }
+  .message { max-width: 100%; font-size: 16px; }
+  header { padding: 20px; }
 }
 </style>
 </head>
@@ -203,396 +265,518 @@ button{
 
 <header>
   <div>
-    <div class="brand">Queue<span>Mitra</span> 🤝</div>
-    <div class="tagline">Your voice. Your queue. Your time.</div>
+    <div class="logo">Queue<span>Mitra</span> 🤝</div>
+    <p>Your voice. Your queue. Your time.</p>
   </div>
   <div>Voice-first assistant for Bharat</div>
 </header>
 
 <main>
+<div class="container">
 
 <section class="hero">
   <h1>Skip the Waiting Stress</h1>
-  <p>Access services using your voice or text.</p>
-  <p>No complicated forms. Just speak or type naturally.</p>
+  <p>
+    Book and manage your queue using your voice.<br>
+    No complicated forms. Just speak naturally.
+  </p>
 </section>
 
-<section class="services">
+<label for="language" style="text-align:center;display:block;font-weight:bold;">
+  Choose your language
+</label>
 
-<div class="service" onclick="selectService('Hospital')">
-<div class="emoji">🏥</div>
-<h3>Hospital</h3>
-<p>Consultations and healthcare</p>
+<select id="language" class="language-select">
+  <option value="en-IN">English</option>
+  <option value="te-IN">తెలుగు (Telugu)</option>
+  <option value="hi-IN">हिन्दी (Hindi)</option>
+</select>
+
+<div class="service-grid">
+
+  <div class="service-card" data-service="Hospital">
+    <div class="emoji">🏥</div>
+    <h3>Hospital</h3>
+    <p>Medical consultations and services</p>
+  </div>
+
+  <div class="service-card" data-service="Bank">
+    <div class="emoji">🏦</div>
+    <h3>Bank</h3>
+    <p>Banking and financial services</p>
+  </div>
+
+  <div class="service-card" data-service="Government Office">
+    <div class="emoji">🏛️</div>
+    <h3>Government Office</h3>
+    <p>Public services and applications</p>
+  </div>
+
+  <div class="service-card" data-service="Municipal">
+    <div class="emoji">🏢</div>
+    <h3>Municipal</h3>
+    <p>City and civic services</p>
+  </div>
+
+  <div class="service-card" data-service="Other Services">
+    <div class="emoji">🛍️</div>
+    <h3>Other Services</h3>
+    <p>General service centres</p>
+  </div>
+
 </div>
-
-<div class="service" onclick="selectService('Bank')">
-<div class="emoji">🏦</div>
-<h3>Bank</h3>
-<p>Banking services</p>
-</div>
-
-<div class="service" onclick="selectService('Government Office')">
-<div class="emoji">🏛️</div>
-<h3>Government Office</h3>
-<p>Public services</p>
-</div>
-
-<div class="service" onclick="selectService('Transport')">
-<div class="emoji">🚌</div>
-<h3>Transport</h3>
-<p>Bus and travel services</p>
-</div>
-
-<div class="service" onclick="selectService('Railway')">
-<div class="emoji">🚆</div>
-<h3>Railway</h3>
-<p>Railway enquiries</p>
-</div>
-
-<div class="service" onclick="selectService('Electricity')">
-<div class="emoji">⚡</div>
-<h3>Electricity</h3>
-<p>Electricity complaints</p>
-</div>
-
-<div class="service" onclick="selectService('Municipal')">
-<div class="emoji">🏙️</div>
-<h3>Municipal</h3>
-<p>City and civic services</p>
-</div>
-
-<div class="service" onclick="selectService('Other Services')">
-<div class="emoji">🛍️</div>
-<h3>Other Services</h3>
-<p>General service centres</p>
-</div>
-
-</section>
-
-<section class="examples">
-<h3>Try these demo requests</h3>
-
-<div class="example-buttons">
-<button class="example" onclick="tryExample('I need to visit Sunrise Hospital for a cardiologist')">🏥 Cardiologist at Sunrise Hospital</button>
-<button class="example" onclick="tryExample('I need to deposit cash at SBI Kukatpally')">🏦 SBI cash deposit</button>
-<button class="example" onclick="tryExample('I want to apply for a new Aadhaar card at the government office')">🏛️ Aadhaar application</button>
-<button class="example" onclick="tryExample('I need to apply for a bus pass')">🚌 Bus pass</button>
-<button class="example" onclick="tryExample('I want to enquire about railway services')">🚆 Railway enquiry</button>
-<button class="example" onclick="tryExample('I want to report a power outage')">⚡ Power complaint</button>
-<button class="example" onclick="tryExample('I want to complain about garbage collection')">🏙️ Garbage complaint</button>
-<button class="example" onclick="tryExample('I need to visit a service centre for mobile repair')">🛍️ Mobile service centre</button>
-</div>
-</section>
 
 <h2 class="conversation-title">💬 QueueMitra Conversation</h2>
 
-<div id="conversation">
-<div class="message bot">
-Hello! Welcome to QueueMitra.
+<div class="chat-box" id="chatBox"></div>
 
-Choose a service above, use the microphone, or type your request below.
+<div class="input-area">
+  <input
+    type="text"
+    id="userInput"
+    placeholder="Type your request here..."
+    autocomplete="off"
+  >
 
-For example: "I need to visit a hospital" or "I want to apply for an Aadhaar card."
-</div>
-</div>
+  <button class="send-btn" id="sendBtn">Send</button>
 
-<div class="controls">
-<input id="userInput" placeholder="Type your request here..." autocomplete="off">
-<button class="send" onclick="sendText()">Send</button>
-<button class="voice" id="voiceBtn" onclick="startVoice()">🎙️ Speak</button>
-</div>
-
-<div style="text-align:center;margin-top:15px">
-<button class="reset" onclick="resetChat()">↻ Start New Conversation</button>
+  <button class="voice-btn" id="voiceBtn">🎙️ Speak</button>
 </div>
 
-<div id="tokenBox" class="token hidden"></div>
+<div class="status" id="status"></div>
+
+<button class="reset-btn" id="resetBtn">
+  ↻ Start New Conversation
+</button>
+
+<div class="ticket" id="ticket">
+
+  <h2>Your Queue Ticket is Ready!</h2>
+
+  <p>Token Number</p>
+
+  <div class="token-number" id="tokenNumber">#101</div>
+
+  <p id="ticketService"></p>
+  <p id="ticketPlace"></p>
+  <p id="ticketPurpose"></p>
+
+  <div class="ticket-info">
+
+    <div class="info-card">
+      <h3>People Ahead</h3>
+      <p id="peopleAhead">3</p>
+    </div>
+
+    <div class="info-card">
+      <h3>Estimated Wait</h3>
+      <p id="waitTime">15 min</p>
+    </div>
+
+  </div>
+
+  <p style="color:#64758b;">
+    Queue information is simulated for this prototype.
+  </p>
+
+  <button class="cancel-btn" id="cancelBtn">
+    Cancel My Token
+  </button>
+
+</div>
 
 <div class="notice">
-<strong>Prototype notice:</strong> Tokens, queue positions and waiting times are simulated.
-QueueMitra is not yet connected to real service providers.
+  <strong>Prototype notice:</strong>
+  Queue availability, waiting times and tokens are simulated.
+  QueueMitra is not connected to real hospitals, banks or government offices.
 </div>
 
+</div>
 </main>
 
 <script>
-let step = "service";
-let service = "";
-let place = "";
-let purpose = "";
-let ahead = 0;
-let tokenNumber = 100;
-
-const conversation = document.getElementById("conversation");
-const input = document.getElementById("userInput");
+const chatBox = document.getElementById("chatBox");
+const userInput = document.getElementById("userInput");
+const sendBtn = document.getElementById("sendBtn");
 const voiceBtn = document.getElementById("voiceBtn");
-const tokenBox = document.getElementById("tokenBox");
+const resetBtn = document.getElementById("resetBtn");
+const statusEl = document.getElementById("status");
+const languageSelect = document.getElementById("language");
+const ticket = document.getElementById("ticket");
 
-function addMessage(text,type){
+let stage = "service";
+let selectedService = "";
+let placeName = "";
+let purpose = "";
+let tokenIssued = false;
+let currentToken = null;
+let recognition = null;
+
+let tokenCounter =
+  Number(localStorage.getItem("queuemitra_token_counter")) || 100;
+
+function addMessage(text, type) {
   const div = document.createElement("div");
   div.className = "message " + type;
   div.textContent = text;
-  conversation.appendChild(div);
-  conversation.scrollTop = conversation.scrollHeight;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-function speak(text){
-  if(!("speechSynthesis" in window)) return;
-  speechSynthesis.cancel();
+function speak(text) {
+  if (!("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-IN";
-  utterance.rate = 0.95;
-  speechSynthesis.speak(utterance);
+  utterance.lang = languageSelect.value;
+  window.speechSynthesis.speak(utterance);
 }
 
-function reply(text){
-  addMessage(text,"bot");
-  speak(text);
+function botReply(text, voice = true) {
+  addMessage(text, "bot");
+  if (voice) speak(text);
 }
 
-function selectService(name){
-  service = name;
-  step = "place";
-  tokenBox.classList.add("hidden");
-
-  addMessage("I selected "+name,"user");
-
-  reply("You selected "+name+". Which place or service centre do you want to visit? Please enter or say the name.");
-  input.placeholder = "Enter the place or centre name...";
-  input.focus();
+function userReply(text) {
+  addMessage(text, "user");
 }
 
-function detectService(text){
-  const t = text.toLowerCase();
+function welcome() {
+  chatBox.innerHTML = "";
 
-  if(t.includes("hospital") || t.includes("doctor") || t.includes("clinic") || t.includes("medical") || t.includes("cardiologist") || t.includes("patient"))
-    return "Hospital";
+  stage = "service";
+  selectedService = "";
+  placeName = "";
+  purpose = "";
+  tokenIssued = false;
+  currentToken = null;
 
-  if(t.includes("bank") || t.includes("deposit") || t.includes("withdraw") || t.includes("account") || t.includes("sbi") || t.includes("loan"))
-    return "Bank";
+  ticket.style.display = "none";
+  statusEl.textContent = "";
 
-  if(t.includes("aadhaar") || t.includes("aadhar") || t.includes("government") || t.includes("govt") || t.includes("passport") || t.includes("ration"))
-    return "Government Office";
+  document.querySelectorAll(".service-card").forEach(card => {
+    card.classList.remove("active");
+  });
 
-  if(t.includes("bus") || t.includes("bus pass") || t.includes("transport"))
-    return "Transport";
-
-  if(t.includes("railway") || t.includes("train"))
-    return "Railway";
-
-  if(t.includes("electricity") || t.includes("power outage") || t.includes("power cut") || t.includes("electric"))
-    return "Electricity";
-
-  if(t.includes("garbage") || t.includes("municipal") || t.includes("drain") || t.includes("street"))
-    return "Municipal";
-
-  if(t.includes("service centre") || t.includes("service center") || t.includes("mobile repair") || t.includes("other service"))
-    return "Other Services";
-
-  return "";
+  botReply(
+    "Hello! Welcome to QueueMitra. Choose a service category above or tell me which service you need.",
+    false
+  );
 }
 
-function processInput(text){
-  text = text.trim();
-  if(!text)return;
+function chooseService(service) {
+  selectedService = service;
+  stage = "place";
 
-  addMessage(text,"user");
-  tokenBox.classList.add("hidden");
+  document.querySelectorAll(".service-card").forEach(card => {
+    card.classList.remove("active");
+  });
 
-  if(step === "service"){
-    const detected = detectService(text);
+  const card = document.querySelector('[data-service="' + service + '"]');
+  if (card) card.classList.add("active");
 
-    if(detected){
-      service = detected;
-      step = "place";
-      reply("I understood. You need "+service+". Which place or service centre do you want to visit?");
-      input.placeholder = "Enter the place or centre name...";
+  botReply(
+    "You selected " + service +
+    ". Which place or organisation do you want to visit? Please enter or say its name."
+  );
+}
+
+document.querySelectorAll(".service-card").forEach(card => {
+  card.addEventListener("click", () => {
+    chooseService(card.dataset.service);
+  });
+});
+
+function processInput(rawText) {
+  const text = rawText.trim();
+  if (!text) return;
+
+  userReply(text);
+
+  const lower = text.toLowerCase();
+
+  if (
+    lower.includes("start over") ||
+    lower.includes("new conversation") ||
+    lower.includes("restart")
+  ) {
+    welcome();
+    return;
+  }
+
+  if (
+    lower.includes("cancel token") ||
+    lower.includes("cancel my token")
+  ) {
+    cancelToken();
+    return;
+  }
+
+  if (lower === "cancel" && tokenIssued) {
+    cancelToken();
+    return;
+  }
+
+  if (stage === "service") {
+
+    if (lower.includes("hospital")) {
+      chooseService("Hospital");
       return;
     }
 
-    service = text;
-    step = "place";
-    reply("What is the name of the place or service centre you want to visit?");
-    input.placeholder = "Enter the place name...";
-    return;
-  }
+    if (lower.includes("bank")) {
+      chooseService("Bank");
+      return;
+    }
 
-  if(step === "place"){
-    place = text;
-    step = "purpose";
+    if (
+      lower.includes("government") ||
+      lower.includes("govt") ||
+      lower.includes("aadhaar") ||
+      lower.includes("passport")
+    ) {
+      chooseService("Government Office");
+      return;
+    }
 
-    reply("You want to visit "+place+". What service do you need there?");
-    input.placeholder = "Enter your purpose...";
-    return;
-  }
+    if (
+      lower.includes("municipal") ||
+      lower.includes("garbage") ||
+      lower.includes("water complaint") ||
+      lower.includes("street light")
+    ) {
+      chooseService("Municipal");
+      return;
+    }
 
-  if(step === "purpose"){
-    purpose = text;
-    step = "confirm";
+    if (
+      lower.includes("service centre") ||
+      lower.includes("service center") ||
+      lower.includes("mobile") ||
+      lower.includes("shop")
+    ) {
+      chooseService("Other Services");
+      return;
+    }
 
-    reply(
-      "Please confirm your details. Service category: "+service+
-      ". Place: "+place+
-      ". Purpose: "+purpose+
-      ". Should I generate your demo queue token? Say yes or no, or type yes or no."
+    botReply(
+      "Please choose Hospital, Bank, Government Office, Municipal or Other Services."
     );
-
-    input.placeholder = "Type Yes or No...";
     return;
   }
 
-  if(step === "confirm"){
-    const t = text.toLowerCase();
+  if (stage === "place") {
 
-    if(t === "yes" || t.includes("confirm") || t.includes("generate") || t.includes("okay") || t.includes("ok")){
+    placeName = text;
+    stage = "purpose";
+
+    botReply(
+      "Thank you. What is the purpose of your visit to " +
+      placeName +
+      "? Please tell me or type your requirement."
+    );
+    return;
+  }
+
+  if (stage === "purpose") {
+
+    purpose = text;
+    stage = "confirm";
+
+    botReply(
+      "Please confirm your details. Service category: " +
+      selectedService +
+      ". Place: " +
+      placeName +
+      ". Purpose: " +
+      purpose +
+      ". Should I generate your queue token? Say yes or no, or type yes or no."
+    );
+    return;
+  }
+
+  if (stage === "confirm") {
+
+    if (
+      lower === "yes" ||
+      lower.includes("confirm") ||
+      lower.includes("generate") ||
+      lower.includes("proceed")
+    ) {
       generateToken();
       return;
     }
 
-    if(t === "no" || t.includes("cancel") || t.includes("change")){
-      step = "place";
-      reply("Okay. Please enter the place or service centre name again.");
-      input.placeholder = "Enter the place name...";
+    if (
+      lower === "no" ||
+      lower.includes("don't") ||
+      lower.includes("do not")
+    ) {
+      botReply(
+        "Okay. Your token has not been generated. You can start a new conversation whenever you are ready."
+      );
+      stage = "service";
       return;
     }
 
-    reply("Please say yes to generate the token or no to change the details.");
+    botReply("Please say yes to confirm or no to cancel.");
     return;
+  }
+
+  if (stage === "issued") {
+
+    if (
+      lower.includes("cancel") ||
+      lower.includes("stop")
+    ) {
+      cancelToken();
+      return;
+    }
+
+    if (
+      lower.includes("new") ||
+      lower.includes("another") ||
+      lower.includes("start")
+    ) {
+      welcome();
+      return;
+    }
+
+    botReply(
+      "Your token is already generated. You can cancel your token or start a new conversation."
+    );
   }
 }
 
-function generateToken(){
-  step = "done";
-  ahead = Math.floor(Math.random()*6)+2;
-  tokenNumber++;
+function generateToken() {
 
-  const wait = ahead*5;
+  if (tokenIssued) return;
 
-  tokenBox.classList.remove("hidden");
+  tokenIssued = true;
+  stage = "issued";
 
-  tokenBox.innerHTML = `
-    <h2>Your Demo Queue Ticket is Ready!</h2>
-    <p>Token Number</p>
-    <div class="token-number">#${tokenNumber}</div>
-    <p><strong>${escapeHTML(service)}</strong></p>
-    <p>${escapeHTML(place)}</p>
-    <p>Purpose: ${escapeHTML(purpose)}</p>
+  tokenCounter++;
+  localStorage.setItem("queuemitra_token_counter", tokenCounter);
 
-    <div class="token-stats">
-      <div class="stat">
-        <h3>People Ahead</h3>
-        <h2>${ahead}</h2>
-      </div>
-      <div class="stat">
-        <h3>Estimated Wait</h3>
-        <h2>${wait} minutes</h2>
-      </div>
-    </div>
+  currentToken = tokenCounter;
 
-    <button class="cancel" onclick="cancelToken()">Cancel My Token</button>
-  `;
+  const ahead = Math.floor(Math.random() * 6) + 1;
+  const wait = ahead * 5;
 
-  const response =
-    "Your demo token number is "+tokenNumber+
-    " for "+service+" at "+place+
-    ". There are "+ahead+" people ahead of you. Estimated waiting time is "+wait+" minutes.";
+  document.getElementById("tokenNumber").textContent = "#" + currentToken;
+  document.getElementById("ticketService").textContent = selectedService;
+  document.getElementById("ticketPlace").textContent = "Place: " + placeName;
+  document.getElementById("ticketPurpose").textContent = "Purpose: " + purpose;
+  document.getElementById("peopleAhead").textContent = ahead;
+  document.getElementById("waitTime").textContent = wait + " min";
 
-  addMessage(response,"bot");
-  speak(response);
+  ticket.style.display = "block";
 
-  input.placeholder = "Start a new request...";
+  const message =
+    "Your token number is " +
+    currentToken +
+    " for " +
+    selectedService +
+    " at " +
+    placeName +
+    ". Your purpose is " +
+    purpose +
+    ". There are " +
+    ahead +
+    " people ahead of you. Estimated waiting time is " +
+    wait +
+    " minutes.";
+
+  botReply(message);
+
+  ticket.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function cancelToken(){
-  tokenBox.classList.add("hidden");
-  step = "service";
-  service = "";
-  place = "";
-  purpose = "";
+function cancelToken() {
 
-  reply("Your demo token has been cancelled. You can start a new request.");
-  input.placeholder = "Type your request here...";
+  if (!tokenIssued) {
+    botReply("You do not have an active token to cancel.");
+    return;
+  }
+
+  tokenIssued = false;
+  stage = "service";
+  ticket.style.display = "none";
+
+  botReply(
+    "Your token " +
+    currentToken +
+    " has been cancelled. You can start a new conversation."
+  );
 }
 
-function escapeHTML(str){
-  return String(str).replace(/[&<>"']/g,function(c){
-    return {
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-    }[c];
-  });
-}
+document.getElementById("cancelBtn").addEventListener("click", cancelToken);
 
-function sendText(){
-  const text = input.value.trim();
-  if(!text)return;
-  input.value = "";
+function sendText() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  userInput.value = "";
   processInput(text);
 }
 
-input.addEventListener("keydown",function(e){
-  if(e.key === "Enter")sendText();
+sendBtn.addEventListener("click", sendText);
+
+userInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    sendText();
+  }
 });
 
-function tryExample(text){
-  processInput(text);
-}
+resetBtn.addEventListener("click", welcome);
 
-function resetChat(){
-  step = "service";
-  service = "";
-  place = "";
-  purpose = "";
-  tokenBox.classList.add("hidden");
-  conversation.innerHTML = "";
+voiceBtn.addEventListener("click", () => {
 
-  reply("Welcome to QueueMitra. You can speak or type your request. Which service do you need?");
-  input.placeholder = "Type your request here...";
-}
-
-function startVoice(){
   const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-  if(!SpeechRecognition){
-    reply("Voice recognition is not supported in this browser. Please use Google Chrome or type your request.");
+  if (!SpeechRecognition) {
+    statusEl.textContent =
+      "Voice recognition is unavailable. Please use Google Chrome.";
     return;
   }
 
-  const recognition = new SpeechRecognition();
-  recognition.lang = "en-IN";
+  recognition = new SpeechRecognition();
+  recognition.lang = languageSelect.value;
   recognition.continuous = false;
   recognition.interimResults = false;
 
-  voiceBtn.textContent = "🔴 Listening...";
-  voiceBtn.classList.add("listening");
-
-  recognition.onresult = function(event){
-    const text = event.results[0][0].transcript;
-    input.value = text;
-    processInput(text);
-    input.value = "";
+  recognition.onstart = () => {
+    statusEl.textContent = "Listening... Speak now 🎙️";
+    voiceBtn.disabled = true;
   };
 
-  recognition.onerror = function(){
-    addMessage("Microphone error. Please try again or type your message.","bot");
+  recognition.onresult = event => {
+    const spokenText = event.results[0][0].transcript;
+    statusEl.textContent = "You said: " + spokenText;
+    processInput(spokenText);
   };
 
-  recognition.onend = function(){
-    voiceBtn.textContent = "🎙️ Speak";
-    voiceBtn.classList.remove("listening");
+  recognition.onerror = event => {
+    statusEl.textContent =
+      "Voice error: " + event.error + ". Please try again.";
   };
 
-  try{
+  recognition.onend = () => {
+    voiceBtn.disabled = false;
+  };
+
+  try {
     recognition.start();
-  }catch(e){
-    voiceBtn.textContent = "🎙️ Speak";
-    voiceBtn.classList.remove("listening");
+  } catch (error) {
+    statusEl.textContent = "Please wait and try the microphone again.";
+    voiceBtn.disabled = false;
   }
-}
+});
+
+welcome();
 </script>
 
 </body>
