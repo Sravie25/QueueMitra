@@ -2,283 +2,294 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QueueMitra - Voice Queue Assistant</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QueueMitra | Voice Queue Assistant</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;font-family:Arial,Helvetica,sans-serif;
-  background:#f3f6fb;color:#172033;
-}
-.container{max-width:1000px;margin:35px auto;padding:20px}
-.card{
-  background:white;border-radius:20px;padding:25px;
-  box-shadow:0 8px 30px rgba(0,0,0,.07);margin-bottom:20px
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
+.container{max-width:1000px;margin:30px auto;padding:15px}
+.card{background:#fff;padding:25px;border-radius:20px;box-shadow:0 8px 30px #0000000a;margin-bottom:20px}
 .header{text-align:center}
-.header h1{color:#2563eb;margin-bottom:8px;font-size:34px}
+.header h1{font-size:34px;color:#2563eb;margin-bottom:8px}
 .header p{color:#64748b}
-.services{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:12px;margin-top:20px
-}
-.service{
-  border:1px solid #e2e8f0;background:#fff;border-radius:14px;
-  padding:18px 10px;cursor:pointer;text-align:center;
-  transition:.2s;font-size:16px;font-weight:bold
-}
-.service:hover,.service.selected{
-  background:#eff6ff;border-color:#2563eb;color:#2563eb
-}
-.chat{
-  height:340px;overflow-y:auto;background:#f8fafc;
-  border-radius:14px;padding:15px;margin-bottom:15px
-}
-.message{margin:10px 0;padding:13px 16px;border-radius:14px;
-max-width:85%;line-height:1.5;white-space:pre-wrap}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:20px}
+.service{border:1px solid #e2e8f0;background:#fff;border-radius:14px;padding:18px 10px;cursor:pointer;font-size:16px;font-weight:bold}
+.service:hover,.service.selected{background:#eff6ff;border-color:#2563eb;color:#2563eb}
+.chat{height:340px;overflow-y:auto;background:#f8fafc;border-radius:14px;padding:15px;margin-bottom:15px}
+.message{margin:10px 0;padding:13px 16px;border-radius:14px;max-width:85%;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
 .bot{background:#e8efff;margin-right:auto}
 .user{background:#dcfce7;margin-left:auto}
 .inputrow{display:flex;gap:10px}
-input{
-  flex:1;min-width:0;padding:14px;border:1px solid #cbd5e1;
-  border-radius:12px;font-size:16px
-}
-button{
-  border:0;border-radius:12px;padding:13px 18px;
-  cursor:pointer;font-size:15px;font-weight:bold
-}
+input{flex:1;min-width:0;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px}
+button{border:0;border-radius:12px;padding:13px 18px;cursor:pointer;font-size:15px;font-weight:bold}
 .primary{background:#2563eb;color:white}
 .secondary{background:#e2e8f0;color:#172033}
-.danger{background:#ef4444;color:white}
 .voice{background:#7c3aed;color:white}
-button:disabled{opacity:.5;cursor:not-allowed}
 .status{text-align:center;color:#64748b;margin:12px 0;font-size:14px}
-.token{
-  display:none;text-align:center;border:2px dashed #2563eb;
-  border-radius:18px;padding:25px;margin-top:20px
-}
-.token h2{color:#2563eb;font-size:28px}
+.token{display:none;text-align:center;border:2px dashed #2563eb;border-radius:18px;padding:25px;margin-top:20px}
+.token h2{color:#2563eb}
 .token-number{font-size:55px;font-weight:bold;margin:20px}
 .small{font-size:13px;color:#64748b}
 .footer{text-align:center;color:#94a3b8;font-size:13px}
 @media(max-width:600px){
- .container{padding:12px;margin:10px auto}
- .card{padding:17px}
- .inputrow{flex-wrap:wrap}
- .inputrow input{width:100%;flex-basis:100%}
- .inputrow button{flex:1}
- .chat{height:300px}
+.container{padding:10px;margin:10px auto}.card{padding:17px}
+.inputrow{flex-wrap:wrap}.inputrow input{width:100%;flex-basis:100%}
+.inputrow button{flex:1}.chat{height:300px}
+}
+@media print{
+body{background:white}
+body *{visibility:hidden}
+.token,.token *{visibility:visible}
+.token{position:absolute;top:0;left:0;width:100%;display:block!important}
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 
 <div class="card header">
-  <h1>QueueMitra</h1>
-  <h3>Smart Voice Queue Assistant</h3>
-  <p>Speak naturally in Telugu or English to get your queue token.</p>
+<h1>QueueMitra</h1>
+<h3>Smart Voice Queue Assistant</h3>
+<p>Speak naturally in Telugu or English to get your queue token.</p>
 </div>
 
 <div class="card">
-  <h3>Select your service</h3>
-
-  <div class="services">
-    <button class="service" data-service="Hospital">🏥 Hospital</button>
-    <button class="service" data-service="Bank">🏦 Bank</button>
-    <button class="service" data-service="Government Office">🏛️ Government Office</button>
-    <button class="service" data-service="Bus">🚌 Bus</button>
-    <button class="service" data-service="Railway">🚆 Railway</button>
-    <button class="service" data-service="Electricity">💡 Electricity</button>
-    <button class="service" data-service="Municipal">🏙️ Municipal</button>
-    <button class="service" data-service="Other Services">🧾 Other Services</button>
-  </div>
+<h3>Select your service</h3>
+<div class="services">
+<button class="service" data-service="Hospital">🏥 Hospital</button>
+<button class="service" data-service="Bank">🏦 Bank</button>
+<button class="service" data-service="Government Office">🏛️ Government Office</button>
+<button class="service" data-service="Bus">🚌 Bus</button>
+<button class="service" data-service="Railway">🚆 Railway</button>
+<button class="service" data-service="Electricity">💡 Electricity</button>
+<button class="service" data-service="Municipal">🏙️ Municipal</button>
+<button class="service" data-service="Other Services">🧾 Other Services</button>
+</div>
 </div>
 
 <div class="card">
-  <h3>Talk to QueueMitra</h3>
+<h3>Talk to QueueMitra</h3>
+<div class="chat" id="chat">
+<div class="message bot">Hello! Welcome to QueueMitra.
 
-  <div class="chat" id="chat">
-    <div class="message bot">
-      Hello! Welcome to QueueMitra.
-
-      Select your service or tell me what service you need. You can speak in Telugu or English.
-    </div>
-  </div>
-
-  <div class="inputrow">
-    <input id="textInput" placeholder="Type in Telugu or English..." autocomplete="off">
-    <button class="primary" id="sendBtn">Send</button>
-    <button class="voice" id="micBtn">🎤 Speak</button>
-  </div>
-
-  <div class="status" id="status">Ready</div>
-  <button class="secondary" id="resetBtn">Start Again</button>
-
-  <div class="token" id="token">
-    <h2>Your Queue Token</h2>
-    <div class="token-number" id="tokenNumber"></div>
-    <div id="tokenDetails"></div>
-    <p id="waitText"></p>
-    <button class="primary" onclick="window.print()">Print Token</button>
-    <p class="small">Queue position and waiting time are simulated for this demo.</p>
-  </div>
+Select your service or tell me what service you need. You can speak in Telugu or English.</div>
 </div>
 
-<div class="footer">
-  QueueMitra | Voice-first queue management prototype
+<div class="inputrow">
+<input id="textInput" placeholder="Type in Telugu or English..." autocomplete="off">
+<button class="primary" id="sendBtn">Send</button>
+<button class="voice" id="micBtn">🎤 Speak</button>
 </div>
+
+<div class="status" id="status">Ready</div>
+<button class="secondary" id="resetBtn">Start Again</button>
+
+<div class="token" id="token">
+<h2>Your Queue Token</h2>
+<div class="token-number" id="tokenNumber"></div>
+<div id="tokenDetails"></div>
+<p id="waitText"></p>
+<button class="primary" onclick="window.print()">Print Token</button>
+<p class="small">Queue position and waiting time are simulated for this demo.</p>
+</div>
+</div>
+
+<div class="footer">QueueMitra | Voice-first queue management prototype</div>
 </div>
 
 <script>
-const chat = document.getElementById("chat");
-const textInput = document.getElementById("textInput");
-const sendBtn = document.getElementById("sendBtn");
-const micBtn = document.getElementById("micBtn");
-const statusBox = document.getElementById("status");
-const resetBtn = document.getElementById("resetBtn");
-const tokenBox = document.getElementById("token");
+const chat=document.getElementById("chat");
+const textInput=document.getElementById("textInput");
+const sendBtn=document.getElementById("sendBtn");
+const micBtn=document.getElementById("micBtn");
+const statusBox=document.getElementById("status");
+const resetBtn=document.getElementById("resetBtn");
+const tokenBox=document.getElementById("token");
 
-let selectedService = "";
-let place = "";
-let purpose = "";
-let step = "service";
-let lastLanguage = "en";
-let recognition = null;
-let listening = false;
-let recognitionLanguage = "en-IN";
+let selectedService="";
+let place="";
+let purpose="";
+let step="service";
+let lastLanguage="en";
+let recognition=null;
+let listening=false;
+let micMode=0;
 
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+/* LANGUAGE DETECTION */
 
-/* Telugu script detector */
 function containsTelugu(text){
   return /[\u0C00-\u0C7F]/.test(text);
 }
 
-/* Detect language from the recognized transcript */
 function detectLanguage(text){
-  if(containsTelugu(text)) return "te";
+  if(containsTelugu(text))return "te";
 
-  // Common Telugu words written using English characters.
-  const teluguWords = [
+  const words=[
     "naaku","naku","kavali","kavaali","cheppandi",
-    "chesukovali","chesukovాలి","ekkada","undhi",
-    "undi","avunu","kaadu","ledu","hospital ki",
-    "bank ki","token","ivvandi","vellali","randi",
-    "dayachesi","emiti","entha","chesukunta"
+    "ekkada","undhi","undi","avunu","kaadu","ledu",
+    "ivvandi","vellali","randi","dayachesi","entha",
+    "chesukovali","chesukovాలి","hospital ki","bank ki"
   ];
 
-  const lower = text.toLowerCase();
-  if(teluguWords.some(word => lower.includes(word))) return "te";
-
+  const lower=text.toLowerCase();
+  if(words.some(w=>lower.includes(w)))return "te";
   return "en";
 }
 
-/* Add chat message */
+/* CHAT UI */
+
 function addMessage(text,type){
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  div.textContent = text;
+  const div=document.createElement("div");
+  div.className="message "+type;
+  div.textContent=text;
   chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+  chat.scrollTop=chat.scrollHeight;
 }
 
-/* Stop previous voice playback */
+/* TEXT TO SPEECH */
+
 function stopSpeech(){
-  if("speechSynthesis" in window){
+  if(window.speechSynthesis){
     window.speechSynthesis.cancel();
   }
 }
 
-/* Speak response */
+/*
+  Telugu TTS:
+  1. Searches for te-IN voice.
+  2. Searches for any Telugu voice.
+  3. If unavailable, keeps Telugu language tag and tries browser synthesis.
+*/
+
 function speak(text,lang){
-  stopSpeech();
-
-  if(!("speechSynthesis" in window)) return;
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang === "te" ? "te-IN" : "en-IN";
-  utterance.rate = 0.95;
-  utterance.pitch = 1;
-
-  const voices = window.speechSynthesis.getVoices();
-
-  let voice = null;
-
-  if(lang === "te"){
-    voice = voices.find(v =>
-      v.lang.toLowerCase().startsWith("te")
-    );
-  }else{
-    voice = voices.find(v =>
-      v.lang.toLowerCase().startsWith("en-in")
-    ) || voices.find(v =>
-      v.lang.toLowerCase().startsWith("en")
-    );
+  if(!window.speechSynthesis){
+    statusBox.textContent="Speech output is not supported in this browser.";
+    return;
   }
 
-  if(voice) utterance.voice = voice;
+  stopSpeech();
 
-  window.speechSynthesis.speak(utterance);
+  const utterance=new SpeechSynthesisUtterance(text);
+  utterance.rate=0.88;
+  utterance.pitch=1;
+  utterance.volume=1;
+
+  if(lang==="te"){
+    utterance.lang="te-IN";
+  }else{
+    utterance.lang="en-IN";
+  }
+
+  utterance.onstart=()=>{
+    statusBox.textContent=lang==="te"?"Speaking Telugu...":"Speaking English...";
+  };
+
+  utterance.onend=()=>{
+    statusBox.textContent="Ready";
+  };
+
+  utterance.onerror=(event)=>{
+    statusBox.textContent="Speech error: "+event.error;
+  };
+
+  function chooseVoice(){
+    const voices=window.speechSynthesis.getVoices();
+
+    if(lang==="te"){
+      let v=voices.find(x=>x.lang.toLowerCase()==="te-in");
+      if(!v){
+        v=voices.find(x=>x.lang.toLowerCase().startsWith("te"));
+      }
+
+      if(v){
+        utterance.voice=v;
+        utterance.lang=v.lang;
+      }else{
+        // Try Telugu locale even if no Telugu voice is listed.
+        utterance.lang="te-IN";
+      }
+    }else{
+      let v=voices.find(x=>x.lang.toLowerCase()==="en-in");
+      if(!v){
+        v=voices.find(x=>x.lang.toLowerCase().startsWith("en"));
+      }
+      if(v){
+        utterance.voice=v;
+        utterance.lang=v.lang;
+      }
+    }
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  const voices=window.speechSynthesis.getVoices();
+
+  if(voices.length){
+    chooseVoice();
+  }else{
+    window.speechSynthesis.onvoiceschanged=()=>{
+      window.speechSynthesis.onvoiceschanged=null;
+      chooseVoice();
+    };
+
+    // Fallback attempt if voice loading event is delayed.
+    setTimeout(()=>{
+      if(window.speechSynthesis.getVoices().length){
+        window.speechSynthesis.onvoiceschanged=null;
+        chooseVoice();
+      }
+    },1500);
+  }
 }
 
-/* Send both text and voice responses */
 function reply(text,lang){
   addMessage(text,"bot");
   speak(text,lang);
 }
 
-/* Select service */
+/* SERVICE BUTTONS */
+
 document.querySelectorAll(".service").forEach(button=>{
   button.addEventListener("click",()=>{
-    selectedService = button.dataset.service;
+    selectedService=button.dataset.service;
 
-    document.querySelectorAll(".service").forEach(b=>{
-      b.classList.remove("selected");
-    });
-
+    document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
     button.classList.add("selected");
 
-    step = "place";
-    const lang = lastLanguage;
+    step="place";
 
-    if(lang === "te"){
-      reply("మీరు "+selectedService+" సేవను ఎంచుకున్నారు. దయచేసి ఆ సేవ అందించే ప్రదేశం లేదా సంస్థ పేరు చెప్పండి.", "te");
+    if(lastLanguage==="te"){
+      reply("మీరు "+selectedService+" సేవను ఎంచుకున్నారు. దయచేసి ఆ సేవ అందించే ప్రదేశం లేదా సంస్థ పేరు చెప్పండి.","te");
     }else{
-      reply("You selected "+selectedService+". Please tell me the place or name of the service provider.", "en");
+      reply("You selected "+selectedService+". Please tell me the place or name of the service provider.","en");
     }
   });
 });
 
-/* Main conversation handler */
+/* CONVERSATION FLOW */
+
 function processText(rawText){
-  const text = rawText.trim();
-  if(!text) return;
+  const text=rawText.trim();
+  if(!text)return;
 
   addMessage(text,"user");
+  const lang=detectLanguage(text);
+  lastLanguage=lang;
 
-  const lang = detectLanguage(text);
-  lastLanguage = lang;
-
-  if(step === "service"){
-    const serviceList = [
+  if(step==="service"){
+    const services=[
       "Hospital","Bank","Government Office",
       "Bus","Railway","Electricity",
       "Municipal","Other Services"
     ];
 
-    let found = serviceList.find(s =>
-      text.toLowerCase().includes(s.toLowerCase())
-    );
+    const found=services.find(s=>text.toLowerCase().includes(s.toLowerCase()));
 
     if(found){
-      selectedService = found;
-      step = "place";
+      selectedService=found;
+      step="place";
 
-      if(lang === "te"){
+      if(lang==="te"){
         reply("మీరు "+found+" సేవను ఎంచుకున్నారు. దయచేసి ప్రదేశం లేదా సంస్థ పేరు చెప్పండి.","te");
       }else{
         reply("You selected "+found+". Please tell me the place or service provider name.","en");
@@ -286,57 +297,57 @@ function processText(rawText){
       return;
     }
 
-    if(lang === "te"){
-      reply("దయచేసి ముందుగా సేవను ఎంచుకోండి. ఆసుపత్రి, బ్యాంకు, ప్రభుత్వ కార్యాలయం, బస్, రైల్వే, విద్యుత్ లేదా ఇతర సేవలు.", "te");
+    if(lang==="te"){
+      reply("దయచేసి ముందుగా సేవను ఎంచుకోండి. ఆసుపత్రి, బ్యాంకు, ప్రభుత్వ కార్యాలయం, బస్, రైల్వే, విద్యుత్ లేదా ఇతర సేవలు.","te");
     }else{
-      reply("Please select a service first: Hospital, Bank, Government Office, Bus, Railway, Electricity, Municipal or Other Services.", "en");
+      reply("Please select a service first: Hospital, Bank, Government Office, Bus, Railway, Electricity, Municipal or Other Services.","en");
     }
     return;
   }
 
-  if(step === "place"){
-    place = text;
-    step = "purpose";
+  if(step==="place"){
+    place=text;
+    step="purpose";
 
-    if(lang === "te"){
-      reply("సరే. "+place+" . మీరు ఏ పని కోసం టోకెన్ తీసుకోవాలనుకుంటున్నారు?", "te");
+    if(lang==="te"){
+      reply("సరే. "+place+". మీరు ఏ పని కోసం టోకెన్ తీసుకోవాలనుకుంటున్నారు?","te");
     }else{
-      reply("Okay. "+place+". What is the purpose of your visit?", "en");
+      reply("Okay. "+place+". What is the purpose of your visit?","en");
     }
     return;
   }
 
-  if(step === "purpose"){
-    purpose = text;
-    step = "confirm";
+  if(step==="purpose"){
+    purpose=text;
+    step="confirm";
 
-    const confirmation =
+    const englishConfirmation=
       "Please confirm your details:\n\n"+
       "Service: "+selectedService+"\n"+
       "Place: "+place+"\n"+
       "Purpose: "+purpose+"\n\n"+
       "Should I generate your queue token? Please say Yes or No.";
 
-    const teluguConfirmation =
+    const teluguConfirmation=
       "మీ వివరాలను నిర్ధారించండి.\n\n"+
       "సేవ: "+selectedService+"\n"+
       "ప్రదేశం: "+place+"\n"+
       "పని: "+purpose+"\n\n"+
       "మీ టోకెన్ జనరేట్ చేయనా? అవును లేదా కాదు అని చెప్పండి.";
 
-    reply(lang === "te" ? teluguConfirmation : confirmation,lang);
+    reply(lang==="te"?teluguConfirmation:englishConfirmation,lang);
     return;
   }
 
-  if(step === "confirm"){
-    const lower = text.toLowerCase();
+  if(step==="confirm"){
+    const lower=text.toLowerCase();
 
-    const isYes = containsTelugu(text) ?
-      /(అవును|సరే|చేయండి|కావాలి)/.test(text) :
+    const isYes=containsTelugu(text)?
+      /(అవును|సరే|చేయండి|కావాలి)/.test(text):
       /\b(yes|yeah|yep|confirm|okay|ok|generate|sure)\b/.test(lower);
 
-    const isNo = containsTelugu(text) ?
-      /(కాదు|వద్దు|ఆపండి)/.test(text) :
+    const isNo=containsTelugu(text)?
+      /(కాదు|వద్దు|ఆపండి)/.test(text):
       /\b(no|nope|cancel|stop)\b/.test(lower);
 
     if(isYes){
@@ -345,203 +356,163 @@ function processText(rawText){
     }
 
     if(isNo){
-      step = "purpose";
-      if(lang === "te"){
-        reply("సరే. దయచేసి మీ పనిని మళ్లీ వివరించండి.", "te");
-      }else{
-        reply("Okay. Please tell me your purpose again.", "en");
-      }
+      step="purpose";
+      reply(lang==="te"?"సరే. దయచేసి మీ పనిని మళ్లీ వివరించండి.":"Okay. Please tell me your purpose again.",lang);
       return;
     }
 
-    if(lang === "te"){
-      reply("దయచేసి అవును లేదా కాదు అని చెప్పండి.", "te");
-    }else{
-      reply("Please say Yes or No to confirm.", "en");
-    }
+    reply(lang==="te"?"దయచేసి అవును లేదా కాదు అని చెప్పండి.":"Please say Yes or No to confirm.",lang);
   }
 }
 
-/* Generate simulated token */
+/* TOKEN */
+
+function escapeHTML(text){
+  return text.replace(/[&<>"']/g,function(m){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];
+  });
+}
+
 function generateToken(lang){
-  step = "done";
+  step="done";
 
-  const number = Math.floor(Math.random()*900)+100;
-  const wait = Math.floor(Math.random()*25)+5;
+  const number=Math.floor(Math.random()*900)+100;
+  const wait=Math.floor(Math.random()*25)+5;
 
-  document.getElementById("tokenNumber").textContent =
+  document.getElementById("tokenNumber").textContent=
     selectedService.substring(0,2).toUpperCase()+"-"+number;
 
-  document.getElementById("tokenDetails").innerHTML =
+  document.getElementById("tokenDetails").innerHTML=
     "<p><strong>Service:</strong> "+escapeHTML(selectedService)+"</p>"+
     "<p><strong>Place:</strong> "+escapeHTML(place)+"</p>"+
     "<p><strong>Purpose:</strong> "+escapeHTML(purpose)+"</p>";
 
-  document.getElementById("waitText").textContent =
-    lang === "te" ?
-    "అంచనా వేచి ఉండే సమయం: "+wait+" నిమిషాలు" :
-    "Estimated waiting time: "+wait+" minutes";
+  document.getElementById("waitText").textContent=
+    lang==="te"?"అంచనా వేచి ఉండే సమయం: "+wait+" నిమిషాలు":"Estimated waiting time: "+wait+" minutes";
 
-  tokenBox.style.display = "block";
+  tokenBox.style.display="block";
 
-  if(lang === "te"){
+  if(lang==="te"){
     reply("మీ టోకెన్ విజయవంతంగా జనరేట్ అయింది. మీ టోకెన్ నంబర్ "+number+". అంచనా వేచి ఉండే సమయం "+wait+" నిమిషాలు. ధన్యవాదాలు.","te");
   }else{
     reply("Your token has been generated successfully. Your token number is "+number+". Estimated waiting time is "+wait+" minutes. Thank you.","en");
   }
 }
 
-/* HTML safety */
-function escapeHTML(text){
-  return text.replace(/[&<>"']/g,function(m){
-    return {
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[m];
-  });
-}
+/* TEXT INPUT */
 
-/* Text input */
 sendBtn.addEventListener("click",()=>{
-  const text = textInput.value;
-  if(!text.trim()) return;
-  textInput.value = "";
+  const text=textInput.value.trim();
+  if(!text)return;
+  textInput.value="";
   processText(text);
 });
 
 textInput.addEventListener("keydown",e=>{
-  if(e.key === "Enter"){
-    sendBtn.click();
-  }
+  if(e.key==="Enter")sendBtn.click();
 });
 
-/* Voice input */
+/* SPEECH RECOGNITION */
+
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+
 function startRecognition(lang){
   if(!SpeechRecognition){
-    statusBox.textContent =
-      "Speech recognition is not supported in this browser. Please use Chrome.";
+    statusBox.textContent="Speech recognition is not supported. Please use Chrome.";
     return;
   }
 
-  if(listening){
-    try{ recognition.stop(); }catch(e){}
-  }
+  recognition=new SpeechRecognition();
+  recognition.lang=lang;
+  recognition.interimResults=false;
+  recognition.maxAlternatives=3;
 
-  recognition = new SpeechRecognition();
-  recognition.lang = lang;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 3;
-
-  recognition.onstart = ()=>{
-    listening = true;
-    statusBox.textContent =
-      lang === "te-IN" ?
-      "Listening in Telugu mode..." :
-      "Listening in English mode...";
-    micBtn.textContent = "⏹ Stop";
+  recognition.onstart=()=>{
+    listening=true;
+    micBtn.textContent="⏹ Stop";
+    statusBox.textContent=lang==="te-IN"?"Listening in Telugu mode...":"Listening in English mode...";
   };
 
-  recognition.onresult = event=>{
-    let transcript = "";
-
-    for(let i=0;i<event.results.length;i++){
-      transcript += event.results[i][0].transcript;
-    }
-
-    transcript = transcript.trim();
+  recognition.onresult=event=>{
+    let transcript=event.results[0][0].transcript.trim();
 
     if(transcript){
-      statusBox.textContent = "Recognized: "+transcript;
+      statusBox.textContent="Recognized: "+transcript;
       processText(transcript);
-    }else{
-      statusBox.textContent = "No speech detected. Try again.";
     }
   };
 
-  recognition.onerror = event=>{
-    listening = false;
-    micBtn.textContent = "🎤 Speak";
+  recognition.onerror=event=>{
+    listening=false;
+    micBtn.textContent="🎤 Speak";
 
-    if(event.error === "not-allowed"){
-      statusBox.textContent = "Please allow microphone access.";
-    }else if(event.error === "no-speech"){
-      statusBox.textContent = "No speech detected. Please try again.";
+    if(event.error==="not-allowed"){
+      statusBox.textContent="Please allow microphone access.";
+    }else if(event.error==="no-speech"){
+      statusBox.textContent="No speech detected. Try again.";
     }else{
-      statusBox.textContent = "Speech recognition error: "+event.error;
+      statusBox.textContent="Recognition error: "+event.error;
     }
   };
 
-  recognition.onend = ()=>{
-    listening = false;
-    micBtn.textContent = "🎤 Speak";
-    if(statusBox.textContent.includes("Listening")){
-      statusBox.textContent = "Ready";
-    }
+  recognition.onend=()=>{
+    listening=false;
+    micBtn.textContent="🎤 Speak";
+    if(statusBox.textContent.includes("Listening"))statusBox.textContent="Ready";
   };
 
   try{
     recognition.start();
   }catch(e){
-    statusBox.textContent = "Unable to start microphone. Try again.";
+    statusBox.textContent="Unable to start microphone. Please try again.";
   }
 }
 
-/*
-  Alternating Telugu and English recognition attempts.
-  Each new click changes the recognition language.
-*/
-let micMode = 0;
-
 micBtn.addEventListener("click",()=>{
   if(listening){
-    try{ recognition.stop(); }catch(e){}
-    listening = false;
-    micBtn.textContent = "🎤 Speak";
-    statusBox.textContent = "Stopped";
+    try{recognition.stop();}catch(e){}
+    listening=false;
+    micBtn.textContent="🎤 Speak";
+    statusBox.textContent="Stopped";
     return;
   }
 
   micMode++;
-  recognitionLanguage =
-    micMode % 2 === 1 ? "te-IN" : "en-IN";
-
-  startRecognition(recognitionLanguage);
+  const language=micMode%2===1?"te-IN":"en-IN";
+  startRecognition(language);
 });
 
-/* Reset */
+/* RESET */
+
 resetBtn.addEventListener("click",()=>{
   stopSpeech();
 
-  if(listening && recognition){
+  if(recognition){
     try{recognition.stop();}catch(e){}
   }
 
-  selectedService = "";
-  place = "";
-  purpose = "";
-  step = "service";
-  lastLanguage = "en";
-  listening = false;
-  micMode = 0;
+  selectedService="";
+  place="";
+  purpose="";
+  step="service";
+  lastLanguage="en";
+  listening=false;
+  micMode=0;
 
-  chat.innerHTML =
+  chat.innerHTML=
     '<div class="message bot">Hello! Welcome to QueueMitra. Select your service or tell me what service you need. You can speak in Telugu or English.</div>';
 
-  tokenBox.style.display = "none";
-  textInput.value = "";
-  statusBox.textContent = "Ready";
+  tokenBox.style.display="none";
+  textInput.value="";
+  statusBox.textContent="Ready";
 
-  document.querySelectorAll(".service").forEach(b=>{
-    b.classList.remove("selected");
-  });
+  document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
 });
 
-/* Load voice list */
-if("speechSynthesis" in window){
-  window.speechSynthesis.onvoiceschanged = ()=>{};
+/* INITIALIZE VOICE LIST */
+if(window.speechSynthesis){
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
 }
 </script>
 </body>
