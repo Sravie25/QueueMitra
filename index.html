@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueMitra | Voice Queue Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="header">
+            <div class="logo">🎙️ QueueMitra</div>
+            <p>Speak. Check. Save your time.</p>
+        </header>
+
+        <main class="main-content">
+
+            <section class="hero">
+                <h1>Your time matters.</h1>
+                <p>
+                    Skip unnecessary waiting.
+                    Talk to QueueMitra and manage your queue with your voice.
+                </p>
+            </section>
+
+            <section class="queue-card">
+
+                <h2>Welcome to QueueMitra</h2>
+
+                <p class="instruction">
+                    Press the microphone and tell us what you need.
+                </p>
+
+                <button id="micButton" class="mic-button" aria-label="Start voice interaction">
+                    🎤
+                </button>
+
+                <p id="status">Ready to listen</p>
+
+                <div class="response-box">
+                    <p id="userText">Your speech will appear here.</p>
+                    <hr>
+                    <p id="assistantText">
+                        QueueMitra's response will appear here.
+                    </p>
+                </div>
+
+            </section>
+
+            <section class="features">
+                <div class="feature">
+                    <span>🗣️</span>
+                    <h3>Voice First</h3>
+                    <p>Interact naturally without filling lengthy forms.</p>
+                </div>
+
+                <div class="feature">
+                    <span>🎫</span>
+                    <h3>Smart Tokens</h3>
+                    <p>Get a queue token through a simple conversation.</p>
+                </div>
+
+                <div class="feature">
+                    <span>⏳</span>
+                    <h3>Save Time</h3>
+                    <p>Know your queue position and estimated wait.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <p>QueueMitra | Built for Bharat 🇮🇳</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
