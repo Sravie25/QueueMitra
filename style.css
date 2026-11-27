@@ -1,0 +1,243 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #0b665e;
+    --primary-dark: #064e47;
+    --accent: #f3b544;
+    --background: #f5f8f7;
+    --card: #ffffff;
+    --text: #172b2a;
+    --muted: #6b7c7a;
+    --border: #e4ece9;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* HEADER */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.header p {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* HERO */
+
+.hero {
+    padding: 65px 20px 45px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    color: var(--primary-dark);
+    margin-bottom: 18px;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+/* MAIN QUEUE CARD */
+
+.queue-card {
+    background: var(--card);
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(20, 70, 60, 0.07);
+}
+
+.queue-card h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: var(--primary-dark);
+}
+
+.instruction {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* MICROPHONE BUTTON */
+
+.mic-button {
+    width: 110px;
+    height: 110px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    font-size: 38px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(11, 102, 94, 0.25);
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.mic-button:hover {
+    background: var(--primary-dark);
+    transform: scale(1.06);
+    box-shadow: 0 14px 30px rgba(11, 102, 94, 0.3);
+}
+
+.mic-button:active {
+    transform: scale(0.95);
+}
+
+/* STATUS */
+
+#status {
+    margin: 20px 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* RESPONSE */
+
+.response-box {
+    background: #f4f8f7;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 25px;
+    text-align: left;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.response-box hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 15px 0;
+}
+
+#userText {
+    color: var(--muted);
+}
+
+#assistantText {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+/* FEATURES */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 45px;
+}
+
+.feature {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 22px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+}
+
+.feature span {
+    font-size: 35px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.feature h3 {
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.feature p {
+    color: var(--muted);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 35px 10px 20px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .app-container {
+        padding: 15px;
+    }
+
+    .header {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hero {
+        padding: 45px 10px 30px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .queue-card {
+        padding: 30px 20px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .mic-button {
+        width: 95px;
+        height: 95px;
+    }
+}
