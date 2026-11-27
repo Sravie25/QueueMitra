@@ -2,82 +2,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QueueMitra | Voice Queue Assistant</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QueueMitra - Voice Queue Assistant</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef5ff, #f8fbff);
+    color: #172554;
+    min-height: 100vh;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1248b5;
+}
+
+.logo span {
+    color: #16a085;
+}
+
+.tagline {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.hero {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 10px 35px rgba(30, 64, 175, 0.08);
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #153e90;
+}
+
+.hero p {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.voice-btn {
+    margin: 30px 0 15px;
+    background: #155eef;
+    color: white;
+    border: none;
+    padding: 20px 35px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.voice-btn:hover {
+    background: #1048bd;
+    transform: scale(1.03);
+}
+
+.voice-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.message {
+    min-height: 30px;
+    margin: 15px 0;
+    color: #0f766e;
+    font-weight: bold;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.service {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    padding: 25px;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.service:hover,
+.service.selected {
+    border-color: #155eef;
+    background: #eef5ff;
+    transform: translateY(-3px);
+}
+
+.service .icon {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.service h3 {
+    margin-bottom: 8px;
+    color: #1e3a8a;
+}
+
+.service p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.queue-card {
+    display: none;
+    margin-top: 30px;
+    background: #ecfdf5;
+    border: 2px solid #a7f3d0;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.queue-card h2 {
+    color: #047857;
+    margin-bottom: 20px;
+}
+
+.token-number {
+    font-size: 55px;
+    font-weight: bold;
+    color: #059669;
+    margin: 15px 0;
+}
+
+.queue-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.info-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 150px;
+}
+
+.info-box h3 {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    color: #047857;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.cancel-btn {
+    margin-top: 25px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.cancel-btn:hover {
+    background: #b91c1c;
+}
+
+.steps {
+    margin-top: 35px;
+    text-align: left;
+    background: #f8fafc;
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.steps h3 {
+    margin-bottom: 15px;
+    color: #1e3a8a;
+}
+
+.steps p {
+    margin: 10px 0;
+    color: #64748b;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+@media(max-width:600px) {
+    .hero {
+        padding: 25px 15px;
+    }
+
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .voice-btn {
+        width: 100%;
+    }
+
+    .token-number {
+        font-size: 40px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="app-container">
+<div class="container">
 
-        <header class="header">
-            <div class="logo">🎙️ QueueMitra</div>
-            <p>Speak. Check. Save your time.</p>
-        </header>
+<header>
+    <div>
+        <div class="logo">Queue<span>Mitra</span> 🤝</div>
+        <div class="tagline">Your voice. Your queue. Your time.</div>
+    </div>
 
-        <main class="main-content">
+    <div class="tagline">
+        Voice-first assistant for Bharat
+    </div>
+</header>
 
-            <section class="hero">
-                <h1>Your time matters.</h1>
-                <p>
-                    Skip unnecessary waiting.
-                    Talk to QueueMitra and manage your queue with your voice.
-                </p>
-            </section>
+<section class="hero">
 
-            <section class="queue-card">
+    <h1>Skip the Waiting Stress</h1>
 
-                <h2>Welcome to QueueMitra</h2>
+    <p>
+        Book and manage your queue using your voice.
+        <br>
+        No complicated forms. Just speak naturally.
+    </p>
 
-                <p class="instruction">
-                    Press the microphone and tell us what you need.
-                </p>
+    <button class="voice-btn" id="voiceBtn">
+        🎙️ Speak to QueueMitra
+    </button>
 
-                <button id="micButton" class="mic-button" aria-label="Start voice interaction">
-                    🎤
-                </button>
+    <div class="message" id="message">
+        Select a service or speak to get started.
+    </div>
 
-                <p id="status">Ready to listen</p>
+    <div class="services">
 
-                <div class="response-box">
-                    <p id="userText">Your speech will appear here.</p>
-                    <hr>
-                    <p id="assistantText">
-                        QueueMitra's response will appear here.
-                    </p>
-                </div>
+        <div class="service" data-service="Hospital">
+            <div class="icon">🏥</div>
+            <h3>Hospital</h3>
+            <p>Medical consultation queue</p>
+        </div>
 
-            </section>
+        <div class="service" data-service="Bank">
+            <div class="icon">🏦</div>
+            <h3>Bank</h3>
+            <p>Banking service queue</p>
+        </div>
 
-            <section class="features">
-                <div class="feature">
-                    <span>🗣️</span>
-                    <h3>Voice First</h3>
-                    <p>Interact naturally without filling lengthy forms.</p>
-                </div>
+        <div class="service" data-service="Government Office">
+            <div class="icon">🏛️</div>
+            <h3>Government Office</h3>
+            <p>Public service queue</p>
+        </div>
 
-                <div class="feature">
-                    <span>🎫</span>
-                    <h3>Smart Tokens</h3>
-                    <p>Get a queue token through a simple conversation.</p>
-                </div>
-
-                <div class="feature">
-                    <span>⏳</span>
-                    <h3>Save Time</h3>
-                    <p>Know your queue position and estimated wait.</p>
-                </div>
-            </section>
-
-        </main>
-
-        <footer>
-            <p>QueueMitra | Built for Bharat 🇮🇳</p>
-        </footer>
+        <div class="service" data-service="Other Service">
+            <div class="icon">🛍️</div>
+            <h3>Other Services</h3>
+            <p>General service queue</p>
+        </div>
 
     </div>
 
-    <script src="script.js"></script>
+    <section class="queue-card" id="queueCard">
+
+        <h2>Your Queue Ticket is Ready!</h2>
+
+        <div>Token Number</div>
+
+        <div class="token-number" id="tokenNumber">
+            #101
+        </div>
+
+        <div id="serviceName">
+            Hospital
+        </div>
+
+        <div class="queue-info">
+
+            <div class="info-box">
+                <h3>People Ahead</h3>
+                <p id="peopleAhead">5</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Estimated Wait</h3>
+                <p id="waitTime">15 min</p>
+            </div>
+
+        </div>
+
+        <button class="cancel-btn" id="cancelBtn">
+            Cancel My Token
+        </button>
+
+    </section>
+
+    <section class="steps">
+
+        <h3>How QueueMitra Works</h3>
+
+        <p>🎙️ Step 1: Speak or select the service you need.</p>
+
+        <p>🎫 Step 2: QueueMitra generates your demo token.</p>
+
+        <p>⏳ Step 3: Know the people ahead of you.</p>
+
+        <p>🔊 Step 4: Receive voice-based updates.</p>
+
+    </section>
+
+</section>
+
+<footer>
+    QueueMitra | Making everyday services accessible through voice.
+</footer>
+
+</div>
+
+<script>
+
+let currentToken = null;
+let peopleAhead = 5;
+let selectedService = null;
+let tokenCounter = 101;
+
+const voiceBtn = document.getElementById("voiceBtn");
+const message = document.getElementById("message");
+const queueCard = document.getElementById("queueCard");
+const tokenNumber = document.getElementById("tokenNumber");
+const peopleAheadElement = document.getElementById("peopleAhead");
+const waitTimeElement = document.getElementById("waitTime");
+const serviceName = document.getElementById("serviceName");
+const cancelBtn = document.getElementById("cancelBtn");
+
+function speak(text) {
+    if (!("speechSynthesis" in window)) return;
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-IN";
+    utterance.rate = 0.95;
+
+    window.speechSynthesis.speak(utterance);
+}
+
+function updateWaitTime() {
+    waitTimeElement.textContent = (peopleAhead * 3) + " min";
+}
+
+function createToken(service) {
+    if (currentToken) {
+        message.textContent = "You already have an active demo token.";
+        speak("You already have an active token.");
+        return;
+    }
+
+    currentToken = tokenCounter++;
+    peopleAhead = Math.floor(Math.random() * 8) + 1;
+
+    tokenNumber.textContent = "#" + currentToken;
+    peopleAheadElement.textContent = peopleAhead;
+    serviceName.textContent = service;
+    updateWaitTime();
+
+    queueCard.style.display = "block";
+
+    message.textContent = "Demo token successfully generated!";
+    
+    speak(
+        "Your QueueMitra demo token is " +
+        currentToken +
+        " for " +
+        service +
+        ". There are " +
+        peopleAhead +
+        " people ahead of you."
+    );
+}
+
+document.querySelectorAll(".service").forEach(card => {
+    card.addEventListener("click", () => {
+
+        document.querySelectorAll(".service").forEach(item => {
+            item.classList.remove("selected");
+        });
+
+        card.classList.add("selected");
+
+        selectedService = card.dataset.service;
+
+        message.textContent =
+            selectedService + " selected. You can now book a token.";
+
+        speak(selectedService + " selected.");
+
+        createToken(selectedService);
+    });
+});
+
+cancelBtn.addEventListener("click", () => {
+
+    if (!currentToken) return;
+
+    currentToken = null;
+    queueCard.style.display = "none";
+
+    message.textContent = "Your demo token has been cancelled.";
+
+    speak("Your token has been cancelled successfully.");
+});
+
+voiceBtn.addEventListener("click", () => {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+
+        message.textContent =
+            "Voice recognition is unavailable in this browser. Please select a service.";
+
+        speak("Voice recognition is unavailable. Please select a service.");
+
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    voiceBtn.disabled = true;
+    message.textContent = "Listening... Speak now.";
+
+    recognition.onresult = event => {
+
+        const transcript =
+            event.results[0][0].transcript.toLowerCase();
+
+        message.textContent = "You said: " + transcript;
+
+        let service = null;
+
+        if (
+            transcript.includes("hospital") ||
+            transcript.includes("doctor") ||
+            transcript.includes("medical")
+        ) {
+            service = "Hospital";
+        }
+
+        else if (
+            transcript.includes("bank")
+        ) {
+            service = "Bank";
+        }
+
+        else if (
+            transcript.includes("government") ||
+            transcript.includes("office") ||
+            transcript.includes("aadhaar")
+        ) {
+            service = "Government Office";
+        }
+
+        else if (
+            transcript.includes("service") ||
+            transcript.includes("shop")
+        ) {
+            service = "Other Service";
+        }
+
+        else if (
+            transcript.includes("cancel")
+        ) {
+            if (currentToken) {
+                cancelBtn.click();
+            } else {
+                message.textContent = "No active token to cancel.";
+                speak("You do not have an active token.");
+            }
+
+            voiceBtn.disabled = false;
+            return;
+        }
+
+        else if (
+            transcript.includes("how many") ||
+            transcript.includes("people ahead") ||
+            transcript.includes("wait")
+        ) {
+            if (currentToken) {
+                speak(
+                    "There are " +
+                    peopleAhead +
+                    " people ahead of you. Estimated waiting time is " +
+                    peopleAhead * 3 +
+                    " minutes."
+                );
+            } else {
+                speak("You do not have a token yet.");
+            }
+
+            voiceBtn.disabled = false;
+            return;
+        }
+
+        if (service) {
+
+            selectedService = service;
+
+            document.querySelectorAll(".service").forEach(item => {
+                item.classList.remove("selected");
+            });
+
+            const matchingCard =
+                document.querySelector('[data-service="' + service + '"]');
+
+            if (matchingCard) {
+                matchingCard.classList.add("selected");
+            }
+
+            createToken(service);
+
+        } else {
+
+            message.textContent =
+                "I didn't understand. Please say hospital, bank or government office.";
+
+            speak(
+                "I did not understand. Please say hospital, bank or government office."
+            );
+        }
+    };
+
+    recognition.onerror = event => {
+
+        message.textContent =
+            "Voice error: " + event.error + ". Please try again.";
+
+    };
+
+    recognition.onend = () => {
+        voiceBtn.disabled = false;
+    };
+
+    try {
+        recognition.start();
+    } catch (error) {
+        message.textContent = "Please try speaking again.";
+        voiceBtn.disabled = false;
+    }
+
+});
+
+</script>
+
 </body>
 </html>
