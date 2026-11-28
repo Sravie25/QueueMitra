@@ -4,321 +4,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QueueMitra | Voice First</title>
+<title>QueueMitra</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f8fc;color:#17243a;font-family:Arial,sans-serif}
-:root{--blue:#2563eb;--dark:#15335f;--border:#e2e8f0}
-header{background:linear-gradient(120deg,#1749a4,#347cf5);color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{background:white;color:#2563eb;border-radius:14px;width:45px;height:45px;display:grid;place-items:center;font-size:25px;font-weight:bold}
-h1{font-size:22px;margin:0}
-header small{opacity:.85}
-header button{background:#ffffff22;color:white;border:1px solid #ffffff55;border-radius:12px;padding:10px;cursor:pointer}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f8fc;color:#17243a}
+header{padding:18px 6%;background:linear-gradient(120deg,#1749a4,#347cf5);color:white;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:45px;height:45px;border-radius:14px;background:white;color:#2563eb;display:grid;place-items:center;font-size:24px;font-weight:bold}
+h1{font-size:22px;margin:0}header small{opacity:.85}
+button{cursor:pointer;border:0;border-radius:13px;padding:13px 17px;font-size:15px;font-weight:bold}
 main{max-width:1050px;margin:28px auto;padding:0 16px}
-.page{display:none}
-.page.active{display:block;animation:fade .3s}
+.page{display:none}.page.active{display:block;animation:fade .25s}
 @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.hero,.panel{background:white;border:1px solid var(--border);border-radius:23px;padding:25px;margin-bottom:20px}
-.hero h2{margin:0 0 8px;font-size:28px;color:var(--dark)}
-.hero p{margin:0;color:#64748b;line-height:1.6}
+.hero,.panel{background:white;border:1px solid #e2e8f0;border-radius:23px;padding:25px;margin-bottom:20px}
+.hero h2{margin:0 0 8px;font-size:28px;color:#15335f}.hero p{margin:0;color:#64748b;line-height:1.6}
 .steps{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
-.step{display:flex;gap:7px;align-items:center;color:#94a3b8}
-.step .dot{width:30px;height:30px;border-radius:50%;background:#e9eef5;display:grid;place-items:center}
-.step.active{color:var(--blue);font-weight:bold}
-.step.active .dot{background:var(--blue);color:white}
-.step.done .dot{background:#dbeafe;color:var(--blue)}
+.step{display:flex;gap:7px;align-items:center;color:#94a3b8}.dot{width:30px;height:30px;border-radius:50%;background:#e9eef5;display:grid;place-items:center}
+.step.active{color:#2563eb;font-weight:bold}.step.active .dot{background:#2563eb;color:white}.step.done .dot{background:#dbeafe;color:#2563eb}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.service{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}
+.service{background:white;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}
 .service:hover{transform:translateY(-3px);border-color:#93b4ff;box-shadow:0 8px 20px #2563eb12}
 .service img{width:100%;height:160px;object-fit:cover}
-.inside{padding:18px}
-.inside h3{margin:0 0 8px}
-.inside p{margin:0;color:#64748b;font-size:14px}
-.arrow{margin-top:12px;color:var(--blue);font-weight:bold}
-.voicepanel{display:grid;grid-template-columns:330px 1fr;overflow:hidden;background:white;border:1px solid var(--border);border-radius:24px}
-.visual{background:#eaf2ff;padding:20px;display:flex;align-items:center}
-.visual img{width:100%;height:100%;max-height:420px;object-fit:cover;border-radius:18px}
-.content{padding:30px}
-.content h2{font-size:26px;margin:0 0 10px;color:var(--dark)}
-.mic{width:100px;height:100px;margin:20px auto;border-radius:50%;background:#e8f1ff;color:#2563eb;display:grid;place-items:center;font-size:42px;border:5px solid #d2e3ff;transition:.3s}
+.inside{padding:18px}.inside h3{margin:0 0 8px}.inside p{margin:0;color:#64748b;font-size:14px}.arrow{margin-top:12px;color:#2563eb;font-weight:bold}
+.voicepanel{display:grid;grid-template-columns:330px 1fr;overflow:hidden;background:white;border:1px solid #e2e8f0;border-radius:24px}
+.visual{background:#eaf2ff;padding:20px;display:flex;align-items:center}.visual img{width:100%;height:100%;max-height:420px;object-fit:cover;border-radius:18px}
+.content{padding:30px}.content h2{font-size:26px;margin:0 0 10px;color:#15335f}
+.mic{width:112px;height:112px;margin:25px auto;border-radius:50%;background:#e8f1ff;color:#2563eb;display:grid;place-items:center;font-size:48px;border:5px solid #d2e3ff;transition:.3s}
 .mic.listening{background:#2563eb;color:white;box-shadow:0 0 0 15px #dbeafe;animation:pulse 1.4s infinite}
+.mic.speaking{background:#dbeafe;box-shadow:0 0 0 12px #eaf2ff}
 @keyframes pulse{50%{box-shadow:0 0 0 23px #dbeafe}}
 .status{text-align:center;font-size:18px;font-weight:bold;color:#2563eb;margin:12px}
-.question{text-align:center;font-size:21px;line-height:1.6;margin:20px 0;color:#17243a}
+.question{text-align:center;font-size:22px;line-height:1.6;margin:20px 0;color:#17243a}
 .transcript{min-height:55px;background:#f1f6ff;border:1px solid #dce9ff;border-radius:14px;padding:15px;color:#36577e;text-align:center;line-height:1.6}
-.field{margin-top:18px}
-label{display:block;font-weight:bold;margin-bottom:8px}
+.field{margin-top:18px}label{display:block;font-weight:bold;margin-bottom:8px}
 input,textarea{width:100%;padding:13px;border:1px solid #d6e0ed;border-radius:12px;font-size:16px}
-textarea{min-height:80px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.btn{border:0;border-radius:13px;padding:14px 18px;font-size:15px;font-weight:bold;cursor:pointer}
-.primary{background:var(--blue);color:white}
-.secondary{background:#eef2f7;color:#334155}
-.voicebtn{background:#e0edff;color:#1d4ed8}
+.primary{background:#2563eb;color:white}.secondary{background:#eef2f7;color:#334155}.voicebtn{background:#e0edff;color:#1d4ed8}
 .info{background:#f1f6ff;padding:15px;border-radius:13px;color:#36577e;line-height:1.6}
-.review{background:#f8fafc;border:1px solid var(--border);border-radius:15px;padding:20px}
-.review div{padding:12px 0;border-bottom:1px solid var(--border)}
-.review div:last-child{border-bottom:0}
+.review{background:#f8fafc;border:1px solid #e2e8f0;border-radius:15px;padding:20px}
+.review div{padding:12px 0;border-bottom:1px solid #e2e8f0}.review div:last-child{border:0}
 .token{max-width:550px;margin:auto;background:white;border:2px solid #dbeafe;border-radius:23px;overflow:hidden}
 .tokenhead{background:linear-gradient(120deg,#1749a4,#347cf5);color:white;text-align:center;padding:24px}
-.tokenbody{padding:25px;text-align:center}
-.tokenno{font-size:42px;color:var(--blue);font-weight:bold;margin:20px}
-.tokenrow{display:flex;justify-content:space-between;gap:12px;text-align:left;padding:13px 0;border-bottom:1px solid var(--border)}
-.tokenrow span{color:#64748b}
-footer{text-align:center;color:#94a3b8;padding:25px}
-@media(max-width:750px){.voicepanel{grid-template-columns:1fr}.visual img{height:200px}.content{padding:22px}header{padding:17px}.hero{padding:20px}}
+.tokenbody{padding:25px;text-align:center}.tokenno{font-size:42px;color:#2563eb;font-weight:bold;margin:20px}
+.tokenrow{display:flex;justify-content:space-between;gap:12px;text-align:left;padding:13px 0;border-bottom:1px solid #e2e8f0}
+.tokenrow span{color:#64748b}footer{text-align:center;color:#94a3b8;padding:25px}
+@media(max-width:750px){.voicepanel{grid-template-columns:1fr}.visual img{height:200px}.content{padding:22px}header{padding:17px}}
 </style>
 </head>
 <body>
 <header>
 <div class="brand"><div class="logo">Q</div><div><h1>QueueMitra</h1><small>Voice First Queue Assistant</small></div></div>
-<button id="restartBtn" onclick="restart()" style="display:none">↻ Restart</button>
+<button id="restartBtn" onclick="restart()" style="display:none;background:#ffffff22;color:white">↻ Restart</button>
 </header>
-
 <main>
 
 <section class="page active" id="languagePage">
 <div class="hero"><h2>Welcome to QueueMitra 👋</h2><p>Choose your preferred language to talk to QueueMitra.</p></div>
 <div class="grid">
-<div class="service" onclick="setLang('en')"><div class="inside"><h3>🇬🇧 English</h3><p>Continue in English</p></div></div>
-<div class="service" onclick="setLang('te')"><div class="inside"><h3>🇮🇳 తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p></div></div>
-<div class="service" onclick="setLang('hi')"><div class="inside"><h3>🇮🇳 हिन्दी</h3><p>हिंदी में जारी रखें</p></div></div>
+<div class="service" onclick="setLang('en')"><div class="inside"><h3>English</h3><p>Continue in English</p></div></div>
+<div class="service" onclick="setLang('te')"><div class="inside"><h3>తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p></div></div>
+<div class="service" onclick="setLang('hi')"><div class="inside"><h3>हिन्दी</h3><p>हिंदी में जारी रखें</p></div></div>
 </div>
 </section>
 
 <section class="page" id="servicePage">
-<div class="hero">
-<div class="steps"><div class="step active"><span class="dot">1</span>Service</div><div class="step"><span class="dot">2</span>Details</div><div class="step"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div>
-<h2 id="serviceHeading"></h2><p id="serviceSub"></p>
-</div>
-<div class="grid" id="services"></div>
-<div class="actions"><button class="btn secondary" onclick="go('languagePage')">← Back</button></div>
+<div class="hero"><div class="steps"><div class="step active"><span class="dot">1</span>Service</div><div class="step"><span class="dot">2</span>Details</div><div class="step"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div><h2 id="serviceHeading"></h2><p id="serviceSub"></p></div>
+<div class="grid" id="services"></div><div class="actions"><button class="secondary" onclick="go('languagePage')">← Back</button></div>
 </section>
 
 <section class="page" id="detailsPage">
-<div class="hero">
-<div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step active"><span class="dot">2</span>Details</div><div class="step"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div>
-</div>
-<div class="voicepanel">
-<div class="visual"><img id="serviceImage" alt="Service"></div>
-<div class="content">
-<h2 id="detailTitle"></h2>
-<p id="detailSub" style="color:#64748b"></p>
-<div class="mic" id="mic">🎙️</div>
-<div class="status" id="status">Ready</div>
-<div class="question" id="question"></div>
-<div class="transcript" id="transcript">Your spoken answer will appear here.</div>
-<div class="field"><label id="manualLabel">Or type your answer</label><input id="manualInput" placeholder="Type here if you prefer"></div>
-<div class="actions">
-<button class="btn voicebtn" onclick="retry()" id="retryBtn">🎤 Speak again</button>
-<button class="btn secondary" onclick="manualNext()" id="manualBtn">Use typed answer</button>
-<button class="btn secondary" onclick="go('servicePage')" id="backBtn">← Back</button>
-</div>
-</div>
-</div>
-</section>
+<div class="hero"><div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step active"><span class="dot">2</span>Details</div><div class="step"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div></div>
+<div class="voicepanel"><div class="visual"><img id="serviceImage" alt="Selected service"></div>
+<div class="content"><h2 id="detailTitle"></h2><p id="detailSub" style="color:#64748b"></p>
+<div class="mic" id="mic">🎙️</div><div class="status" id="status">Ready</div><div class="question" id="question"></div><div class="transcript" id="transcript">Your spoken answer will appear here.</div>
+<div class="field"><label>Optional: type your answer</label><input id="manualInput" placeholder="Type here if voice is unavailable"></div>
+<div class="actions"><button class="voicebtn" onclick="retry()" id="retryBtn">🎤 Speak again</button><button class="secondary" onclick="manualNext()">Submit typed answer</button><button class="secondary" onclick="go('servicePage')">← Back</button></div>
+</div></div></section>
 
 <section class="page" id="confirmPage">
-<div class="hero">
-<div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step done"><span class="dot">✓</span>Details</div><div class="step active"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div>
-<h2 id="confirmHeading"></h2><p id="confirmSub"></p>
-</div>
-<div class="panel">
-<div class="review" id="review"></div>
-<div class="mic" id="confirmMic">🎙️</div>
-<div class="status" id="confirmStatus"></div>
-<div class="question" id="confirmQuestion"></div>
-<div class="transcript" id="confirmTranscript"></div>
-<div class="actions">
-<button class="btn primary" onclick="confirmYes()" id="yesBtn"></button>
-<button class="btn secondary" onclick="confirmNo()" id="noBtn"></button>
-<button class="btn voicebtn" onclick="retryConfirm()" id="confirmRetry"></button>
-</div>
-</div>
-</section>
+<div class="hero"><div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step done"><span class="dot">✓</span>Details</div><div class="step active"><span class="dot">3</span>Confirm</div><div class="step"><span class="dot">4</span>Token</div></div><h2 id="confirmHeading"></h2><p id="confirmSub"></p></div>
+<div class="panel"><div class="review" id="review"></div><div class="mic" id="confirmMic">🎙️</div><div class="status" id="confirmStatus"></div><div class="question" id="confirmQuestion"></div><div class="transcript" id="confirmTranscript"></div>
+<div class="actions"><button class="primary" onclick="confirmYes()" id="yesBtn">Yes</button><button class="secondary" onclick="confirmNo()" id="noBtn">Change</button><button class="voicebtn" onclick="retryConfirm()" id="confirmRetry">🎤 Speak</button></div>
+</div></section>
 
 <section class="page" id="tokenPage">
-<div class="hero">
-<div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step done"><span class="dot">✓</span>Details</div><div class="step done"><span class="dot">✓</span>Confirm</div><div class="step active"><span class="dot">4</span>Token</div></div>
-<h2 id="tokenHeading"></h2><p id="tokenSub"></p>
-</div>
-<div class="token" id="tokenCard">
-<div class="tokenhead"><h2>QueueMitra</h2><div id="tokenService"></div></div>
-<div class="tokenbody"><div>VISITOR TOKEN</div><div class="tokenno" id="tokenNumber"></div>
-<div class="tokenrow"><span>Visitor</span><strong id="tokenVisitor"></strong></div>
-<div class="tokenrow"><span>Place</span><strong id="tokenPlace"></strong></div>
-<div class="tokenrow"><span>Purpose</span><strong id="tokenPurpose"></strong></div>
-<div class="tokenrow"><span>Date</span><strong id="tokenDate"></strong></div>
-<p style="color:#64748b;font-size:13px">Demo token • Not a real reservation</p>
-</div></div>
-<div class="panel" style="margin-top:20px">
-<div class="info" id="waitInfo"></div>
-<div class="actions"><button class="btn primary" onclick="downloadToken()">⬇ Download Token</button><button class="btn voicebtn" onclick="speak(waitText)">🔊 Listen</button><button class="btn secondary" onclick="restart()">Start New Booking</button></div>
-</div>
+<div class="hero"><div class="steps"><div class="step done"><span class="dot">✓</span>Service</div><div class="step done"><span class="dot">✓</span>Details</div><div class="step done"><span class="dot">✓</span>Confirm</div><div class="step active"><span class="dot">4</span>Token</div></div><h2 id="tokenHeading"></h2><p id="tokenSub"></p></div>
+<div class="token" id="tokenCard"><div class="tokenhead"><h2>QueueMitra</h2><div id="tokenService"></div></div><div class="tokenbody"><div>VISITOR TOKEN</div><div class="tokenno" id="tokenNumber"></div><div class="tokenrow"><span>Visitor</span><strong id="tokenVisitor"></strong></div><div class="tokenrow"><span>Place</span><strong id="tokenPlace"></strong></div><div class="tokenrow"><span>Purpose</span><strong id="tokenPurpose"></strong></div><div class="tokenrow"><span>Date</span><strong id="tokenDate"></strong></div><p style="color:#64748b;font-size:13px">Demo token • Not a real reservation</p></div></div>
+<div class="panel" style="margin-top:20px"><div class="info" id="waitInfo"></div><div class="actions"><button class="primary" onclick="downloadToken()">⬇ Download Token</button><button class="voicebtn" onclick="speak(waitText)">🔊 Listen</button><button class="secondary" onclick="restart()">Start New Booking</button></div></div>
 </section>
-</main>
-<footer>QueueMitra • Accessible voice-first queue assistance</footer>
+</main><footer>QueueMitra • Accessible voice-first queue assistance</footer>
 
 <script>
-const WORKER="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
-let lang="en",service=0,answers=[],idx=0,name="",place="",purpose="",token="",ahead=0,minutes=0,waitText="",recognition=null;
-
 const T={
-en:{
-services:["Hospital","Bank","Government Office","Restaurants","Other"],
-desc:["Hospital queue booking","Bank service booking","Government service booking","Restaurant waiting queue","Other service"],
-places:["Which hospital do you want to visit?","Which bank do you want to visit?","Which government office do you want to visit?","Which restaurant do you want to visit?","Which service or place do you need?"],
-qs:["Please tell me your name.","Which place or provider do you want to visit?","Please tell me the purpose of your visit."],
-confirm:"I heard the following details. Are they correct?",
-yes:"Yes, confirm my booking.",no:"No, let me change my details.",
-start:"Choose a service to continue.",listen:"Listening... Please speak.",ready:"Preparing voice assistant...",retry:"Speak again",manual:"Use typed answer",token:"Your token is ready!",wait:"Demo queue information: {a} people ahead. Estimated waiting time: about {m} minutes. This is simulated information, not a real queue.",
-name:"Name",place:"Place",purpose:"Purpose",visitor:"Visitor",new:"Start new booking",err:"Voice recognition unavailable. Please type your answer or try Chrome.",serviceTitle:"Choose your service",confirmTitle:"Confirm your details",yesLabel:"Yes",noLabel:"Change details",voice:"Voice assistant"
-},
-te:{
-services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","రెస్టారెంట్","ఇతర"],
-desc:["ఆసుపత్రి క్యూ బుకింగ్","బ్యాంక్ సేవ","ప్రభుత్వ సేవ","రెస్టారెంట్ క్యూ","ఇతర సేవ"],
-places:["మీరు ఏ ఆసుపత్రికి వెళ్లాలి?","మీరు ఏ బ్యాంకుకు వెళ్లాలి?","ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలి?","ఏ రెస్టారెంట్‌కు వెళ్లాలి?","ఏ సేవ లేదా ప్రదేశం కావాలి?"],
-qs:["దయచేసి మీ పేరు చెప్పండి.","మీరు ఏ ప్రదేశానికి వెళ్లాలనుకుంటున్నారు?","మీరు వెళ్లడానికి కారణం చెప్పండి."],
-confirm:"మీ వివరాలు ఇవే. అవి సరైనవేనా?",
-yes:"అవును, బుకింగ్ నిర్ధారించండి.",no:"లేదు, వివరాలను మార్చండి.",
-start:"సేవను ఎంచుకోండి.",listen:"వింటున్నాను... మాట్లాడండి.",ready:"వాయిస్ సహాయకుడు సిద్ధమవుతోంది...",retry:"మళ్లీ మాట్లాడండి",manual:"టైప్ చేసిన సమాధానం ఉపయోగించండి",token:"మీ టోకెన్ సిద్ధంగా ఉంది!",wait:"డెమో సమాచారం: మీ ముందు {a} మంది ఉన్నారు. అంచనా సమయం {m} నిమిషాలు. ఇది నిజమైన క్యూ సమాచారం కాదు.",
-name:"పేరు",place:"ప్రదేశం",purpose:"కారణం",visitor:"సందర్శకుడు",new:"కొత్త బుకింగ్",err:"వాయిస్ అందుబాటులో లేదు. టైప్ చేయండి లేదా Chrome ఉపయోగించండి.",serviceTitle:"సేవను ఎంచుకోండి",confirmTitle:"మీ వివరాలను నిర్ధారించండి",yesLabel:"అవును",noLabel:"వివరాలు మార్చండి",voice:"వాయిస్ సహాయకుడు"
-},
-hi:{
-services:["अस्पताल","बैंक","सरकारी कार्यालय","रेस्तरां","अन्य"],
-desc:["अस्पताल कतार","बैंक सेवा","सरकारी सेवा","रेस्तरां कतार","अन्य सेवा"],
-places:["आप किस अस्पताल में जाना चाहते हैं?","आप किस बैंक में जाना चाहते हैं?","आप किस सरकारी कार्यालय में जाना चाहते हैं?","आप किस रेस्तरां में जाना चाहते हैं?","आपको कौन सी सेवा या जगह चाहिए?"],
-qs:["कृपया अपना नाम बताएं।","आप किस स्थान पर जाना चाहते हैं?","कृपया आने का कारण बताएं।"],
-confirm:"मैंने ये विवरण सुने हैं। क्या ये सही हैं?",
-yes:"हाँ, बुकिंग की पुष्टि करें।",no:"नहीं, विवरण बदलें।",
-start:"सेवा चुनें।",listen:"सुन रहा हूँ... बोलिए।",ready:"वॉयस सहायक तैयार हो रहा है...",retry:"फिर बोलें",manual:"लिखित उत्तर उपयोग करें",token:"आपका टोकन तैयार है!",wait:"डेमो जानकारी: आपके आगे {a} लोग हैं। अनुमानित समय {m} मिनट है। यह वास्तविक कतार नहीं है।",
-name:"नाम",place:"स्थान",purpose:"कारण",visitor:"आगंतुक",new:"नई बुकिंग",err:"वॉयस उपलब्ध नहीं है। टाइप करें या Chrome का उपयोग करें.",serviceTitle:"सेवा चुनें",confirmTitle:"अपने विवरण की पुष्टि करें",yesLabel:"हाँ",noLabel:"विवरण बदलें",voice:"वॉयस सहायक"
-}
+en:{services:["Hospital","Bank","Government Office","Restaurants","Other"],desc:["Hospital queue booking","Bank service booking","Government service booking","Restaurant waiting queue","Other service"],places:["Which hospital do you want to visit?","Which bank do you want to visit?","Which government office do you want to visit?","Which restaurant do you want to visit?","Which service or place do you need?"],qs:["Please tell me your name.","PLACE","Please tell me the purpose of your visit."],confirm:"I heard these details. Are they correct?",yes:"Yes, confirm.",no:"No, change details.",start:"Choose a service to continue.",listen:"Listening now. Please speak.",speaking:"Speaking the question...",retry:"Speak again",token:"Your token is ready!",wait:"Demo queue information: {a} people ahead. Estimated waiting time: about {m} minutes. This is simulated, not real queue information.",name:"Name",place:"Place",purpose:"Purpose",err:"Voice recognition unavailable. You can type or use Chrome.",serviceTitle:"Choose your service",confirmTitle:"Confirm your details",yesLabel:"Yes",noLabel:"Change details"},
+te:{services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","రెస్టారెంట్","ఇతర"],desc:["ఆసుపత్రి క్యూ","బ్యాంక్ సేవ","ప్రభుత్వ సేవ","రెస్టారెంట్ క్యూ","ఇతర సేవ"],places:["మీరు ఏ ఆసుపత్రికి వెళ్లాలి?","మీరు ఏ బ్యాంకుకు వెళ్లాలి?","ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలి?","ఏ రెస్టారెంట్‌కు వెళ్లాలి?","ఏ సేవ లేదా ప్రదేశం కావాలి?"],qs:["దయచేసి మీ పేరు చెప్పండి.","PLACE","మీరు వెళ్లడానికి కారణం చెప్పండి."],confirm:"మీ వివరాలు ఇవే. అవి సరైనవేనా?",yes:"అవును, నిర్ధారించండి.",no:"లేదు, మార్చండి.",start:"సేవను ఎంచుకోండి.",listen:"వింటున్నాను... మాట్లాడండి.",speaking:"ప్రశ్న చెబుతున్నాను...",retry:"మళ్లీ మాట్లాడండి",token:"మీ టోకెన్ సిద్ధంగా ఉంది!",wait:"డెమో సమాచారం: మీ ముందు {a} మంది ఉన్నారు. అంచనా సమయం {m} నిమిషాలు. ఇది నిజమైన క్యూ సమాచారం కాదు.",name:"పేరు",place:"ప్రదేశం",purpose:"కారణం",err:"వాయిస్ అందుబాటులో లేదు. టైప్ చేయండి లేదా Chrome ఉపయోగించండి.",serviceTitle:"సేవను ఎంచుకోండి",confirmTitle:"మీ వివరాలను నిర్ధారించండి",yesLabel:"అవును",noLabel:"వివరాలు మార్చండి"},
+hi:{services:["अस्पताल","बैंक","सरकारी कार्यालय","रेस्तरां","अन्य"],desc:["अस्पताल कतार","बैंक सेवा","सरकारी सेवा","रेस्तरां कतार","अन्य सेवा"],places:["आप किस अस्पताल में जाना चाहते हैं?","आप किस बैंक में जाना चाहते हैं?","आप किस सरकारी कार्यालय में जाना चाहते हैं?","आप किस रेस्तरां में जाना चाहते हैं?","आपको कौन सी सेवा या जगह चाहिए?"],qs:["कृपया अपना नाम बताएं।","PLACE","कृपया आने का कारण बताएं।"],confirm:"क्या मैंने सही विवरण सुने हैं?",yes:"हाँ, पुष्टि करें।",no:"नहीं, बदलें।",start:"सेवा चुनें।",listen:"सुन रहा हूँ... बोलिए।",speaking:"प्रश्न बोल रहा हूँ...",retry:"फिर बोलें",token:"आपका टोकन तैयार है!",wait:"डेमो जानकारी: आपके आगे {a} लोग हैं। अनुमानित समय {m} मिनट है। यह वास्तविक कतार नहीं है।",name:"नाम",place:"स्थान",purpose:"कारण",err:"वॉयस उपलब्ध नहीं है। टाइप करें या Chrome उपयोग करें.",serviceTitle:"सेवा चुनें",confirmTitle:"अपने विवरण की पुष्टि करें",yesLabel:"हाँ",noLabel:"विवरण बदलें"}
 };
-
-const imgs=[
-"https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80",
-"https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=900&q=80",
-"https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80",
-"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
-"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"
-];
-
-function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.getElementById("restartBtn").style.display=id==="languagePage"?"none":"inline-block";window.scrollTo(0,0)}
-function setLang(l){lang=l;renderServices();go("servicePage");speak(T[lang].start)}
-function renderServices(){
-document.getElementById("serviceHeading").textContent=T[lang].serviceTitle;
-document.getElementById("serviceSub").textContent=T[lang].start;
-document.getElementById("services").innerHTML=T[lang].services.map((s,i)=>`<div class="service" onclick="choose(${i})"><img src="${imgs[i]}" alt=""><div class="inside"><h3>${["🏥","🏦","🏛️","🍽️","📋"][i]} ${s}</h3><p>${T[lang].desc[i]}</p><div class="arrow">Select →</div></div></div>`).join("");
-}
-function choose(i){
-service=i;answers=[];idx=0;
-document.getElementById("serviceImage").src=imgs[i];
-document.getElementById("detailTitle").textContent=T[lang].services[i];
-document.getElementById("detailSub").textContent=T[lang].places[i];
-document.getElementById("manualInput").value="";
-go("detailsPage");
-setTimeout(()=>ask(),500);
-}
-function ask(){
-if(idx>=3){showConfirm();return}
-const q=idx===1?T[lang].places[service]:T[lang].qs[idx];
-document.getElementById("question").textContent=q;
-document.getElementById("transcript").textContent="";
-document.getElementById("manualInput").value="";
-document.getElementById("status").textContent=T[lang].ready;
-speak(q).then(()=>listen());
-}
-function listen(){
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR){document.getElementById("status").textContent=T[lang].err;document.getElementById("mic").classList.remove("listening");return}
-try{
-recognition=new SR();recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";recognition.interimResults=false;recognition.continuous=false;
-recognition.onstart=()=>{document.getElementById("mic").classList.add("listening");document.getElementById("status").textContent=T[lang].listen};
-recognition.onresult=e=>{let text=e.results[0][0].transcript;document.getElementById("transcript").textContent=text;document.getElementById("manualInput").value=text;document.getElementById("mic").classList.remove("listening");document.getElementById("status").textContent="✓";setTimeout(()=>advance(text),700)};
-recognition.onerror=()=>{document.getElementById("mic").classList.remove("listening");document.getElementById("status").textContent=T[lang].err};
-recognition.onend=()=>document.getElementById("mic").classList.remove("listening");
-recognition.start();
-}catch(e){document.getElementById("status").textContent=T[lang].err}
-}
-function retry(){try{recognition&&recognition.abort()}catch(e){}speak(document.getElementById("question").textContent).then(listen)}
-function manualNext(){const v=document.getElementById("manualInput").value.trim();if(!v){alert("Please enter an answer.");return}advance(v)}
-function advance(v){
-if(!v)return;
-answers[idx]=v;
-idx++;
-if(idx<3){ask()}else showConfirm();
-}
-function showConfirm(){
-name=answers[0]||"";place=answers[1]||"";purpose=answers[2]||"";
-const t=T[lang];
-document.getElementById("confirmHeading").textContent=t.confirmTitle;
-document.getElementById("confirmSub").textContent=t.confirm;
-document.getElementById("review").innerHTML=`<div><strong>${t.services[service]}</strong></div><div><strong>${t.name}:</strong> ${escape(name)}</div><div><strong>${t.place}:</strong> ${escape(place)}</div><div><strong>${t.purpose}:</strong> ${escape(purpose)}</div>`;
-document.getElementById("confirmQuestion").textContent=t.confirm;
-document.getElementById("confirmStatus").textContent="";
-document.getElementById("confirmTranscript").textContent="";
-document.getElementById("yesBtn").textContent=t.yesLabel;
-document.getElementById("noBtn").textContent=t.noLabel;
-document.getElementById("confirmRetry").textContent="🎤 "+t.retry;
-go("confirmPage");
-speak(t.confirm).then(()=>listenConfirm());
-}
-function listenConfirm(){
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR){document.getElementById("confirmStatus").textContent=T[lang].err;return}
-try{
-recognition=new SR();recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";recognition.interimResults=false;
-recognition.onstart=()=>{document.getElementById("confirmMic").classList.add("listening");document.getElementById("confirmStatus").textContent=T[lang].listen};
-recognition.onresult=e=>{let v=e.results[0][0].transcript.toLowerCase();document.getElementById("confirmTranscript").textContent=v;document.getElementById("confirmMic").classList.remove("listening");if(/yes|confirm|correct|అవును|సరే|हाँ|हां|सही/.test(v)){confirmYes()}else if(/no|change|wrong|లేదు|వద్దు|नहीं|बदल/.test(v)){confirmNo()}else{document.getElementById("confirmStatus").textContent="Please say yes or no";setTimeout(listenConfirm,1000)}};
-recognition.onerror=()=>document.getElementById("confirmStatus").textContent=T[lang].err;
-recognition.onend=()=>document.getElementById("confirmMic").classList.remove("listening");
-recognition.start();
-}catch(e){}
-}
-function retryConfirm(){speak(T[lang].confirm).then(listenConfirm)}
+const imgs=["https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80","https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"];
+let lang="en",service=0,answers=[],idx=0,name="",place="",purpose="",token="",ahead=0,minutes=0,waitText="",recognition=null,session=0;
+function go(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.getElementById("restartBtn").style.display=id==="languagePage"?"none":"inline-block";window.scrollTo(0,0)}
+function setLang(l){lang=l;renderServices();go("servicePage")}
+function renderServices(){document.getElementById("serviceHeading").textContent=T[lang].serviceTitle;document.getElementById("serviceSub").textContent=T[lang].start;document.getElementById("services").innerHTML=T[lang].services.map((s,i)=>`<div class="service" onclick="choose(${i})"><img src="${imgs[i]}" alt=""><div class="inside"><h3>${["🏥","🏦","🏛️","🍽️","📋"][i]} ${s}</h3><p>${T[lang].desc[i]}</p><div class="arrow">Select →</div></div></div>`).join("")}
+function choose(i){stopAll();session++;service=i;answers=[];idx=0;document.getElementById("serviceImage").src=imgs[i];document.getElementById("detailTitle").textContent=T[lang].services[i];document.getElementById("detailSub").textContent=T[lang].places[i];go("detailsPage");setTimeout(()=>ask(session),400)}
+function ask(s){if(s!==session)return;if(idx>=3){showConfirm();return}const q=idx===1?T[lang].places[service]:T[lang].qs[idx];document.getElementById("question").textContent=q;document.getElementById("transcript").textContent="";document.getElementById("manualInput").value="";document.getElementById("status").textContent=T[lang].speaking;document.getElementById("mic").className="mic speaking";speak(q,s).then(()=>{if(s!==session)return;document.getElementById("mic").className="mic";startListening(s)})}
+function startListening(s){if(s!==session)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById("status").textContent=T[lang].err;return}try{recognition=new SR();recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";recognition.interimResults=true;recognition.continuous=false;recognition.maxAlternatives=1;let finalText="";recognition.onstart=()=>{if(s!==session)return;document.getElementById("mic").className="mic listening";document.getElementById("status").textContent=T[lang].listen};recognition.onresult=e=>{let r=e.results[e.results.length-1];let text=r[0].transcript;if(r.isFinal){finalText=text;document.getElementById("transcript").textContent=text;document.getElementById("manualInput").value=text}};recognition.onerror=e=>{if(s!==session)return;document.getElementById("mic").className="mic";document.getElementById("status").textContent=e.error==="not-allowed"?"Please allow microphone access.":T[lang].err};recognition.onend=()=>{if(s!==session)return;document.getElementById("mic").className="mic";if(finalText.trim()){document.getElementById("status").textContent="✓";setTimeout(()=>advance(finalText,s),500)}else{document.getElementById("status").textContent="No speech detected. Please try again.";setTimeout(()=>{if(s===session)startListening(s)},1300)}};recognition.start()}catch(e){document.getElementById("status").textContent=T[lang].err}}
+function retry(){let s=session;try{recognition&&recognition.abort()}catch(e){}const q=document.getElementById("question").textContent;document.getElementById("status").textContent=T[lang].speaking;document.getElementById("mic").className="mic speaking";speak(q,s).then(()=>{if(s===session)startListening(s)})}
+function manualNext(){let v=document.getElementById("manualInput").value.trim();if(!v){alert("Please enter an answer.");return}advance(v,session)}
+function advance(v,s){if(s!==session||!v)return;answers[idx]=v;idx++;ask(s)}
+function showConfirm(){name=answers[0]||"";place=answers[1]||"";purpose=answers[2]||"";const t=T[lang];document.getElementById("confirmHeading").textContent=t.confirmTitle;document.getElementById("confirmSub").textContent=t.confirm;document.getElementById("review").innerHTML=`<div><strong>${t.services[service]}</strong></div><div><strong>${t.name}:</strong> ${esc(name)}</div><div><strong>${t.place}:</strong> ${esc(place)}</div><div><strong>${t.purpose}:</strong> ${esc(purpose)}</div>`;document.getElementById("confirmQuestion").textContent=t.confirm;document.getElementById("confirmTranscript").textContent="";document.getElementById("confirmStatus").textContent=t.speaking;document.getElementById("yesBtn").textContent=t.yesLabel;document.getElementById("noBtn").textContent=t.noLabel;go("confirmPage");let s=session;speak(t.confirm,s).then(()=>{if(s===session)listenConfirm(s)})}
+function listenConfirm(s){if(s!==session)return;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById("confirmStatus").textContent=T[lang].err;return}try{recognition=new SR();recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";recognition.interimResults=false;recognition.onstart=()=>{document.getElementById("confirmMic").className="mic listening";document.getElementById("confirmStatus").textContent=T[lang].listen};recognition.onresult=e=>{let v=e.results[0][0].transcript.toLowerCase();document.getElementById("confirmTranscript").textContent=v;if(/yes|confirm|correct|అవును|సరే|हाँ|हां|सही/.test(v))confirmYes();else if(/no|change|wrong|లేదు|వద్దు|नहीं|बदल/.test(v))confirmNo();else{document.getElementById("confirmStatus").textContent="Please say yes or no.";setTimeout(()=>listenConfirm(s),900)}};recognition.onerror=()=>document.getElementById("confirmStatus").textContent=T[lang].err;recognition.onend=()=>document.getElementById("confirmMic").className="mic";recognition.start()}catch(e){document.getElementById("confirmStatus").textContent=T[lang].err}}
+function retryConfirm(){let s=session;stopRec();speak(T[lang].confirm,s).then(()=>{if(s===session)listenConfirm(s)})}
 function confirmYes(){createToken()}
-function confirmNo(){idx=0;answers=[];go("detailsPage");ask()}
-function createToken(){
-token="QM-"+Math.floor(1000+Math.random()*9000);ahead=Math.floor(Math.random()*8)+1;minutes=ahead*5;
-const t=T[lang];
-document.getElementById("tokenHeading").textContent=t.token;
-document.getElementById("tokenSub").textContent="Keep your token for reference.";
-document.getElementById("tokenService").textContent=t.services[service];
-document.getElementById("tokenNumber").textContent=token;
-document.getElementById("tokenVisitor").textContent=name;
-document.getElementById("tokenPlace").textContent=place;
-document.getElementById("tokenPurpose").textContent=purpose;
-document.getElementById("tokenDate").textContent=new Date().toLocaleDateString();
-waitText=t.wait.replace("{a}",ahead).replace("{m}",minutes);
-document.getElementById("waitInfo").textContent=waitText;
-go("tokenPage");
-speak(t.token+" "+waitText);
-}
-function restart(){answers=[];idx=0;name=place=purpose="";try{recognition&&recognition.abort()}catch(e){}go("languagePage")}
-function escape(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-
-async function speak(text){
-return new Promise(resolve=>{
-if(!text){resolve();return}
-if("speechSynthesis" in window){
-speechSynthesis.cancel();
-const u=new SpeechSynthesisUtterance(text);u.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";u.rate=.9;
-u.onend=resolve;u.onerror=resolve;
-speechSynthesis.speak(u);
-setTimeout(resolve,12000);
-}else resolve();
-});
-}
-function downloadToken(){
-const c=document.createElement("canvas");c.width=800;c.height=1000;const x=c.getContext("2d");
-x.fillStyle="#fff";x.fillRect(0,0,800,1000);x.strokeStyle="#2563eb";x.lineWidth=8;x.strokeRect(20,20,760,960);
-x.fillStyle="#2563eb";x.fillRect(20,20,760,170);x.fillStyle="#fff";x.textAlign="center";x.font="bold 50px Arial";x.fillText("QueueMitra",400,95);x.font="26px Arial";x.fillText(T[lang].services[service],400,145);
-x.fillStyle="#17243a";x.font="30px Arial";x.fillText("VISITOR TOKEN",400,270);x.fillStyle="#2563eb";x.font="bold 90px Arial";x.fillText(token,400,390);
-x.fillStyle="#17243a";x.textAlign="left";x.font="30px Arial";x.fillText("Visitor: "+name,100,500);x.fillText("Place: "+place,100,590);x.fillText("Purpose:",100,680);wrap(x,purpose,100,725,600,36);x.font="28px Arial";x.fillText("Date: "+new Date().toLocaleDateString(),100,870);x.textAlign="center";x.font="22px Arial";x.fillStyle="#64748b";x.fillText("Demo token • Not a real reservation",400,940);
-const a=document.createElement("a");a.download="QueueMitra-"+token+".png";a.href=c.toDataURL();a.click();
-}
+function confirmNo(){session++;stopAll();idx=0;answers=[];go("detailsPage");ask(session)}
+function createToken(){stopAll();token="QM-"+Math.floor(1000+Math.random()*9000);ahead=Math.floor(Math.random()*8)+1;minutes=ahead*5;const t=T[lang];document.getElementById("tokenHeading").textContent=t.token;document.getElementById("tokenSub").textContent="Keep your token for reference.";document.getElementById("tokenService").textContent=t.services[service];document.getElementById("tokenNumber").textContent=token;document.getElementById("tokenVisitor").textContent=name;document.getElementById("tokenPlace").textContent=place;document.getElementById("tokenPurpose").textContent=purpose;document.getElementById("tokenDate").textContent=new Date().toLocaleDateString();waitText=t.wait.replace("{a}",ahead).replace("{m}",minutes);document.getElementById("waitInfo").textContent=waitText;go("tokenPage");speak(t.token+" "+waitText,session)}
+function stopRec(){try{recognition&&recognition.abort()}catch(e){}recognition=null}
+function stopAll(){stopRec();try{speechSynthesis.cancel()}catch(e){}}
+function restart(){session++;stopAll();answers=[];idx=0;name=place=purpose="";go("languagePage")}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function speak(text,s){return new Promise(resolve=>{if(s!==session){resolve();return}if(!("speechSynthesis"in window)){resolve();return}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";u.rate=.88;u.onend=()=>resolve();u.onerror=()=>resolve();speechSynthesis.speak(u);setTimeout(()=>resolve(),18000)})}
+function downloadToken(){const c=document.createElement("canvas");c.width=800;c.height=1000;const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,800,1000);x.strokeStyle="#2563eb";x.lineWidth=8;x.strokeRect(20,20,760,960);x.fillStyle="#2563eb";x.fillRect(20,20,760,170);x.fillStyle="#fff";x.textAlign="center";x.font="bold 50px Arial";x.fillText("QueueMitra",400,95);x.font="26px Arial";x.fillText(T[lang].services[service],400,145);x.fillStyle="#17243a";x.font="30px Arial";x.fillText("VISITOR TOKEN",400,270);x.fillStyle="#2563eb";x.font="bold 90px Arial";x.fillText(token,400,390);x.fillStyle="#17243a";x.textAlign="left";x.font="30px Arial";x.fillText("Visitor: "+name,100,500);x.fillText("Place: "+place,100,590);x.fillText("Purpose:",100,680);wrap(x,purpose,100,725,600,36);x.font="28px Arial";x.fillText("Date: "+new Date().toLocaleDateString(),100,870);x.textAlign="center";x.font="22px Arial";x.fillStyle="#64748b";x.fillText("Demo token • Not a real reservation",400,940);let a=document.createElement("a");a.download="QueueMitra-"+token+".png";a.href=c.toDataURL();a.click()}
 function wrap(ctx,text,x,y,w,h){let words=String(text).split(" "),line="";for(let i=0;i<words.length;i++){let test=line+words[i]+" ";if(ctx.measureText(test).width>w&&i>0){ctx.fillText(line,x,y);line=words[i]+" ";y+=h}else line=test}ctx.fillText(line,x,y)}
 </script>
 </body>
