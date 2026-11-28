@@ -8,48 +8,202 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#ffffff;color:#172033}
-header{background:linear-gradient(135deg,#155eef,#7254e8);color:white;text-align:center;padding:20px}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff;
+  background-image:url('queuemitra-background.png');
+  background-repeat:no-repeat;
+  background-position:center 100px;
+  background-size:100% auto;
+  background-attachment:fixed;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#155eef,#7254e8);
+  color:white;
+  text-align:center;
+  padding:20px;
+}
+
 header h1{margin:0;font-size:28px}
 header p{margin:8px 0 0}
-.container{max-width:760px;margin:20px auto;padding:12px}
-.panel{background:#fff;border-radius:22px;padding:20px}
-.language-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.lang-btn{border:2px solid #e3e9f5;background:white;border-radius:15px;padding:20px;font-size:18px;font-weight:bold;cursor:pointer}
+
+.container{
+  max-width:900px;
+  margin:20px auto;
+  padding:12px;
+}
+
+.panel{
+  background:rgba(255,255,255,0.94);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:0 8px 35px rgba(0,0,0,.07);
+}
+
+.language-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.lang-btn{
+  border:2px solid #e3e9f5;
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
 .lang-btn:hover{border-color:#155eef}
-.chat{min-height:300px;max-height:550px;overflow-y:auto;padding:12px;background:#fff;border-radius:18px;margin-bottom:15px}
-.message{margin:12px 0;padding:16px;border-radius:18px;max-width:95%;line-height:1.6;white-space:pre-wrap;font-size:17px}
+
+.chat{
+  min-height:300px;
+  max-height:550px;
+  overflow-y:auto;
+  padding:12px;
+  background:rgba(255,255,255,0.96);
+  border-radius:18px;
+  margin-bottom:15px;
+}
+
+.message{
+  margin:12px 0;
+  padding:16px;
+  border-radius:18px;
+  max-width:95%;
+  line-height:1.6;
+  white-space:pre-wrap;
+  font-size:17px;
+}
+
 .bot{background:#edf2ff;margin-right:auto}
 .user{background:#dcfce7;margin-left:auto}
-.service-grid{display:flex;flex-direction:column;gap:10px;margin:10px 0 16px}
-.service-card{display:flex;align-items:center;gap:15px;text-align:left;width:100%;background:white;border:2px solid #dce5f5;border-radius:15px;padding:15px;cursor:pointer;font-size:18px;font-weight:bold;color:#172033;transition:.15s}
-.service-card:hover{border-color:#155eef;background:#f0f5ff}
-.service-card span{font-size:32px;min-width:45px;text-align:center}
-.controls{display:flex;gap:8px;flex-wrap:wrap}
-input{flex:1;min-width:180px;padding:14px;border-radius:12px;border:1px solid #ccd5e5;font-size:16px}
-.action{background:#155eef;color:white;border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+
+.service-grid{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:10px 0 16px;
+}
+
+.service-card{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-align:left;
+  width:100%;
+  background:white;
+  border:2px solid #dce5f5;
+  border-radius:15px;
+  padding:15px;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:bold;
+  color:#172033;
+  transition:.15s;
+}
+
+.service-card:hover{
+  border-color:#155eef;
+  background:#f0f5ff;
+}
+
+.service-card span{
+  font-size:32px;
+  min-width:45px;
+  text-align:center;
+}
+
+.controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+input{
+  flex:1;
+  min-width:180px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ccd5e5;
+  font-size:16px;
+}
+
+.action{
+  background:#155eef;
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:13px 18px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
 .action:hover{background:#0848c7}
 .secondary{background:#64748b}
 .secondary:hover{background:#475569}
 .voice{background:#16a34a}
 .hidden{display:none!important}
-.token{border:2px dashed #155eef;border-radius:15px;padding:20px;margin-top:20px;text-align:center;background:#fff}
+
+.token{
+  border:2px dashed #155eef;
+  border-radius:15px;
+  padding:20px;
+  margin-top:20px;
+  text-align:center;
+  background:#fff;
+}
+
 .token h2{color:#155eef}
-.token-number{font-size:40px;font-weight:bold;color:#155eef;margin:15px 0;overflow-wrap:anywhere}
-.note{font-size:13px;color:#64748b;margin-top:12px}
-footer{text-align:center;color:#64748b;padding:20px}
+
+.token-number{
+  font-size:40px;
+  font-weight:bold;
+  color:#155eef;
+  margin:15px 0;
+  overflow-wrap:anywhere;
+}
+
+.note{
+  font-size:13px;
+  color:#64748b;
+  margin-top:12px;
+}
+
+footer{
+  text-align:center;
+  color:#64748b;
+  padding:20px;
+  background:rgba(255,255,255,0.85);
+}
+
+@media(max-width:768px){
+  body{
+    background-image:none;
+  }
+
+  .container{padding:8px}
+  .panel{padding:12px}
+  .chat{padding:8px}
+  .message{font-size:16px}
+  .service-card{padding:13px}
+}
+
 @media(max-width:480px){
-.language-grid{grid-template-columns:1fr}
-.container{padding:8px}
-.panel{padding:12px}
-.chat{padding:8px}
-.message{font-size:16px}
-.service-card{padding:13px}
+  .language-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
+
 <header>
 <h1>🤝 QueueMitra</h1>
 <p id="subtitle">Your voice-first queue assistant</p>
@@ -68,6 +222,7 @@ footer{text-align:center;color:#64748b;padding:20px}
 </div>
 
 <div id="appScreen" class="hidden">
+
 <div id="chat" class="chat"></div>
 
 <div class="controls" id="inputControls">
@@ -88,6 +243,7 @@ footer{text-align:center;color:#64748b;padding:20px}
 <footer>QueueMitra | Voice-first demo</footer>
 
 <script>
+
 const WORKER_URL="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
 
 const data={
@@ -119,6 +275,7 @@ restart:"Start Again",listening:"Listening...",
 voiceError:"Voice input is unavailable. Please type your answer.",
 continue:"Please enter your answer below."
 },
+
 te:{
 subtitle:"మీ వాయిస్ ద్వారా క్యూ సహాయకుడు",
 greeting:"నమస్కారం! QueueMitra కు స్వాగతం. 😊",
@@ -147,6 +304,7 @@ restart:"మళ్లీ ప్రారంభించండి",listening:"వ
 voiceError:"వాయిస్ అందుబాటులో లేదు. దయచేసి టైప్ చేయండి.",
 continue:"దయచేసి క్రింద మీ సమాధానం నమోదు చేయండి."
 },
+
 hi:{
 subtitle:"आपका आवाज़ आधारित कतार सहायक",
 greeting:"नमस्ते! QueueMitra में आपका स्वागत है। 😊",
@@ -178,7 +336,10 @@ continue:"कृपया नीचे अपना उत्तर दर्ज
 };
 
 const serviceIcons=["🏥","🏦","🏛️","🍽️","📋"];
-let lang="en",step="",serviceIndex=-1;
+
+let lang="en";
+let step="";
+let serviceIndex=-1;
 let userData={name:"",service:"",place:"",purpose:""};
 let currentToken="";
 
@@ -280,35 +441,42 @@ document.getElementById("userInput").placeholder=text;
 function sendMessage(){
 const input=document.getElementById("userInput");
 const value=input.value.trim();
+
 if(!value){
 addBot(data[lang].invalid,false);
 return;
 }
+
 input.value="";
 addUser(value);
 processAnswer(value);
 }
 
 function processAnswer(value){
+
 if(step==="name"){
 userData.name=value;
 step="place";
 addBot(data[lang].placeQuestions[serviceIndex]);
 return;
 }
+
 if(step==="place"){
 userData.place=value;
 step="purpose";
 addBot(data[lang].purpose);
 return;
 }
+
 if(step==="purpose"){
 userData.purpose=value;
 showConfirmation();
 return;
 }
+
 if(step==="confirm"){
 const normalized=value.toLowerCase();
+
 const yesWords=["yes","అవును","हाँ","haan"];
 const noWords=["change","మార్చండి","बदलें","no","కాదు","नहीं"];
 
@@ -328,6 +496,7 @@ addBot(data[lang].confirmAsk);
 function showConfirmation(){
 step="confirm";
 const d=data[lang];
+
 const summary=
 d.confirm+"\n\n"+
 d.nameLabel+": "+userData.name+"\n"+
@@ -335,11 +504,13 @@ d.serviceLabel+": "+userData.service+"\n"+
 d.placeLabel+": "+userData.place+"\n"+
 d.purposeLabel+": "+userData.purpose+"\n\n"+
 d.confirmAsk+"\n\n"+d.yes+" / "+d.no;
+
 addBot(summary);
 }
 
 function generateToken(){
 currentToken="QM-"+Math.floor(1000+Math.random()*9000);
+
 const peopleAhead=Math.floor(Math.random()*15)+1;
 const waitMinutes=peopleAhead*(Math.floor(Math.random()*4)+3);
 const d=data[lang];
@@ -398,6 +569,7 @@ ctx.textAlign="center";
 ctx.fillStyle="#155eef";
 ctx.font="bold 42px Arial";
 ctx.fillText(data[lang].tokenTitle,450,100);
+
 ctx.font="bold 65px Arial";
 ctx.fillText(currentToken,450,190);
 
@@ -413,6 +585,7 @@ data[lang].purposeLabel+": "+userData.purpose
 ];
 
 let y=300;
+
 lines.forEach(line=>{
 wrapText(ctx,line,760).forEach(text=>{
 ctx.fillText(text,80,y);
@@ -425,6 +598,7 @@ ctx.textAlign="center";
 ctx.fillStyle="#155eef";
 ctx.font="bold 30px Arial";
 ctx.fillText("QueueMitra",450,650);
+
 ctx.fillStyle="#64748b";
 ctx.font="22px Arial";
 ctx.fillText("Demo token",450,690);
@@ -434,6 +608,7 @@ if(!blob){
 addBot("Unable to download token. Please try again.",false);
 return;
 }
+
 const url=URL.createObjectURL(blob);
 const link=document.createElement("a");
 link.href=url;
@@ -447,8 +622,10 @@ function wrapText(ctx,text,maxWidth){
 const words=text.split(" ");
 const lines=[];
 let line="";
+
 words.forEach(word=>{
 const test=line?line+" "+word:word;
+
 if(ctx.measureText(test).width>maxWidth&&line){
 lines.push(line);
 line=word;
@@ -456,16 +633,19 @@ line=word;
 line=test;
 }
 });
+
 if(line)lines.push(line);
 return lines;
 }
 
 function startListening(){
 const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+
 if(!SpeechRecognition){
 addBot(data[lang].voiceError,false);
 return;
 }
+
 const recognition=new SpeechRecognition();
 recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";
 recognition.interimResults=false;
@@ -478,12 +658,15 @@ recognition.onresult=function(event){
 document.getElementById("userInput").value=event.results[0][0].transcript;
 sendMessage();
 };
+
 recognition.onerror=function(){
 addBot(data[lang].voiceError,false);
 };
+
 recognition.onend=function(){
 button.textContent="🎤";
 };
+
 recognition.start();
 }
 
@@ -501,6 +684,7 @@ showServices();
 document.getElementById("userInput").addEventListener("keydown",e=>{
 if(e.key==="Enter")sendMessage();
 });
+
 </script>
 </body>
 </html>
