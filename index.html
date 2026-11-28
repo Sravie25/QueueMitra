@@ -1,519 +1,441 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QueueMitra | Voice Queue Assistant</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QueueMitra - Voice Queue Assistant</title>
+<link rel="stylesheet" href="style.css">
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
-.container{max-width:1000px;margin:30px auto;padding:15px}
-.card{background:#fff;padding:25px;border-radius:20px;box-shadow:0 8px 30px #0000000a;margin-bottom:20px}
-.header{text-align:center}
-.header h1{font-size:34px;color:#2563eb;margin-bottom:8px}
-.header p{color:#64748b}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:20px}
-.service{border:1px solid #e2e8f0;background:#fff;border-radius:14px;padding:18px 10px;cursor:pointer;font-size:16px;font-weight:bold}
-.service:hover,.service.selected{background:#eff6ff;border-color:#2563eb;color:#2563eb}
-.chat{height:340px;overflow-y:auto;background:#f8fafc;border-radius:14px;padding:15px;margin-bottom:15px}
-.message{margin:10px 0;padding:13px 16px;border-radius:14px;max-width:85%;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
-.bot{background:#e8efff;margin-right:auto}
-.user{background:#dcfce7;margin-left:auto}
-.inputrow{display:flex;gap:10px}
-input{flex:1;min-width:0;padding:14px;border:1px solid #cbd5e1;border-radius:12px;font-size:16px}
-button{border:0;border-radius:12px;padding:13px 18px;cursor:pointer;font-size:15px;font-weight:bold}
+body{
+ margin:0;background:#f3f6fb;color:#172033;
+ font-family:Arial,Helvetica,sans-serif;
+}
+.container{max-width:1050px;margin:30px auto;padding:20px}
+.card{
+ background:white;padding:28px;border-radius:20px;
+ box-shadow:0 8px 30px rgba(0,0,0,.06);margin-bottom:20px
+}
+h1{text-align:center;color:#2563eb;margin-bottom:8px}
+.subtitle{text-align:center;color:#64748b;margin-bottom:25px}
+.services{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+ gap:12px
+}
+.service{
+ border:2px solid #e2e8f0;border-radius:14px;padding:18px;
+ text-align:center;cursor:pointer;background:white;font-weight:bold;
+ transition:.2s
+}
+.service:hover,.service.selected{
+ border-color:#2563eb;background:#eff6ff
+}
+.service .emoji{font-size:30px;display:block;margin-bottom:8px}
+.chat{
+ min-height:180px;max-height:350px;overflow:auto;
+ background:#f8fafc;border-radius:14px;padding:15px
+}
+.message{
+ padding:14px 17px;border-radius:14px;margin:10px 0;
+ line-height:1.7;white-space:pre-wrap
+}
+.bot{background:#e8efff}
+.user{background:#dcfce7;text-align:right}
+.controls{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
+input{
+ flex:1;min-width:200px;padding:14px;border:1px solid #cbd5e1;
+ border-radius:12px;font-size:16px
+}
+button{
+ border:0;border-radius:12px;padding:14px 20px;
+ cursor:pointer;font-size:16px;font-weight:bold
+}
 .primary{background:#2563eb;color:white}
 .secondary{background:#e2e8f0;color:#172033}
-.voice{background:#7c3aed;color:white}
-.status{text-align:center;color:#64748b;margin:12px 0;font-size:14px}
-.token{display:none;text-align:center;border:2px dashed #2563eb;border-radius:18px;padding:25px;margin-top:20px}
-.token h2{color:#2563eb}
-.token-number{font-size:55px;font-weight:bold;margin:20px}
-.small{font-size:13px;color:#64748b}
-.footer{text-align:center;color:#94a3b8;font-size:13px}
-@media(max-width:600px){
-.container{padding:10px;margin:10px auto}.card{padding:17px}
-.inputrow{flex-wrap:wrap}.inputrow input{width:100%;flex-basis:100%}
-.inputrow button{flex:1}.chat{height:300px}
+.danger{background:#fee2e2;color:#991b1b}
+button:disabled{opacity:.5;cursor:not-allowed}
+.status{text-align:center;color:#64748b;margin-top:12px}
+.token{
+ border:2px dashed #2563eb;border-radius:20px;padding:30px;
+ text-align:center;margin-top:20px
 }
-@media print{
-body{background:white}
-body *{visibility:hidden}
-.token,.token *{visibility:visible}
-.token{position:absolute;top:0;left:0;width:100%;display:block!important}
+.token-number{font-size:50px;font-weight:bold;margin:20px 0;color:#172033}
+.token-details{line-height:2;font-size:18px}
+.hidden{display:none!important}
+.small{color:#64748b;font-size:14px}
+@media(max-width:600px){
+ .container{padding:10px;margin:10px auto}
+ .card{padding:18px}
+ .token-number{font-size:38px}
 }
 </style>
 </head>
+
 <body>
 <div class="container">
 
-<div class="card header">
+<div class="card">
 <h1>QueueMitra</h1>
-<h3>Smart Voice Queue Assistant</h3>
-<p>Speak naturally in Telugu or English to get your queue token.</p>
-</div>
+<div class="subtitle">Voice-First Smart Queue Assistant</div>
 
-<div class="card">
-<h3>Select your service</h3>
-<div class="services">
-<button class="service" data-service="Hospital">🏥 Hospital</button>
-<button class="service" data-service="Bank">🏦 Bank</button>
-<button class="service" data-service="Government Office">🏛️ Government Office</button>
-<button class="service" data-service="Bus">🚌 Bus</button>
-<button class="service" data-service="Railway">🚆 Railway</button>
-<button class="service" data-service="Electricity">💡 Electricity</button>
-<button class="service" data-service="Municipal">🏙️ Municipal</button>
-<button class="service" data-service="Other Services">🧾 Other Services</button>
+<div class="services" id="services">
+<div class="service" data-service="Hospital"><span class="emoji">🏥</span>Hospital</div>
+<div class="service" data-service="Bank"><span class="emoji">🏦</span>Bank</div>
+<div class="service" data-service="Government Office"><span class="emoji">🏛️</span>Government Office</div>
+<div class="service" data-service="Bus"><span class="emoji">🚌</span>Bus</div>
+<div class="service" data-service="Railway"><span class="emoji">🚆</span>Railway</div>
+<div class="service" data-service="Electricity"><span class="emoji">💡</span>Electricity</div>
+<div class="service" data-service="Municipal"><span class="emoji">🏙️</span>Municipal</div>
+<div class="service" data-service="Other Services"><span class="emoji">📋</span>Other Services</div>
 </div>
 </div>
 
 <div class="card">
-<h3>Talk to QueueMitra</h3>
-<div class="chat" id="chat">
-<div class="message bot">Hello! Welcome to QueueMitra.
+<h2>Voice Assistant</h2>
+<div class="chat" id="chat"></div>
 
-Select your service or tell me what service you need. You can speak in Telugu or English.</div>
-</div>
-
-<div class="inputrow">
-<input id="textInput" placeholder="Type in Telugu or English..." autocomplete="off">
+<div class="controls">
+<input id="textInput" placeholder="Type your message here..." autocomplete="off">
 <button class="primary" id="sendBtn">Send</button>
-<button class="voice" id="micBtn">🎤 Speak</button>
+<button class="secondary" id="micBtn">🎤 Speak</button>
+<button class="danger" id="resetBtn">Reset</button>
 </div>
 
-<div class="status" id="status">Ready</div>
-<button class="secondary" id="resetBtn">Start Again</button>
+<div class="status" id="status">Select a service to begin.</div>
+<p class="small" style="text-align:center">
+Speak Telugu or English. Telugu responses will use Telugu audio when Telugu text is detected.
+</p>
+</div>
 
-<div class="token" id="token">
+<div class="card hidden" id="tokenCard">
+<div class="token">
 <h2>Your Queue Token</h2>
 <div class="token-number" id="tokenNumber"></div>
-<div id="tokenDetails"></div>
-<p id="waitText"></p>
-<button class="primary" onclick="window.print()">Print Token</button>
+
+<div class="token-details">
+<div><b>Service:</b> <span id="tokenService"></span></div>
+<div><b>Place:</b> <span id="tokenPlace"></span></div>
+<div><b>Purpose:</b> <span id="tokenPurpose"></span></div>
+<div><b>Estimated waiting time:</b> <span id="tokenWait"></span> minutes</div>
+</div>
+
+<div class="controls" style="justify-content:center">
+<button class="primary" id="downloadBtn">⬇ Download Token</button>
+</div>
+
 <p class="small">Queue position and waiting time are simulated for this demo.</p>
 </div>
 </div>
 
-<div class="footer">QueueMitra | Voice-first queue management prototype</div>
 </div>
 
 <script>
+const WORKER_URL =
+ "https://plain-art-16cdqueuemitra-voice.shravyasrirachakonda.workers.dev";
+
 const chat=document.getElementById("chat");
 const textInput=document.getElementById("textInput");
 const sendBtn=document.getElementById("sendBtn");
 const micBtn=document.getElementById("micBtn");
-const statusBox=document.getElementById("status");
 const resetBtn=document.getElementById("resetBtn");
-const tokenBox=document.getElementById("token");
+const statusBox=document.getElementById("status");
+const tokenCard=document.getElementById("tokenCard");
 
-let selectedService="";
+let service="";
 let place="";
 let purpose="";
 let step="service";
-let lastLanguage="en";
 let recognition=null;
-let listening=false;
-let micMode=0;
+let currentToken=null;
 
-/* LANGUAGE DETECTION */
-
-function containsTelugu(text){
-  return /[\u0C00-\u0C7F]/.test(text);
+function hasTelugu(text){
+ return /[\u0C00-\u0C7F]/.test(text);
 }
 
 function detectLanguage(text){
-  if(containsTelugu(text))return "te";
-
-  const words=[
-    "naaku","naku","kavali","kavaali","cheppandi",
-    "ekkada","undhi","undi","avunu","kaadu","ledu",
-    "ivvandi","vellali","randi","dayachesi","entha",
-    "chesukovali","chesukovాలి","hospital ki","bank ki"
-  ];
-
-  const lower=text.toLowerCase();
-  if(words.some(w=>lower.includes(w)))return "te";
-  return "en";
+ return hasTelugu(text) ? "te" : "en";
 }
-
-/* CHAT UI */
 
 function addMessage(text,type){
-  const div=document.createElement("div");
-  div.className="message "+type;
-  div.textContent=text;
-  chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
+ const div=document.createElement("div");
+ div.className="message "+type;
+ div.textContent=text;
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
 }
 
-/* TEXT TO SPEECH */
+async function speakText(text){
+ if(!text)return;
 
-function stopSpeech(){
-  if(window.speechSynthesis){
-    window.speechSynthesis.cancel();
-  }
-}
+ const language=detectLanguage(text);
+ statusBox.textContent=language==="te"
+  ?"తెలుగు ఆడియో తయారు అవుతోంది..."
+  :"Generating audio...";
 
-/*
-  Telugu TTS:
-  1. Searches for te-IN voice.
-  2. Searches for any Telugu voice.
-  3. If unavailable, keeps Telugu language tag and tries browser synthesis.
-*/
+ try{
+  const response=await fetch(WORKER_URL,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    text:text,
+    language:language
+   })
+  });
 
-function speak(text,lang){
-  if(!window.speechSynthesis){
-    statusBox.textContent="Speech output is not supported in this browser.";
-    return;
-  }
-
-  stopSpeech();
-
-  const utterance=new SpeechSynthesisUtterance(text);
-  utterance.rate=0.88;
-  utterance.pitch=1;
-  utterance.volume=1;
-
-  if(lang==="te"){
-    utterance.lang="te-IN";
-  }else{
-    utterance.lang="en-IN";
+  if(!response.ok){
+   const errorText=await response.text();
+   throw new Error(errorText||"Audio generation failed");
   }
 
-  utterance.onstart=()=>{
-    statusBox.textContent=lang==="te"?"Speaking Telugu...":"Speaking English...";
+  const blob=await response.blob();
+  const audioUrl=URL.createObjectURL(blob);
+  const audio=new Audio(audioUrl);
+
+  audio.onended=()=>{
+   URL.revokeObjectURL(audioUrl);
+   statusBox.textContent="Ready";
   };
 
-  utterance.onend=()=>{
-    statusBox.textContent="Ready";
+  audio.onerror=()=>{
+   URL.revokeObjectURL(audioUrl);
+   statusBox.textContent="Audio playback failed.";
   };
 
-  utterance.onerror=(event)=>{
-    statusBox.textContent="Speech error: "+event.error;
-  };
+  await audio.play();
 
-  function chooseVoice(){
-    const voices=window.speechSynthesis.getVoices();
-
-    if(lang==="te"){
-      let v=voices.find(x=>x.lang.toLowerCase()==="te-in");
-      if(!v){
-        v=voices.find(x=>x.lang.toLowerCase().startsWith("te"));
-      }
-
-      if(v){
-        utterance.voice=v;
-        utterance.lang=v.lang;
-      }else{
-        // Try Telugu locale even if no Telugu voice is listed.
-        utterance.lang="te-IN";
-      }
-    }else{
-      let v=voices.find(x=>x.lang.toLowerCase()==="en-in");
-      if(!v){
-        v=voices.find(x=>x.lang.toLowerCase().startsWith("en"));
-      }
-      if(v){
-        utterance.voice=v;
-        utterance.lang=v.lang;
-      }
-    }
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  const voices=window.speechSynthesis.getVoices();
-
-  if(voices.length){
-    chooseVoice();
-  }else{
-    window.speechSynthesis.onvoiceschanged=()=>{
-      window.speechSynthesis.onvoiceschanged=null;
-      chooseVoice();
-    };
-
-    // Fallback attempt if voice loading event is delayed.
-    setTimeout(()=>{
-      if(window.speechSynthesis.getVoices().length){
-        window.speechSynthesis.onvoiceschanged=null;
-        chooseVoice();
-      }
-    },1500);
-  }
+ }catch(error){
+  console.error("TTS Error:",error);
+  statusBox.textContent="Audio unavailable. Text response is available.";
+ }
 }
 
-function reply(text,lang){
-  addMessage(text,"bot");
-  speak(text,lang);
+function botReply(text,voice=true){
+ addMessage(text,"bot");
+ if(voice)speakText(text);
 }
 
-/* SERVICE BUTTONS */
+function startConversation(){
+ step="place";
+ botReply(
+  hasTelugu("దయచేసి") 
+   ? "దయచేసి మీరు వెళ్లే ప్రదేశం పేరు చెప్పండి."
+   : "Please tell me the name of the place or service provider."
+ );
+}
 
 document.querySelectorAll(".service").forEach(button=>{
-  button.addEventListener("click",()=>{
-    selectedService=button.dataset.service;
+ button.addEventListener("click",()=>{
+  document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
+  button.classList.add("selected");
+  service=button.dataset.service;
+  place="";
+  purpose="";
+  step="place";
+  tokenCard.classList.add("hidden");
+  chat.innerHTML="";
 
-    document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
-    button.classList.add("selected");
-
-    step="place";
-
-    if(lastLanguage==="te"){
-      reply("మీరు "+selectedService+" సేవను ఎంచుకున్నారు. దయచేసి ఆ సేవ అందించే ప్రదేశం లేదా సంస్థ పేరు చెప్పండి.","te");
-    }else{
-      reply("You selected "+selectedService+". Please tell me the place or name of the service provider.","en");
-    }
-  });
+  if(service){
+   botReply("You selected "+service+". Please tell me the place or provider name.");
+  }
+ });
 });
 
-/* CONVERSATION FLOW */
+function processText(text){
+ text=text.trim();
+ if(!text)return;
 
-function processText(rawText){
-  const text=rawText.trim();
-  if(!text)return;
+ addMessage(text,"user");
+ textInput.value="";
 
-  addMessage(text,"user");
-  const lang=detectLanguage(text);
-  lastLanguage=lang;
+ if(step==="place"){
+  place=text;
+  step="purpose";
+  botReply("What is your purpose for visiting "+place+"?");
+  return;
+ }
 
-  if(step==="service"){
-    const services=[
-      "Hospital","Bank","Government Office",
-      "Bus","Railway","Electricity",
-      "Municipal","Other Services"
-    ];
+ if(step==="purpose"){
+  purpose=text;
+  step="confirm";
 
-    const found=services.find(s=>text.toLowerCase().includes(s.toLowerCase()));
+  const confirmation=
+   "Please confirm your details:\n"+
+   "Service: "+service+"\n"+
+   "Place: "+place+"\n"+
+   "Purpose: "+purpose+"\n\n"+
+   "Should I generate your queue token? Please say yes or no.";
 
-    if(found){
-      selectedService=found;
-      step="place";
+  botReply(confirmation);
+  return;
+ }
 
-      if(lang==="te"){
-        reply("మీరు "+found+" సేవను ఎంచుకున్నారు. దయచేసి ప్రదేశం లేదా సంస్థ పేరు చెప్పండి.","te");
-      }else{
-        reply("You selected "+found+". Please tell me the place or service provider name.","en");
-      }
-      return;
-    }
+ if(step==="confirm"){
+  const answer=text.toLowerCase();
 
-    if(lang==="te"){
-      reply("దయచేసి ముందుగా సేవను ఎంచుకోండి. ఆసుపత్రి, బ్యాంకు, ప్రభుత్వ కార్యాలయం, బస్, రైల్వే, విద్యుత్ లేదా ఇతర సేవలు.","te");
-    }else{
-      reply("Please select a service first: Hospital, Bank, Government Office, Bus, Railway, Electricity, Municipal or Other Services.","en");
-    }
-    return;
+  if(
+   answer.includes("yes")||
+   answer.includes("yeah")||
+   answer.includes("correct")||
+   answer.includes("అవును")||
+   answer.includes("సరే")||
+   answer.includes("కరెక్ట్")
+  ){
+   generateToken();
+   return;
   }
 
-  if(step==="place"){
-    place=text;
-    step="purpose";
-
-    if(lang==="te"){
-      reply("సరే. "+place+". మీరు ఏ పని కోసం టోకెన్ తీసుకోవాలనుకుంటున్నారు?","te");
-    }else{
-      reply("Okay. "+place+". What is the purpose of your visit?","en");
-    }
-    return;
+  if(
+   answer.includes("no")||
+   answer.includes("wrong")||
+   answer.includes("కాదు")
+  ){
+   step="place";
+   place="";
+   purpose="";
+   botReply("Okay. Please tell me the place name again.");
+   return;
   }
 
-  if(step==="purpose"){
-    purpose=text;
-    step="confirm";
+  botReply("Please say yes to confirm or no to change the details.");
+  return;
+ }
 
-    const englishConfirmation=
-      "Please confirm your details:\n\n"+
-      "Service: "+selectedService+"\n"+
-      "Place: "+place+"\n"+
-      "Purpose: "+purpose+"\n\n"+
-      "Should I generate your queue token? Please say Yes or No.";
-
-    const teluguConfirmation=
-      "మీ వివరాలను నిర్ధారించండి.\n\n"+
-      "సేవ: "+selectedService+"\n"+
-      "ప్రదేశం: "+place+"\n"+
-      "పని: "+purpose+"\n\n"+
-      "మీ టోకెన్ జనరేట్ చేయనా? అవును లేదా కాదు అని చెప్పండి.";
-
-    reply(lang==="te"?teluguConfirmation:englishConfirmation,lang);
-    return;
-  }
-
-  if(step==="confirm"){
-    const lower=text.toLowerCase();
-
-    const isYes=containsTelugu(text)?
-      /(అవును|సరే|చేయండి|కావాలి)/.test(text):
-      /\b(yes|yeah|yep|confirm|okay|ok|generate|sure)\b/.test(lower);
-
-    const isNo=containsTelugu(text)?
-      /(కాదు|వద్దు|ఆపండి)/.test(text):
-      /\b(no|nope|cancel|stop)\b/.test(lower);
-
-    if(isYes){
-      generateToken(lang);
-      return;
-    }
-
-    if(isNo){
-      step="purpose";
-      reply(lang==="te"?"సరే. దయచేసి మీ పనిని మళ్లీ వివరించండి.":"Okay. Please tell me your purpose again.",lang);
-      return;
-    }
-
-    reply(lang==="te"?"దయచేసి అవును లేదా కాదు అని చెప్పండి.":"Please say Yes or No to confirm.",lang);
-  }
+ if(step==="service"){
+  botReply("Please select a service first.");
+ }
 }
 
-/* TOKEN */
+function generateToken(){
+ const prefix={
+  "Hospital":"HO",
+  "Bank":"BK",
+  "Government Office":"GO",
+  "Bus":"BU",
+  "Railway":"RA",
+  "Electricity":"EL",
+  "Municipal":"MU",
+  "Other Services":"OS"
+ }[service]||"QM";
 
-function escapeHTML(text){
-  return text.replace(/[&<>"']/g,function(m){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];
-  });
+ const number=Math.floor(100+Math.random()*900);
+ const token=prefix+"-"+number;
+ const wait=Math.floor(5+Math.random()*35);
+
+ currentToken={
+  token:token,
+  service:service,
+  place:place,
+  purpose:purpose,
+  wait:wait
+ };
+
+ document.getElementById("tokenNumber").textContent=token;
+ document.getElementById("tokenService").textContent=service;
+ document.getElementById("tokenPlace").textContent=place;
+ document.getElementById("tokenPurpose").textContent=purpose;
+ document.getElementById("tokenWait").textContent=wait;
+
+ tokenCard.classList.remove("hidden");
+ step="done";
+
+ botReply("Your queue token is "+token+". Your estimated waiting time is "+wait+" minutes. Your token has been generated successfully.");
+ statusBox.textContent="Token generated successfully.";
 }
-
-function generateToken(lang){
-  step="done";
-
-  const number=Math.floor(Math.random()*900)+100;
-  const wait=Math.floor(Math.random()*25)+5;
-
-  document.getElementById("tokenNumber").textContent=
-    selectedService.substring(0,2).toUpperCase()+"-"+number;
-
-  document.getElementById("tokenDetails").innerHTML=
-    "<p><strong>Service:</strong> "+escapeHTML(selectedService)+"</p>"+
-    "<p><strong>Place:</strong> "+escapeHTML(place)+"</p>"+
-    "<p><strong>Purpose:</strong> "+escapeHTML(purpose)+"</p>";
-
-  document.getElementById("waitText").textContent=
-    lang==="te"?"అంచనా వేచి ఉండే సమయం: "+wait+" నిమిషాలు":"Estimated waiting time: "+wait+" minutes";
-
-  tokenBox.style.display="block";
-
-  if(lang==="te"){
-    reply("మీ టోకెన్ విజయవంతంగా జనరేట్ అయింది. మీ టోకెన్ నంబర్ "+number+". అంచనా వేచి ఉండే సమయం "+wait+" నిమిషాలు. ధన్యవాదాలు.","te");
-  }else{
-    reply("Your token has been generated successfully. Your token number is "+number+". Estimated waiting time is "+wait+" minutes. Thank you.","en");
-  }
-}
-
-/* TEXT INPUT */
 
 sendBtn.addEventListener("click",()=>{
-  const text=textInput.value.trim();
-  if(!text)return;
-  textInput.value="";
-  processText(text);
+ processText(textInput.value);
 });
 
 textInput.addEventListener("keydown",e=>{
-  if(e.key==="Enter")sendBtn.click();
+ if(e.key==="Enter")processText(textInput.value);
 });
-
-/* SPEECH RECOGNITION */
-
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-
-function startRecognition(lang){
-  if(!SpeechRecognition){
-    statusBox.textContent="Speech recognition is not supported. Please use Chrome.";
-    return;
-  }
-
-  recognition=new SpeechRecognition();
-  recognition.lang=lang;
-  recognition.interimResults=false;
-  recognition.maxAlternatives=3;
-
-  recognition.onstart=()=>{
-    listening=true;
-    micBtn.textContent="⏹ Stop";
-    statusBox.textContent=lang==="te-IN"?"Listening in Telugu mode...":"Listening in English mode...";
-  };
-
-  recognition.onresult=event=>{
-    let transcript=event.results[0][0].transcript.trim();
-
-    if(transcript){
-      statusBox.textContent="Recognized: "+transcript;
-      processText(transcript);
-    }
-  };
-
-  recognition.onerror=event=>{
-    listening=false;
-    micBtn.textContent="🎤 Speak";
-
-    if(event.error==="not-allowed"){
-      statusBox.textContent="Please allow microphone access.";
-    }else if(event.error==="no-speech"){
-      statusBox.textContent="No speech detected. Try again.";
-    }else{
-      statusBox.textContent="Recognition error: "+event.error;
-    }
-  };
-
-  recognition.onend=()=>{
-    listening=false;
-    micBtn.textContent="🎤 Speak";
-    if(statusBox.textContent.includes("Listening"))statusBox.textContent="Ready";
-  };
-
-  try{
-    recognition.start();
-  }catch(e){
-    statusBox.textContent="Unable to start microphone. Please try again.";
-  }
-}
 
 micBtn.addEventListener("click",()=>{
-  if(listening){
-    try{recognition.stop();}catch(e){}
-    listening=false;
-    micBtn.textContent="🎤 Speak";
-    statusBox.textContent="Stopped";
-    return;
-  }
+ const SpeechRecognition=
+  window.SpeechRecognition||window.webkitSpeechRecognition;
 
-  micMode++;
-  const language=micMode%2===1?"te-IN":"en-IN";
-  startRecognition(language);
+ if(!SpeechRecognition){
+  statusBox.textContent="Speech recognition is not supported in this browser. Please type your message.";
+  return;
+ }
+
+ recognition=new SpeechRecognition();
+
+ // Telugu speech recognition. English text input remains available.
+ recognition.lang="te-IN";
+ recognition.continuous=false;
+ recognition.interimResults=false;
+
+ recognition.onstart=()=>{
+  statusBox.textContent="Listening... మాట్లాడండి";
+  micBtn.textContent="🔴 Listening";
+ };
+
+ recognition.onresult=e=>{
+  const transcript=e.results[0][0].transcript;
+  statusBox.textContent="Recognized: "+transcript;
+  processText(transcript);
+ };
+
+ recognition.onerror=e=>{
+  statusBox.textContent="Voice recognition error: "+e.error+". Please try again or type.";
+ };
+
+ recognition.onend=()=>{
+  micBtn.textContent="🎤 Speak";
+ };
+
+ try{
+  recognition.start();
+ }catch(e){
+  statusBox.textContent="Microphone is busy. Please try again.";
+ }
 });
-
-/* RESET */
 
 resetBtn.addEventListener("click",()=>{
-  stopSpeech();
-
-  if(recognition){
-    try{recognition.stop();}catch(e){}
-  }
-
-  selectedService="";
-  place="";
-  purpose="";
-  step="service";
-  lastLanguage="en";
-  listening=false;
-  micMode=0;
-
-  chat.innerHTML=
-    '<div class="message bot">Hello! Welcome to QueueMitra. Select your service or tell me what service you need. You can speak in Telugu or English.</div>';
-
-  tokenBox.style.display="none";
-  textInput.value="";
-  statusBox.textContent="Ready";
-
-  document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
+ service="";
+ place="";
+ purpose="";
+ step="service";
+ currentToken=null;
+ chat.innerHTML="";
+ tokenCard.classList.add("hidden");
+ textInput.value="";
+ statusBox.textContent="Select a service to begin.";
+ document.querySelectorAll(".service").forEach(b=>b.classList.remove("selected"));
+ if(recognition){
+  try{recognition.stop()}catch(e){}
+ }
 });
 
-/* INITIALIZE VOICE LIST */
-if(window.speechSynthesis){
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
-}
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+ if(!currentToken)return;
+
+ const data=
+  "QUEUEMITRA - QUEUE TOKEN\n"+
+  "========================\n"+
+  "Token: "+currentToken.token+"\n"+
+  "Service: "+currentToken.service+"\n"+
+  "Place: "+currentToken.place+"\n"+
+  "Purpose: "+currentToken.purpose+"\n"+
+  "Estimated waiting time: "+currentToken.wait+" minutes\n"+
+  "\nQueue position and waiting time are simulated for this demo.";
+
+ const blob=new Blob([data],{type:"text/plain"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download=currentToken.token+"-QueueMitra-Token.txt";
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ URL.revokeObjectURL(url);
+ statusBox.textContent="Token downloaded.";
+});
+
+botReply("Welcome to QueueMitra. Please select a service to begin.");
 </script>
 </body>
 </html>
