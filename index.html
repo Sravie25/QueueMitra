@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +13,8 @@ body{margin:0;font-family:Arial,sans-serif;background:#eef3f9;color:#172033}
 .header{text-align:center;margin-bottom:18px}
 .logo{font-size:34px;font-weight:800;color:#2563eb}
 .subtitle{color:#64748b;margin-top:5px}
-.chat{height:65vh;min-height:400px;max-height:650px;overflow-y:auto;background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:15px}
-.msg{padding:13px 16px;border-radius:17px;margin:10px 0;max-width:90%;line-height:1.6;white-space:pre-wrap}
+.chat{min-height:350px;max-height:550px;overflow-y:auto;background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:15px}
+.msg{padding:13px 16px;border-radius:17px;margin:10px 0;max-width:95%;line-height:1.6;white-space:pre-wrap}
 .bot{background:#e3edff;color:#173b82}
 .user{background:#2563eb;color:white;margin-left:auto}
 .service-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 18px}
@@ -29,7 +30,7 @@ button{border:0;border-radius:14px;padding:14px 18px;cursor:pointer;font-size:16
 .choice{display:flex;gap:10px;margin:10px 0}
 .choice button{flex:1}
 .hidden{display:none!important}
-.lang-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.lang-grid{display:grid;gap:12px}
 .lang-button{padding:18px;background:#eff6ff;color:#1e40af;border:2px solid #dbeafe;font-size:20px}
 .token-card{background:white;border:2px solid #dbeafe;border-radius:20px;padding:25px;text-align:center;margin-top:20px}
 .token-number{font-size:65px;color:#2563eb;font-weight:800;margin:15px}
@@ -39,7 +40,7 @@ button{border:0;border-radius:14px;padding:14px 18px;cursor:pointer;font-size:16
 @media(max-width:550px){
 .container{padding:6px;margin:6px}
 .card{padding:14px}
-.chat{height:60vh;padding:10px}
+.chat{padding:10px}
 .service-card{padding:14px 8px;min-height:100px}
 .service-icon{font-size:32px}
 .service-name{font-size:15px}
@@ -91,8 +92,17 @@ const data={
 en:{
 welcome:"Welcome to QueueMitra! Please tap the service you need.",
 services:["Hospital","Bank","Government Office","Bus","Railway","Electricity","Municipal Office","Other"],
+placeQuestions:[
+"Which hospital do you want to visit?",
+"Which bank do you want to visit?",
+"Which government office do you want to visit?",
+"Which bus station or destination do you need?",
+"Which railway station do you want to visit?",
+"Which electricity office do you want to visit?",
+"Which municipal office do you want to visit?",
+"Which service or place do you need?"
+],
 name:"What is your name?",
-place:"Which hospital, office, station or place are you visiting?",
 purpose:"What is the purpose of your visit?",
 confirm:"Please confirm your details.",
 yes:"Confirm",
@@ -106,14 +116,22 @@ confirmation:"Please check your details:\nName: {name}\nService: {service}\nLoca
 thanks:"Thank you for using QueueMitra.",
 again:"Let's start again.",
 error:"Please try again.",
-serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"],
-download:"Download Token"
+serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"]
 },
 te:{
 welcome:"QueueMitraకి స్వాగతం! మీకు కావలసిన సేవను ఎంచుకోండి.",
 services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","బస్సు","రైల్వే","విద్యుత్","మున్సిపల్ కార్యాలయం","ఇతర"],
+placeQuestions:[
+"మీరు ఏ ఆసుపత్రికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ బ్యాంకుకు వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ బస్ స్టేషన్‌కు లేదా ఏ ప్రాంతానికి వెళ్లాలి?",
+"మీరు ఏ రైల్వే స్టేషన్‌కు వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ విద్యుత్ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ మున్సిపల్ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ సేవ లేదా ప్రదేశం కోసం వచ్చారు?"
+],
 name:"మీ పేరు చెప్పండి.",
-place:"మీరు ఏ ఆసుపత్రి, కార్యాలయం లేదా ప్రదేశానికి వెళ్తున్నారు?",
 purpose:"మీరు ఏ పని కోసం వచ్చారు?",
 confirm:"మీ వివరాలను నిర్ధారించండి.",
 yes:"నిర్ధారించండి",
@@ -127,14 +145,22 @@ confirmation:"మీ వివరాలను పరిశీలించండ�
 thanks:"QueueMitra ఉపయోగించినందుకు ధన్యవాదాలు.",
 again:"మళ్లీ ప్రారంభిద్దాం.",
 error:"దయచేసి మళ్లీ ప్రయత్నించండి.",
-serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"],
-download:"టోకెన్ డౌన్‌లోడ్"
+serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"]
 },
 hi:{
 welcome:"QueueMitra में आपका स्वागत है! कृपया अपनी सेवा चुनें।",
 services:["अस्पताल","बैंक","सरकारी कार्यालय","बस","रेलवे","बिजली","नगरपालिका कार्यालय","अन्य"],
+placeQuestions:[
+"आप किस अस्पताल में जाना चाहते हैं?",
+"आप किस बैंक में जाना चाहते हैं?",
+"आप किस सरकारी कार्यालय में जाना चाहते हैं?",
+"आप किस बस स्टेशन या स्थान पर जाना चाहते हैं?",
+"आप किस रेलवे स्टेशन पर जाना चाहते हैं?",
+"आप किस बिजली कार्यालय में जाना चाहते हैं?",
+"आप किस नगरपालिका कार्यालय में जाना चाहते हैं?",
+"आप किस सेवा या स्थान के लिए आए हैं?"
+],
 name:"कृपया अपना नाम बताएं।",
-place:"आप किस अस्पताल, कार्यालय या स्थान पर जा रहे हैं?",
 purpose:"आप किस काम के लिए आए हैं?",
 confirm:"कृपया अपने विवरण की पुष्टि करें।",
 yes:"पुष्टि करें",
@@ -145,15 +171,14 @@ ahead:"आपसे पहले {n} लोग हैं।",
 wait:"आपका अनुमानित प्रतीक्षा समय {n} मिनट है।",
 nameLabel:"नाम",tokenLabel:"टोकन नंबर",serviceLabel:"सेवा",placeLabel:"स्थान",purposeLabel:"कार्य",
 confirmation:"कृपया विवरण जांचें:\nनाम: {name}\nसेवा: {service}\nस्थान: {place}\nकार्य: {purpose}",
-thanks:"QueueMitra का उपयोग करने के लिए धन्यवाद।",
-again:"फिर से शुरू करते हैं।",
-error:"कृपया फिर से प्रयास करें।",
-serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"],
-download:"टोकन डाउनलोड करें"
+thanks:"QueueMitra का उपयोग करने के लिए धन्यवाद.",
+again:"फिर से शुरू करते हैं.",
+error:"कृपया फिर से प्रयास करें.",
+serviceIcons:["🏥","🏦","🏛️","🚌","🚆","⚡","🏙️","📋"]
 }
 };
 
-let lang="en",step="",name="",service="",place="",purpose="",token="",ahead=0,wait=0;
+let lang="en",step="",name="",service="",place="",purpose="",token="",ahead=0,wait=0,serviceIndex=-1;
 const locale={en:"en-IN",te:"te-IN",hi:"hi-IN"};
 
 function startApp(l){
@@ -187,6 +212,7 @@ function showServices(){
 const chat=document.getElementById("chat");
 const grid=document.createElement("div");
 grid.className="service-grid";
+grid.id="serviceGrid";
 
 data[lang].services.forEach((s,i)=>{
 const b=document.createElement("button");
@@ -201,7 +227,12 @@ chat.scrollTop=chat.scrollHeight;
 }
 
 function selectService(i){
+serviceIndex=i;
 service=data[lang].services[i];
+
+const grid=document.getElementById("serviceGrid");
+if(grid)grid.remove();
+
 addUser(data[lang].serviceIcons[i]+" "+service);
 step="name";
 addBot(data[lang].name,true);
@@ -226,7 +257,7 @@ addUser(text);
 if(step==="name"){
 name=text;
 step="place";
-addBot(data[lang].place,true);
+addBot(data[lang].placeQuestions[serviceIndex],true);
 }
 else if(step==="place"){
 place=text;
@@ -251,7 +282,6 @@ step="service";
 addBot(data[lang].again,true);
 showServices();
 }
-else addBot(data[lang].confirm,true);
 }
 }
 
@@ -269,7 +299,6 @@ generateToken();
 };
 
 const no=document.createElement("button");
-no.className="secondary";
 no.textContent=data[lang].no;
 no.onclick=()=>{
 addUser(data[lang].no);
@@ -312,7 +341,7 @@ console.log("Speech service unavailable");
 function startListening(){
 const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!Recognition){
-addBot("Speech recognition is unavailable. Please type.");
+addBot(data[lang].error);
 return;
 }
 const r=new Recognition();
@@ -331,7 +360,7 @@ function generateToken(){
 step="done";
 addBot(data[lang].generating,true);
 
-// DEMO VALUES: simulated queue values, not real queue data.
+// Demo-only simulated queue values.
 ahead=Math.floor(Math.random()*15)+1;
 wait=ahead*2;
 token=Math.floor(Math.random()*900)+100;
@@ -425,6 +454,7 @@ ctx.closePath();
 
 function restart(){
 lang="en";step="";name=service=place=purpose=token="";
+serviceIndex=-1;
 document.getElementById("languageArea").classList.remove("hidden");
 document.getElementById("chatArea").classList.add("hidden");
 document.getElementById("tokenArea").classList.add("hidden");
