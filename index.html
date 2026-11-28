@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +30,7 @@ main{max-width:1050px;margin:28px auto;padding:0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
 .service{background:white;border:1px solid #e2e8f0;border-radius:20px;overflow:hidden;cursor:pointer;transition:.2s}
 .service:hover{transform:translateY(-3px);border-color:#93b4ff;box-shadow:0 8px 20px #2563eb12}
-.service img{width:100%;height:160px;object-fit:cover;background:linear-gradient(120deg,#dbeafe,#eaf2ff)}
+.service img{width:100%;height:160px;object-fit:cover}
 .inside{padding:18px}
 .inside h3{margin:0 0 8px}
 .inside p{margin:0;color:#64748b;font-size:14px}
@@ -64,20 +65,12 @@ input{width:100%;padding:13px;border:1px solid #d6e0ed;border-radius:12px;font-s
 .tokenrow{display:flex;justify-content:space-between;gap:12px;text-align:left;padding:13px 0;border-bottom:1px solid #e2e8f0}
 .tokenrow span{color:#64748b}
 footer{text-align:center;color:#94a3b8;padding:25px}
-#ttsWarn{display:none;background:#fff7e6;border:1px solid #ffd591;color:#874d00;border-radius:14px;padding:12px 16px;margin-bottom:16px;line-height:1.5;font-size:14px}
 @media(max-width:750px){
 .voicepanel{grid-template-columns:1fr}
 .visual img{height:200px}
 .content{padding:22px}
 header{padding:17px}
 }
-.lang-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;outline:none}
-.lang-card .inside{width:100%;padding:28px}
-.lang-card h3{font-size:25px;margin-bottom:10px}
-.lang-card:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
-.hero{box-shadow:0 10px 30px #17365d08}
-.service{box-shadow:0 8px 24px #17365d08}
-@media(max-width:520px){.hero h2{font-size:23px}.grid{grid-template-columns:1fr}.lang-card{min-height:120px}}
 </style>
 </head>
 <body>
@@ -87,11 +80,10 @@ header{padding:17px}
 <div class="logo">Q</div>
 <div><h1>QueueMitra</h1><small>Voice First Queue Assistant</small></div>
 </div>
-<button id="restartBtn" onclick="restart()" data-k="restartBtn" style="display:none;background:#ffffff22;color:white">↻ Restart</button>
+<button id="restartBtn" onclick="restart()" style="display:none;background:#ffffff22;color:white">↻ Restart</button>
 </header>
 
 <main>
-<div id="ttsWarn" role="status"></div>
 
 <section class="page active" id="languagePage">
 <div class="hero">
@@ -99,54 +91,54 @@ header{padding:17px}
 <p>Choose your preferred language to talk to QueueMitra.</p>
 </div>
 <div class="grid">
-<div class="service lang-card" role="button" tabindex="0" onclick="setLang('en')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('en')}"><div class="inside"><h3>🇬🇧 English</h3><p>Continue in English</p><div class="arrow">Start →</div></div></div>
-<div class="service lang-card" role="button" tabindex="0" onclick="setLang('te')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('te')}"><div class="inside"><h3>🇮🇳 తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p><div class="arrow">ప్రారంభించండి →</div></div></div>
-<div class="service lang-card" role="button" tabindex="0" onclick="setLang('hi')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('hi')}"><div class="inside"><h3>🇮🇳 हिन्दी</h3><p>हिंदी में जारी रखें</p><div class="arrow">शुरू करें →</div></div></div>
+<div class="service" onclick="setLang('en')"><div class="inside"><h3>English</h3><p>Continue in English</p></div></div>
+<div class="service" onclick="setLang('te')"><div class="inside"><h3>తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p></div></div>
+<div class="service" onclick="setLang('hi')"><div class="inside"><h3>हिन्दी</h3><p>हिंदी में जारी रखें</p></div></div>
 </div>
 </section>
 
 <section class="page" id="servicePage">
 <div class="hero">
 <div class="steps">
-<div class="step active"><span class="dot">1</span><span data-k="s1">Service</span></div>
-<div class="step"><span class="dot">2</span><span data-k="s2">Details</span></div>
-<div class="step"><span class="dot">3</span><span data-k="s3">Confirm</span></div>
-<div class="step"><span class="dot">4</span><span data-k="s4">Token</span></div>
+<div class="step active"><span class="dot">1</span>Service</div>
+<div class="step"><span class="dot">2</span>Details</div>
+<div class="step"><span class="dot">3</span>Confirm</div>
+<div class="step"><span class="dot">4</span>Token</div>
 </div>
 <h2 id="serviceHeading"></h2>
 <p id="serviceSub"></p>
 </div>
 <div class="grid" id="services"></div>
-<div class="actions"><button class="secondary" onclick="go('languagePage')" data-k="back">← Back</button></div>
+<div class="actions"><button class="secondary" onclick="go('languagePage')">← Back</button></div>
 </section>
 
 <section class="page" id="detailsPage">
 <div class="hero">
 <div class="steps">
-<div class="step done"><span class="dot">✓</span><span data-k="s1">Service</span></div>
-<div class="step active"><span class="dot">2</span><span data-k="s2">Details</span></div>
-<div class="step"><span class="dot">3</span><span data-k="s3">Confirm</span></div>
-<div class="step"><span class="dot">4</span><span data-k="s4">Token</span></div>
+<div class="step done"><span class="dot">✓</span>Service</div>
+<div class="step active"><span class="dot">2</span>Details</div>
+<div class="step"><span class="dot">3</span>Confirm</div>
+<div class="step"><span class="dot">4</span>Token</div>
 </div>
 </div>
 
 <div class="voicepanel">
-<div class="visual"><img id="serviceImage" alt="" onerror="this.style.visibility='hidden'"></div>
+<div class="visual"><img id="serviceImage" alt="Selected service"></div>
 <div class="content">
 <h2 id="detailTitle"></h2>
 <p id="detailSub" style="color:#64748b"></p>
 <div class="mic" id="mic">🎙️</div>
 <div class="status" id="status">Ready</div>
 <div class="question" id="question"></div>
-<div class="transcript" id="transcript"></div>
+<div class="transcript" id="transcript">Your spoken answer will appear here.</div>
 <div class="field">
-<label for="manualInput" data-k="typeLabel">Optional: type your answer</label>
-<input id="manualInput" data-ph="typePh" onkeydown="if(event.key==='Enter')manualNext()">
+<label>Optional: type your answer</label>
+<input id="manualInput" placeholder="Type here if voice is unavailable">
 </div>
 <div class="actions">
-<button class="voicebtn" onclick="retry()" data-k="speakAgain">🎤 Speak again</button>
-<button class="secondary" onclick="manualNext()" data-k="submitTyped">Submit typed answer</button>
-<button class="secondary" onclick="go('servicePage');stopAll();session++" data-k="back">← Back</button>
+<button class="voicebtn" onclick="retry()" id="retryBtn">🎤 Speak again</button>
+<button class="secondary" onclick="manualNext()">Submit typed answer</button>
+<button class="secondary" onclick="go('servicePage')">← Back</button>
 </div>
 </div>
 </div>
@@ -155,10 +147,10 @@ header{padding:17px}
 <section class="page" id="confirmPage">
 <div class="hero">
 <div class="steps">
-<div class="step done"><span class="dot">✓</span><span data-k="s1">Service</span></div>
-<div class="step done"><span class="dot">✓</span><span data-k="s2">Details</span></div>
-<div class="step active"><span class="dot">3</span><span data-k="s3">Confirm</span></div>
-<div class="step"><span class="dot">4</span><span data-k="s4">Token</span></div>
+<div class="step done"><span class="dot">✓</span>Service</div>
+<div class="step done"><span class="dot">✓</span>Details</div>
+<div class="step active"><span class="dot">3</span>Confirm</div>
+<div class="step"><span class="dot">4</span>Token</div>
 </div>
 <h2 id="confirmHeading"></h2>
 <p id="confirmSub"></p>
@@ -172,7 +164,7 @@ header{padding:17px}
 <div class="actions">
 <button class="primary" onclick="confirmYes()" id="yesBtn">Yes</button>
 <button class="secondary" onclick="confirmNo()" id="noBtn">Change</button>
-<button class="voicebtn" onclick="retryConfirm()" data-k="speakBtn">🎤 Speak</button>
+<button class="voicebtn" onclick="retryConfirm()" id="confirmRetry">🎤 Speak</button>
 </div>
 </div>
 </section>
@@ -180,10 +172,10 @@ header{padding:17px}
 <section class="page" id="tokenPage">
 <div class="hero">
 <div class="steps">
-<div class="step done"><span class="dot">✓</span><span data-k="s1">Service</span></div>
-<div class="step done"><span class="dot">✓</span><span data-k="s2">Details</span></div>
-<div class="step done"><span class="dot">✓</span><span data-k="s3">Confirm</span></div>
-<div class="step active"><span class="dot">4</span><span data-k="s4">Token</span></div>
+<div class="step done"><span class="dot">✓</span>Service</div>
+<div class="step done"><span class="dot">✓</span>Details</div>
+<div class="step done"><span class="dot">✓</span>Confirm</div>
+<div class="step active"><span class="dot">4</span>Token</div>
 </div>
 <h2 id="tokenHeading"></h2>
 <p id="tokenSub"></p>
@@ -195,35 +187,31 @@ header{padding:17px}
 <div id="tokenService"></div>
 </div>
 <div class="tokenbody">
-<div data-k="tokenLabel">VISITOR TOKEN</div>
+<div>VISITOR TOKEN</div>
 <div class="tokenno" id="tokenNumber"></div>
-<div class="tokenrow"><span data-k="visitor">Visitor</span><strong id="tokenVisitor"></strong></div>
-<div class="tokenrow"><span data-k="place">Place</span><strong id="tokenPlace"></strong></div>
-<div class="tokenrow"><span data-k="purpose">Purpose</span><strong id="tokenPurpose"></strong></div>
-<div class="tokenrow"><span data-k="date">Date</span><strong id="tokenDate"></strong></div>
-<p style="color:#64748b;font-size:13px" data-k="demo">Demo token • Not a real reservation</p>
+<div class="tokenrow"><span>Visitor</span><strong id="tokenVisitor"></strong></div>
+<div class="tokenrow"><span>Place</span><strong id="tokenPlace"></strong></div>
+<div class="tokenrow"><span>Purpose</span><strong id="tokenPurpose"></strong></div>
+<div class="tokenrow"><span>Date</span><strong id="tokenDate"></strong></div>
+<p style="color:#64748b;font-size:13px">Demo token • Not a real reservation</p>
 </div>
 </div>
 
 <div class="panel" style="margin-top:20px">
 <div class="info" id="waitInfo"></div>
 <div class="actions">
-<button class="primary" onclick="downloadToken()" data-k="download">⬇ Download Token</button>
-<button class="voicebtn" onclick="speak(waitText,session)" data-k="listenBtn">🔊 Listen</button>
-<button class="secondary" onclick="restart()" data-k="newBooking">Start New Booking</button>
+<button class="primary" onclick="downloadToken()">⬇ Download Token</button>
+<button class="voicebtn" onclick="speak(waitText,session)">🔊 Listen</button>
+<button class="secondary" onclick="restart()">Start New Booking</button>
 </div>
 </div>
 </section>
+
 </main>
 <footer>QueueMitra • Accessible voice-first queue assistance</footer>
 
 <script>
-/* ===== CONFIG =====
-   Paste the EXACT URL from Cloudflare dashboard (Workers → your worker → Settings → Domains & Routes).
-   Format: https://<worker-name>.<account-subdomain>.workers.dev
-   If Telugu voice still fails, the yellow warning bar on the page shows the exact reason. */
-const WORKER_URL="https://queuemitra-voice.plain-art-16cd.workers.dev";
-const TTS_TIMEOUT_MS=12000;
+const WORKER_URL="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
 
 const T={
 en:{
@@ -232,25 +220,16 @@ desc:["Hospital queue booking","Bank service booking","Government service bookin
 places:["Which hospital do you want to visit?","Which bank do you want to visit?","Which government office do you want to visit?","Which restaurant do you want to visit?","Which service or place do you need?"],
 qs:["Please tell me your name.","PLACE","Please tell me the purpose of your visit."],
 confirm:"I heard these details. Are they correct?",
+yes:"Yes, confirm.",no:"No, change details.",
 start:"Choose a service to continue.",
 listen:"Listening now. Please speak.",
 speaking:"Speaking the question...",
-token:"Your token is ready!",
+retry:"Speak again",token:"Your token is ready!",
 wait:"Demo queue information: {a} people ahead. Estimated waiting time: about {m} minutes. This is simulated, not real queue information.",
 name:"Name",place:"Place",purpose:"Purpose",
 err:"Voice recognition unavailable. You can type your answer.",
 serviceTitle:"Choose your service",confirmTitle:"Confirm your details",
-yesLabel:"Yes",noLabel:"Change details",
-s1:"Service",s2:"Details",s3:"Confirm",s4:"Token",
-select:"Select →",back:"← Back",restartBtn:"↻ Restart",
-speakAgain:"🎤 Speak again",submitTyped:"Submit typed answer",speakBtn:"🎤 Speak",
-typeLabel:"Optional: type your answer",typePh:"Type here if voice is unavailable",
-transcriptPh:"Your spoken answer will appear here.",
-noSpeech:"No speech detected. Please try again.",allowMic:"Please allow microphone access.",
-sayYesNo:"Please say yes or no.",enterAnswer:"Please enter an answer.",
-keep:"Keep your token for reference.",tokenLabel:"VISITOR TOKEN",visitor:"Visitor",date:"Date",
-demo:"Demo token • Not a real reservation",download:"⬇ Download Token",listenBtn:"🔊 Listen",newBooking:"Start New Booking",
-ready:"Ready",ttsWarn:"Telugu voice server did not respond ({e}). Using the device voice instead, which may be silent."
+yesLabel:"Yes",noLabel:"Change details"
 },
 te:{
 services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","రెస్టారెంట్","ఇతర"],
@@ -258,25 +237,16 @@ desc:["ఆసుపత్రి క్యూ","బ్యాంక్ సేవ",
 places:["మీరు ఏ ఆసుపత్రికి వెళ్లాలి?","మీరు ఏ బ్యాంకుకు వెళ్లాలి?","ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలి?","ఏ రెస్టారెంట్‌కు వెళ్లాలి?","ఏ సేవ లేదా ప్రదేశం కావాలి?"],
 qs:["దయచేసి మీ పేరు చెప్పండి.","PLACE","మీరు వెళ్లడానికి కారణం చెప్పండి."],
 confirm:"మీ వివరాలు ఇవే. అవి సరైనవేనా?",
+yes:"అవును, నిర్ధారించండి.",no:"లేదు, మార్చండి.",
 start:"సేవను ఎంచుకోండి.",
 listen:"వింటున్నాను... మాట్లాడండి.",
 speaking:"ప్రశ్న చెబుతున్నాను...",
-token:"మీ టోకెన్ సిద్ధంగా ఉంది!",
+retry:"మళ్లీ మాట్లాడండి",token:"మీ టోకెన్ సిద్ధంగా ఉంది!",
 wait:"డెమో సమాచారం: మీ ముందు {a} మంది ఉన్నారు. అంచనా సమయం {m} నిమిషాలు. ఇది నిజమైన క్యూ సమాచారం కాదు.",
 name:"పేరు",place:"ప్రదేశం",purpose:"కారణం",
 err:"వాయిస్ అందుబాటులో లేదు. దయచేసి టైప్ చేయండి.",
 serviceTitle:"సేవను ఎంచుకోండి",confirmTitle:"మీ వివరాలను నిర్ధారించండి",
-yesLabel:"అవును",noLabel:"వివరాలు మార్చండి",
-s1:"సేవ",s2:"వివరాలు",s3:"నిర్ధారణ",s4:"టోకెన్",
-select:"ఎంచుకోండి →",back:"← వెనుకకు",restartBtn:"↻ మళ్లీ మొదలు",
-speakAgain:"🎤 మళ్లీ మాట్లాడండి",submitTyped:"టైప్ చేసిన సమాధానం పంపండి",speakBtn:"🎤 మాట్లాడండి",
-typeLabel:"ఐచ్ఛికం: మీ సమాధానం టైప్ చేయండి",typePh:"వాయిస్ పనిచేయకపోతే ఇక్కడ టైప్ చేయండి",
-transcriptPh:"మీ సమాధానం ఇక్కడ కనిపిస్తుంది.",
-noSpeech:"మాట వినిపించలేదు. మళ్లీ ప్రయత్నించండి.",allowMic:"దయచేసి మైక్రోఫోన్ అనుమతించండి.",
-sayYesNo:"దయచేసి అవును లేదా కాదు అని చెప్పండి.",enterAnswer:"దయచేసి సమాధానం నమోదు చేయండి.",
-keep:"సూచన కోసం మీ టోకెన్ ఉంచుకోండి.",tokenLabel:"సందర్శకుడి టోకెన్",visitor:"సందర్శకుడు",date:"తేదీ",
-demo:"డెమో టోకెన్ • నిజమైన రిజర్వేషన్ కాదు",download:"⬇ టోకెన్ డౌన్‌లోడ్",listenBtn:"🔊 వినండి",newBooking:"కొత్త బుకింగ్",
-ready:"సిద్ధం",ttsWarn:"తెలుగు వాయిస్ సర్వర్ స్పందించలేదు ({e}). పరికరం వాయిస్ వాడుతున్నాము, అది వినిపించకపోవచ్చు."
+yesLabel:"అవును",noLabel:"వివరాలు మార్చండి"
 },
 hi:{
 services:["अस्पताल","बैंक","सरकारी कार्यालय","रेस्तरां","अन्य"],
@@ -284,29 +254,19 @@ desc:["अस्पताल कतार","बैंक सेवा","सर�
 places:["आप किस अस्पताल में जाना चाहते हैं?","आप किस बैंक में जाना चाहते हैं?","आप किस सरकारी कार्यालय में जाना चाहते हैं?","आप किस रेस्तरां में जाना चाहते हैं?","आपको कौन सी सेवा या जगह चाहिए?"],
 qs:["कृपया अपना नाम बताएं।","PLACE","कृपया आने का कारण बताएं।"],
 confirm:"क्या मैंने सही विवरण सुने हैं?",
+yes:"हाँ, पुष्टि करें।",no:"नहीं, बदलें।",
 start:"सेवा चुनें।",
 listen:"सुन रहा हूँ... बोलिए।",
 speaking:"प्रश्न बोल रहा हूँ...",
-token:"आपका टोकन तैयार है!",
+retry:"फिर बोलें",token:"आपका टोकन तैयार है!",
 wait:"डेमो जानकारी: आपके आगे {a} लोग हैं। अनुमानित समय {m} मिनट है। यह वास्तविक कतार नहीं है।",
 name:"नाम",place:"स्थान",purpose:"कारण",
-err:"वॉयस उपलब्ध नहीं है। कृपया टाइप करें।",
+err:"वॉयस उपलब्ध नहीं है। कृपया टाइप करें.",
 serviceTitle:"सेवा चुनें",confirmTitle:"अपने विवरण की पुष्टि करें",
-yesLabel:"हाँ",noLabel:"विवरण बदलें",
-s1:"सेवा",s2:"विवरण",s3:"पुष्टि",s4:"टोकन",
-select:"चुनें →",back:"← वापस",restartBtn:"↻ फिर से शुरू",
-speakAgain:"🎤 फिर बोलें",submitTyped:"टाइप किया उत्तर भेजें",speakBtn:"🎤 बोलें",
-typeLabel:"वैकल्पिक: अपना उत्तर टाइप करें",typePh:"वॉयस काम न करे तो यहाँ टाइप करें",
-transcriptPh:"आपका बोला हुआ उत्तर यहाँ दिखेगा।",
-noSpeech:"आवाज़ नहीं सुनाई दी। कृपया फिर कोशिश करें।",allowMic:"कृपया माइक्रोफ़ोन की अनुमति दें।",
-sayYesNo:"कृपया हाँ या नहीं कहें।",enterAnswer:"कृपया उत्तर दर्ज करें।",
-keep:"संदर्भ के लिए अपना टोकन रखें।",tokenLabel:"आगंतुक टोकन",visitor:"आगंतुक",date:"तारीख",
-demo:"डेमो टोकन • वास्तविक आरक्षण नहीं",download:"⬇ टोकन डाउनलोड",listenBtn:"🔊 सुनें",newBooking:"नई बुकिंग",
-ready:"तैयार",ttsWarn:"वॉयस सर्वर जवाब नहीं दे रहा ({e})।"
+yesLabel:"हाँ",noLabel:"विवरण बदलें"
 }
 };
 
-const LC={en:"en-IN",te:"te-IN",hi:"hi-IN"};
 const imgs=[
 "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=80",
 "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=900&q=80",
@@ -315,175 +275,130 @@ const imgs=[
 "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"
 ];
 
-let lang="en",service=0,answers=[],idx=0,name="",place="",purpose="",token="",ahead=0,minutes=0,waitText="",recognition=null,session=0,turn=0,currentAudio=null;
-const $=id=>document.getElementById(id);
-
-function applyStatic(){
-const t=T[lang];
-document.documentElement.lang=lang;
-document.querySelectorAll("[data-k]").forEach(e=>{if(t[e.dataset.k]!==undefined)e.textContent=t[e.dataset.k]});
-document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t[e.dataset.ph]);
-$("transcript").textContent=t.transcriptPh;
-}
-
-function warn(msg){
-const w=$("ttsWarn");
-w.textContent=msg||"";
-w.style.display=msg?"block":"none";
-}
+let lang="en",service=0,answers=[],idx=0,name="",place="",purpose="",token="",ahead=0,minutes=0,waitText="",recognition=null,session=0,currentAudio=null;
 
 function go(id){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-$(id).classList.add("active");
-$("restartBtn").style.display=id==="languagePage"?"none":"inline-block";
+document.getElementById(id).classList.add("active");
+document.getElementById("restartBtn").style.display=id==="languagePage"?"none":"inline-block";
 window.scrollTo(0,0);
 }
 
-/* Unlock audio playback on the first tap (needed on Safari / iOS / some Android browsers) */
-function unlockAudio(){
-try{
-const a=new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=");
-a.play().catch(()=>{});
-}catch(e){}
-try{
-if(window.speechSynthesis){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u);}
-}catch(e){}
-}
-
 function setLang(l){
-if(!T[l])return;
-unlockAudio();
-stopAll();session++;turn++;
 lang=l;
-warn("");
-applyStatic();
-$("status").textContent=T[lang].ready;
 renderServices();
 go("servicePage");
 }
 
 function renderServices(){
-const t=T[lang];
-$("serviceHeading").textContent=t.serviceTitle;
-$("serviceSub").textContent=t.start;
-$("services").innerHTML=t.services.map((s,i)=>`
-<div class="service" role="button" tabindex="0" onclick="choose(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();choose(${i})}">
-<img src="${imgs[i]}" alt="" onerror="this.style.visibility='hidden'">
+document.getElementById("serviceHeading").textContent=T[lang].serviceTitle;
+document.getElementById("serviceSub").textContent=T[lang].start;
+document.getElementById("services").innerHTML=T[lang].services.map((s,i)=>`
+<div class="service" onclick="choose(${i})">
+<img src="${imgs[i]}" alt="">
 <div class="inside">
 <h3>${["🏥","🏦","🏛️","🍽️","📋"][i]} ${s}</h3>
-<p>${t.desc[i]}</p>
-<div class="arrow">${t.select}</div>
+<p>${T[lang].desc[i]}</p>
+<div class="arrow">Select →</div>
 </div>
 </div>`).join("");
 }
 
 function choose(i){
-unlockAudio();
 stopAll();
-session++;turn++;
+session++;
 service=i;
 answers=[];
 idx=0;
-$("serviceImage").style.visibility="visible";
-$("serviceImage").src=imgs[i];
-$("detailTitle").textContent=T[lang].services[i];
-$("detailSub").textContent=T[lang].places[i];
+document.getElementById("serviceImage").src=imgs[i];
+document.getElementById("detailTitle").textContent=T[lang].services[i];
+document.getElementById("detailSub").textContent=T[lang].places[i];
 go("detailsPage");
-const s=session;
-setTimeout(()=>ask(s),400);
+setTimeout(()=>ask(session),400);
 }
 
 function ask(s){
 if(s!==session)return;
 if(idx>=3){showConfirm();return}
 const q=idx===1?T[lang].places[service]:T[lang].qs[idx];
-const tn=++turn;
-$("question").textContent=q;
-$("transcript").textContent="";
-$("manualInput").value="";
-$("status").textContent=T[lang].speaking;
-$("mic").className="mic speaking";
+document.getElementById("question").textContent=q;
+document.getElementById("transcript").textContent="";
+document.getElementById("manualInput").value="";
+document.getElementById("status").textContent=T[lang].speaking;
+document.getElementById("mic").className="mic speaking";
 speak(q,s).then(()=>{
-if(s!==session||tn!==turn)return;
-$("mic").className="mic";
+if(s!==session)return;
+document.getElementById("mic").className="mic";
 startListening(s);
 });
 }
 
 function startListening(s){
 if(s!==session)return;
-stopRec();
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!SR){
-$("status").textContent=T[lang].err;
+document.getElementById("status").textContent=T[lang].err;
 return;
 }
 try{
-const rec=new SR();
-recognition=rec;
-rec.lang=LC[lang];
-rec.interimResults=true;
-rec.continuous=false;
-rec.maxAlternatives=1;
+recognition=new SR();
+recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";
+recognition.interimResults=true;
+recognition.continuous=false;
+recognition.maxAlternatives=1;
 let finalText="";
-rec.onstart=()=>{
+let failed=false;
+recognition.onstart=()=>{
 if(s!==session)return;
-$("mic").className="mic listening";
-$("status").textContent=T[lang].listen;
+document.getElementById("mic").className="mic listening";
+document.getElementById("status").textContent=T[lang].listen;
 };
-rec.onresult=e=>{
-const r=e.results[e.results.length-1];
-const text=r[0].transcript;
-$("transcript").textContent=text;
+recognition.onresult=e=>{
+if(s!==session)return;
+for(let i=e.resultIndex;i<e.results.length;i++){
+const r=e.results[i];
 if(r.isFinal){
-finalText=text;
-$("manualInput").value=text;
+finalText=r[0].transcript.trim();
+document.getElementById("transcript").textContent=finalText;
+document.getElementById("manualInput").value=finalText;
+}
 }
 };
-rec.onerror=e=>{
-if(s!==session||recognition!==rec)return;
-$("mic").className="mic";
-if(e.error==="no-speech"||e.error==="aborted")return;
-$("status").textContent=e.error==="not-allowed"?T[lang].allowMic:T[lang].err;
-rec._failed=true;
+recognition.onerror=e=>{
+if(s!==session)return;
+failed=true;
+document.getElementById("mic").className="mic";
+document.getElementById("status").textContent=(e.error==="not-allowed"||e.error==="service-not-allowed")?"Microphone permission denied. Allow microphone access or type your answer.":"Voice not detected. Tap Speak again or type your answer.";
 };
-rec.onend=()=>{
-if(s!==session||recognition!==rec)return;
-recognition=null;
-$("mic").className="mic";
-if(finalText.trim()){
-$("status").textContent="✓";
-setTimeout(()=>advance(finalText,s),500);
-}else if(!rec._failed){
-$("status").textContent=T[lang].noSpeech;
-setTimeout(()=>{if(s===session&&!recognition)startListening(s)},1300);
+recognition.onend=()=>{
+if(s!==session)return;
+document.getElementById("mic").className="mic";
+if(finalText&&!failed){
+document.getElementById("status").textContent="✓";
+setTimeout(()=>{if(s===session)advance(finalText,s);},400);
+}else if(!failed){
+document.getElementById("status").textContent="No speech detected. Tap Speak again or type your answer.";
 }
 };
-rec.start();
+recognition.start();
 }catch(e){
-$("status").textContent=T[lang].err;
+document.getElementById("mic").className="mic";
+document.getElementById("status").textContent=T[lang].err;
 }
 }
 
 function retry(){
-const s=session;
-stopAll();
-const tn=++turn;
-const q=$("question").textContent;
-$("status").textContent=T[lang].speaking;
-$("mic").className="mic speaking";
-speak(q,s).then(()=>{
-if(s!==session||tn!==turn)return;
-$("mic").className="mic";
-startListening(s);
-});
+let s=session;
+stopRec();
+const q=document.getElementById("question").textContent;
+document.getElementById("status").textContent=T[lang].speaking;
+document.getElementById("mic").className="mic speaking";
+speak(q,s).then(()=>{if(s===session)startListening(s)});
 }
 
 function manualNext(){
-const v=$("manualInput").value.trim();
-if(!v){alert(T[lang].enterAnswer);return}
-stopAll();
-turn++;
+let v=document.getElementById("manualInput").value.trim();
+if(!v){alert("Please enter an answer.");return}
 advance(v,session);
 }
 
@@ -499,90 +414,60 @@ name=answers[0]||"";
 place=answers[1]||"";
 purpose=answers[2]||"";
 const t=T[lang];
-$("confirmHeading").textContent=t.confirmTitle;
-$("confirmSub").textContent=t.confirm;
-$("review").innerHTML=`
+document.getElementById("confirmHeading").textContent=t.confirmTitle;
+document.getElementById("confirmSub").textContent=t.confirm;
+document.getElementById("review").innerHTML=`
 <div><strong>${t.services[service]}</strong></div>
 <div><strong>${t.name}:</strong> ${esc(name)}</div>
 <div><strong>${t.place}:</strong> ${esc(place)}</div>
 <div><strong>${t.purpose}:</strong> ${esc(purpose)}</div>`;
-$("confirmQuestion").textContent=t.confirm;
-$("confirmTranscript").textContent="";
-$("confirmStatus").textContent=t.speaking;
-$("confirmMic").className="mic speaking";
-$("yesBtn").textContent=t.yesLabel;
-$("noBtn").textContent=t.noLabel;
+document.getElementById("confirmQuestion").textContent=t.confirm;
+document.getElementById("confirmTranscript").textContent="";
+document.getElementById("confirmStatus").textContent=t.speaking;
+document.getElementById("yesBtn").textContent=t.yesLabel;
+document.getElementById("noBtn").textContent=t.noLabel;
 go("confirmPage");
-const s=session,tn=++turn;
-speak(t.confirm,s).then(()=>{
-if(s===session&&tn===turn){$("confirmMic").className="mic";listenConfirm(s)}
-});
+let s=session;
+speak(t.confirm,s).then(()=>{if(s===session)listenConfirm(s)});
 }
-
-/* "no" is checked first and Latin words use \b so "incorrect"/"know"/"now" don't mis-trigger */
-const NO_RE=/\b(no|nope|not|change|wrong|incorrect)\b|లేదు|వద్దు|కాదు|नहीं|नही|बदल|गलत/;
-const YES_RE=/\b(yes|yeah|yep|confirm|correct|right|ok|okay)\b|అవును|సరే|సరైన|हाँ|हां|सही|ठीक/;
 
 function listenConfirm(s){
 if(s!==session)return;
-stopRec();
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!SR){
-$("confirmStatus").textContent=T[lang].err;
+document.getElementById("confirmStatus").textContent=T[lang].err;
 return;
 }
 try{
-const rec=new SR();
-recognition=rec;
-rec.lang=LC[lang];
-rec.interimResults=false;
-let got=false;
-rec.onstart=()=>{
-if(s!==session)return;
-$("confirmMic").className="mic listening";
-$("confirmStatus").textContent=T[lang].listen;
+recognition=new SR();
+recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";
+recognition.interimResults=false;
+recognition.onstart=()=>{
+document.getElementById("confirmMic").className="mic listening";
+document.getElementById("confirmStatus").textContent=T[lang].listen;
 };
-rec.onresult=e=>{
-if(s!==session||recognition!==rec)return;
-got=true;
-const v=e.results[0][0].transcript.toLowerCase();
-$("confirmTranscript").textContent=v;
-if(NO_RE.test(v))confirmNo();
-else if(YES_RE.test(v))confirmYes();
+recognition.onresult=e=>{
+let v=e.results[0][0].transcript.toLowerCase();
+document.getElementById("confirmTranscript").textContent=v;
+if(/yes|confirm|correct|అవును|సరే|हाँ|हां|सही/.test(v))confirmYes();
+else if(/no|change|wrong|లేదు|వద్దు|नहीं|बदल/.test(v))confirmNo();
 else{
-$("confirmStatus").textContent=T[lang].sayYesNo;
-setTimeout(()=>{if(s===session)listenConfirm(s)},900);
+document.getElementById("confirmStatus").textContent="Please say yes or no.";
+setTimeout(()=>listenConfirm(s),900);
 }
 };
-rec.onerror=e=>{
-if(s!==session||recognition!==rec)return;
-$("confirmMic").className="mic";
-if(e.error==="no-speech"||e.error==="aborted")return;
-rec._failed=true;
-$("confirmStatus").textContent=e.error==="not-allowed"?T[lang].allowMic:T[lang].err;
-};
-rec.onend=()=>{
-if(s!==session||recognition!==rec)return;
-$("confirmMic").className="mic";
-if(!got&&!rec._failed){
-$("confirmStatus").textContent=T[lang].noSpeech;
-setTimeout(()=>{if(s===session&&$("confirmPage").classList.contains("active"))listenConfirm(s)},1300);
-}
-};
-rec.start();
+recognition.onerror=()=>document.getElementById("confirmStatus").textContent=T[lang].err;
+recognition.onend=()=>document.getElementById("confirmMic").className="mic";
+recognition.start();
 }catch(e){
-$("confirmStatus").textContent=T[lang].err;
+document.getElementById("confirmStatus").textContent=T[lang].err;
 }
 }
 
 function retryConfirm(){
-const s=session;
-stopAll();
-const tn=++turn;
-$("confirmMic").className="mic speaking";
-speak(T[lang].confirm,s).then(()=>{
-if(s===session&&tn===turn){$("confirmMic").className="mic";listenConfirm(s)}
-});
+let s=session;
+stopRec();
+speak(T[lang].confirm,s).then(()=>{if(s===session)listenConfirm(s)});
 }
 
 function confirmYes(){
@@ -590,8 +475,8 @@ createToken();
 }
 
 function confirmNo(){
+session++;
 stopAll();
-session++;turn++;
 idx=0;
 answers=[];
 go("detailsPage");
@@ -600,50 +485,45 @@ ask(session);
 
 function createToken(){
 stopAll();
-turn++;
 token="QM-"+Math.floor(1000+Math.random()*9000);
 ahead=Math.floor(Math.random()*8)+1;
 minutes=ahead*5;
 const t=T[lang];
-$("tokenHeading").textContent=t.token;
-$("tokenSub").textContent=t.keep;
-$("tokenService").textContent=t.services[service];
-$("tokenNumber").textContent=token;
-$("tokenVisitor").textContent=name;
-$("tokenPlace").textContent=place;
-$("tokenPurpose").textContent=purpose;
-$("tokenDate").textContent=new Date().toLocaleDateString();
+document.getElementById("tokenHeading").textContent=t.token;
+document.getElementById("tokenSub").textContent="Keep your token for reference.";
+document.getElementById("tokenService").textContent=t.services[service];
+document.getElementById("tokenNumber").textContent=token;
+document.getElementById("tokenVisitor").textContent=name;
+document.getElementById("tokenPlace").textContent=place;
+document.getElementById("tokenPurpose").textContent=purpose;
+document.getElementById("tokenDate").textContent=new Date().toLocaleDateString();
 waitText=t.wait.replace("{a}",ahead).replace("{m}",minutes);
-$("waitInfo").textContent=waitText;
+document.getElementById("waitInfo").textContent=waitText;
 go("tokenPage");
 speak(t.token+" "+waitText,session);
 }
 
 function stopRec(){
-if(recognition){
-const r=recognition;
+try{recognition&&recognition.abort()}catch(e){}
 recognition=null;
-r.onstart=r.onresult=r.onerror=r.onend=null;
-try{r.abort()}catch(e){}
-}
 }
 
 function stopAll(){
 stopRec();
 try{speechSynthesis.cancel()}catch(e){}
 if(currentAudio){
-try{currentAudio.pause();currentAudio.currentTime=0}catch(e){}
+currentAudio.pause();
+currentAudio.currentTime=0;
 currentAudio=null;
 }
 }
 
 function restart(){
-session++;turn++;
+session++;
 stopAll();
 answers=[];
 idx=0;
 name=place=purpose="";
-warn("");
 go("languagePage");
 }
 
@@ -651,75 +531,64 @@ function esc(s){
 return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 }
 
-/* ===== Speech output =====
-   Telugu: Vakyam TTS via Cloudflare Worker (falls back to device voice and shows a warning with the reason).
-   English / Hindi: browser speech. */
-function browserSpeak(text,done){
-try{
-if(!window.speechSynthesis){done();return}
-speechSynthesis.cancel();
-const u=new SpeechSynthesisUtterance(text);
-u.lang=LC[lang];
-u.rate=.88;
-u.onend=done;u.onerror=done;
-speechSynthesis.speak(u);
-setTimeout(done,18000);
-}catch(e){done()}
-}
-
+/* Robust voice playback: Telugu via Worker, with browser fallback.
+   This function always resolves so the question flow cannot get stuck. */
 function speak(text,s){
-return new Promise(async resolve=>{
-let settled=false,fell=false;
-const done=()=>{if(!settled){settled=true;resolve()}};
-if(s!==session){done();return}
-if(lang!=="te"){browserSpeak(text,done);return}
-
-const fallback=reason=>{
-if(fell||settled)return;
-fell=true;
-console.warn("Telugu TTS fallback:",reason);
-if(s!==session){done();return}
-warn(T.te.ttsWarn.replace("{e}",reason)+"  [DEBUG: "+reason+"]");
-browserSpeak(text,done);
-};
-
-try{
-if(currentAudio){currentAudio.pause();currentAudio=null}
-const ctrl=new AbortController();
-const timer=setTimeout(()=>ctrl.abort(),TTS_TIMEOUT_MS);
-let response;
-try{
-response=await fetch(WORKER_URL,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:text,language:"te"}),
-signal:ctrl.signal
-});
-}finally{clearTimeout(timer)}
-if(!response.ok)throw new Error("Worker HTTP "+response.status);
-const data=await response.json();
-if(s!==session){done();return}
-let audioValue=data.audio;
-if(audioValue&&typeof audioValue==="object")audioValue=audioValue.audio||audioValue.data||audioValue.base64;
-if(!audioValue)throw new Error(data.error||"No audio returned");
-const src=/^(https?:|data:|blob:)/i.test(audioValue)?audioValue:"data:audio/mpeg;base64,"+audioValue;
-const au=new Audio(src);
-currentAudio=au;
-au.onended=()=>{if(currentAudio===au)currentAudio=null;done()};
-au.onerror=()=>{if(currentAudio===au)currentAudio=null;fallback("audio could not be decoded")};
-await au.play();
-warn("");
-}catch(err){
-const msg=err&&err.name==="AbortError"?"timeout":(err&&err.message)||"unknown error";
-fallback(msg);
+ return new Promise(async resolve=>{
+  if(s!==session){resolve();return;}
+  let finished=false;
+  const done=()=>{if(!finished){finished=true;resolve();}};
+  const browserFallback=()=>{
+   if(s!==session){done();return;}
+   try{
+    if(!window.speechSynthesis){done();return;}
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==='te'?'te-IN':lang==='hi'?'hi-IN':'en-IN';
+    u.rate=.88;
+    u.onend=done;
+    u.onerror=done;
+    speechSynthesis.speak(u);
+    // Don't block the workflow indefinitely if the speech engine hangs.
+    setTimeout(done,18000);
+   }catch(e){done();}
+  };
+  if(lang==='te'){
+   try{
+    if(currentAudio){currentAudio.pause();currentAudio=null;}
+    const response=await fetch(WORKER_URL,{
+     method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({text:text,language:'te'})
+    });
+    if(!response.ok)throw new Error('TTS service returned HTTP '+response.status);
+    const data=await response.json();
+    if(s!==session){done();return;}
+    let audioValue=data.audio;
+    if(typeof audioValue==='object'&&audioValue!==null){
+     audioValue=audioValue.audio||audioValue.data||audioValue.base64;
+    }
+    if(!audioValue)throw new Error(data.error||'No audio data returned by Worker');
+    // Support either a Base64 audio string or an already formed audio URL/data URI.
+    const audioSrc=(typeof audioValue==='string'&&(/^(https?:|data:|blob:)/i).test(audioValue))
+      ?audioValue:'data:audio/'+(data.format||'mp3')+';base64,'+audioValue;
+    currentAudio=new Audio(audioSrc);
+    currentAudio.onended=()=>{currentAudio=null;done();};
+    currentAudio.onerror=()=>{currentAudio=null;browserFallback();};
+    await currentAudio.play();
+    return;
+   }catch(error){
+    if(s!==session){done();return;}
+    const status=document.getElementById('status');
+    if(status)status.textContent='Telugu voice service unavailable. Trying device voice…';
+    browserFallback();
+    return;
+   }
+  }
+  browserFallback();
+ });
 }
-});
-}
 
-/* ===== Token download ===== */
 function downloadToken(){
-const t=T[lang];
-const FONT="'Noto Sans Telugu','Noto Sans Devanagari',Arial,sans-serif";
 const c=document.createElement("canvas");
 c.width=800;
 c.height=1000;
@@ -733,40 +602,40 @@ x.fillStyle="#2563eb";
 x.fillRect(20,20,760,170);
 x.fillStyle="#fff";
 x.textAlign="center";
-x.font="bold 50px "+FONT;
+x.font="bold 50px Arial";
 x.fillText("QueueMitra",400,95);
-x.font="26px "+FONT;
-x.fillText(t.services[service],400,145);
+x.font="26px Arial";
+x.fillText(T[lang].services[service],400,145);
 x.fillStyle="#17243a";
-x.font="30px "+FONT;
-x.fillText(t.tokenLabel,400,270);
+x.font="30px Arial";
+x.fillText("VISITOR TOKEN",400,270);
 x.fillStyle="#2563eb";
-x.font="bold 90px "+FONT;
+x.font="bold 90px Arial";
 x.fillText(token,400,390);
 x.fillStyle="#17243a";
 x.textAlign="left";
-x.font="30px "+FONT;
-wrap(x,t.visitor+": "+name,100,480,600,36);
-wrap(x,t.place+": "+place,100,570,600,36);
-x.fillText(t.purpose+":",100,660);
-wrap(x,purpose,100,705,600,36);
-x.font="28px "+FONT;
-x.fillText(t.date+": "+new Date().toLocaleDateString(),100,880);
+x.font="30px Arial";
+x.fillText("Visitor: "+name,100,500);
+x.fillText("Place: "+place,100,590);
+x.fillText("Purpose:",100,680);
+wrap(x,purpose,100,725,600,36);
+x.font="28px Arial";
+x.fillText("Date: "+new Date().toLocaleDateString(),100,870);
 x.textAlign="center";
-x.font="22px "+FONT;
+x.font="22px Arial";
 x.fillStyle="#64748b";
-x.fillText(t.demo,400,940);
-const a=document.createElement("a");
+x.fillText("Demo token • Not a real reservation",400,940);
+let a=document.createElement("a");
 a.download="QueueMitra-"+token+".png";
 a.href=c.toDataURL();
 a.click();
 }
 
 function wrap(ctx,text,x,y,w,h){
-const words=String(text).split(" ");
+let words=String(text).split(" ");
 let line="";
 for(let i=0;i<words.length;i++){
-const test=line+words[i]+" ";
+let test=line+words[i]+" ";
 if(ctx.measureText(test).width>w&&i>0){
 ctx.fillText(line,x,y);
 line=words[i]+" ";
@@ -774,10 +643,7 @@ y+=h;
 }else line=test;
 }
 ctx.fillText(line,x,y);
-return y;
 }
-
-applyStatic();
 </script>
 </body>
 </html>
