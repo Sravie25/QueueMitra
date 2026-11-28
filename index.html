@@ -70,6 +70,13 @@ footer{text-align:center;color:#94a3b8;padding:25px}
 .content{padding:22px}
 header{padding:17px}
 }
+.lang-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;outline:none}
+.lang-card .inside{width:100%;padding:28px}
+.lang-card h3{font-size:25px;margin-bottom:10px}
+.lang-card:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+.hero{box-shadow:0 10px 30px #17365d08}
+.service{box-shadow:0 8px 24px #17365d08}
+@media(max-width:520px){.hero h2{font-size:23px}.grid{grid-template-columns:1fr}.lang-card{min-height:120px}}
 </style>
 </head>
 <body>
@@ -90,9 +97,9 @@ header{padding:17px}
 <p>Choose your preferred language to talk to QueueMitra.</p>
 </div>
 <div class="grid">
-<div class="service" onclick="setLang('en')"><div class="inside"><h3>English</h3><p>Continue in English</p></div></div>
-<div class="service" onclick="setLang('te')"><div class="inside"><h3>తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p></div></div>
-<div class="service" onclick="setLang('hi')"><div class="inside"><h3>हिन्दी</h3><p>हिंदी में जारी रखें</p></div></div>
+<div class="service lang-card" role="button" tabindex="0" onclick="setLang('en')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('en')}"><div class="inside"><h3>🇬🇧 English</h3><p>Continue in English</p><div class="arrow">Start →</div></div></div>
+<div class="service lang-card" role="button" tabindex="0" onclick="setLang('te')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('te')}"><div class="inside"><h3>🇮🇳 తెలుగు</h3><p>తెలుగులో కొనసాగించండి</p><div class="arrow">ప్రారంభించండి →</div></div></div>
+<div class="service lang-card" role="button" tabindex="0" onclick="setLang('hi')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();setLang('hi')}"><div class="inside"><h3>🇮🇳 हिन्दी</h3><p>हिंदी में जारी रखें</p><div class="arrow">शुरू करें →</div></div></div>
 </div>
 </section>
 
@@ -205,36 +212,35 @@ header{padding:17px}
 </div>
 </div>
 </section>
-
 </main>
 <footer>QueueMitra • Accessible voice-first queue assistance</footer>
-
 <script>
-const WORKER_URL="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
+const WORKER_URL="https://plain-art-16cdqueuemitra-voice.workers.dev";
+
 const T={
 en:{
 services:["Hospital","Bank","Government Office","Restaurants","Other"],
 desc:["Hospital queue booking","Bank service booking","Government service booking","Restaurant waiting queue","Other service"],
 places:["Which hospital do you want to visit?","Which bank do you want to visit?","Which government office do you want to visit?","Which restaurant do you want to visit?","Which service or place do you need?"],
-qs:["Please tell me your name.","PLACE","Please tell me the reason for your visit."],
-confirm:"Are these details correct?",
-yes:"Yes, confirm.",no:"No, change.",
-start:"Please select a service.",
-listen:"Listening... Please speak.",
+qs:["Please tell me your name.","PLACE","Please tell me the purpose of your visit."],
+confirm:"I heard these details. Are they correct?",
+yes:"Yes, confirm.",no:"No, change details.",
+start:"Choose a service to continue.",
+listen:"Listening now. Please speak.",
 speaking:"Speaking the question...",
 retry:"Speak again",token:"Your token is ready!",
-wait:"Demo information: {a} people are ahead of you. Estimated wait is {m} minutes. This is not real queue information.",
+wait:"Demo queue information: {a} people ahead. Estimated waiting time: about {m} minutes. This is simulated, not real queue information.",
 name:"Name",place:"Place",purpose:"Purpose",
-err:"Voice is unavailable. Please type your answer.",
-serviceTitle:"Choose a service",confirmTitle:"Confirm your details",
+err:"Voice recognition unavailable. You can type your answer.",
+serviceTitle:"Choose your service",confirmTitle:"Confirm your details",
 yesLabel:"Yes",noLabel:"Change details"
 },
 te:{
 services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","రెస్టారెంట్","ఇతర"],
-desc:["ఆసుపత్రి క్యూ బుకింగ్","బ్యాంక్ సేవ","ప్రభుత్వ సేవ","రెస్టారెంట్ క్యూ","ఇతర సేవ"],
-places:["మీరు ఏ ఆసుపత్రికి వెళ్లాలనుకుంటున్నారు?","మీరు ఏ బ్యాంకుకు వెళ్లాలనుకుంటున్నారు?","మీరు ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?","మీరు ఏ రెస్టారెంట్‌కు వెళ్లాలనుకుంటున్నారు?","మీకు ఏ సేవ లేదా ప్రదేశం కావాలి?"],
-qs:["దయచేసి మీ పేరు చెప్పండి.","PLACE","దయచేసి రావడానికి కారణం చెప్పండి."],
-confirm:"నేను విన్న వివరాలు సరైనవేనా?",
+desc:["ఆసుపత్రి క్యూ","బ్యాంక్ సేవ","ప్రభుత్వ సేవ","రెస్టారెంట్ క్యూ","ఇతర సేవ"],
+places:["మీరు ఏ ఆసుపత్రికి వెళ్లాలి?","మీరు ఏ బ్యాంకుకు వెళ్లాలి?","ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలి?","ఏ రెస్టారెంట్‌కు వెళ్లాలి?","ఏ సేవ లేదా ప్రదేశం కావాలి?"],
+qs:["దయచేసి మీ పేరు చెప్పండి.","PLACE","మీరు వెళ్లడానికి కారణం చెప్పండి."],
+confirm:"మీ వివరాలు ఇవే. అవి సరైనవేనా?",
 yes:"అవును, నిర్ధారించండి.",no:"లేదు, మార్చండి.",
 start:"సేవను ఎంచుకోండి.",
 listen:"వింటున్నాను... మాట్లాడండి.",
@@ -283,6 +289,8 @@ window.scrollTo(0,0);
 }
 
 function setLang(l){
+if(!T[l])return;
+stopAll();session++;
 lang=l;
 renderServices();
 go("servicePage");
@@ -424,7 +432,6 @@ go("confirmPage");
 let s=session;
 speak(t.confirm,s).then(()=>{if(s===session)listenConfirm(s)});
 }
-
 function listenConfirm(s){
 if(s!==session)return;
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -457,6 +464,7 @@ recognition.start();
 document.getElementById("confirmStatus").textContent=T[lang].err;
 }
 }
+
 function retryConfirm(){
 let s=session;
 stopRec();
@@ -524,72 +532,61 @@ function esc(s){
 return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 }
 
+/* Telugu uses Vakyam TTS through the Cloudflare Worker.
+   English and Hindi use browser speech. Telugu falls back to browser speech if needed. */
 function speak(text,s){
-return new Promise(async resolve=>{
-if(s!==session){resolve();return;}
-let settled=false;
-const done=()=>{if(!settled){settled=true;resolve();}};
-const fallback=()=>{
-if(s!==session){done();return;}
-try{
-if(!window.speechSynthesis){done();return;}
-speechSynthesis.cancel();
-const u=new SpeechSynthesisUtterance(text);
-u.lang=lang==='te'?'te-IN':lang==='hi'?'hi-IN':'en-IN';
-u.rate=.88;
-u.onend=done;
-u.onerror=done;
-speechSynthesis.speak(u);
-setTimeout(done,18000);
-}catch(e){done();}
-};
-
-if(lang==='te'){
-try{
-if(currentAudio){
-currentAudio.pause();
-currentAudio.currentTime=0;
-currentAudio=null;
-}
-const response=await fetch(WORKER_URL,{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({text:text,language:'te'})
-});
-if(!response.ok)throw new Error('Worker HTTP '+response.status);
-const data=await response.json();
-if(s!==session){done();return;}
-let audioValue=data.audio;
-if(audioValue&&typeof audioValue==='object')
-audioValue=audioValue.audio||audioValue.data||audioValue.base64;
-if(!audioValue)throw new Error(data.error||'No audio returned');
-let audioSrc;
-if(typeof audioValue==='string'&&/^(https?:|data:|blob:)/i.test(audioValue))
-audioSrc=audioValue;
-else
-audioSrc='data:audio/mpeg;base64,'+audioValue;
-currentAudio=new Audio(audioSrc);
-currentAudio.onended=()=>{currentAudio=null;done();};
-currentAudio.onerror=()=>{currentAudio=null;fallback();};
-await currentAudio.play();
-return;
-}catch(error){
-console.warn('Telugu TTS fallback:',error);
-fallback();
-return;
-}
-}
-
-if(!('speechSynthesis' in window)){done();return;}
-speechSynthesis.cancel();
-const u=new SpeechSynthesisUtterance(text);
-u.lang=lang==='hi'?'hi-IN':'en-IN';
-u.rate=.88;
-u.onend=done;
-u.onerror=done;
-speechSynthesis.speak(u);
-setTimeout(done,18000);
-});
+ return new Promise(async resolve=>{
+  if(s!==session){resolve();return;}
+  let settled=false;
+  const done=()=>{if(!settled){settled=true;resolve();}};
+  const fallback=()=>{
+   if(s!==session){done();return;}
+   try{
+    if(!window.speechSynthesis){done();return;}
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==='te'?'te-IN':lang==='hi'?'hi-IN':'en-IN';
+    u.rate=.88;
+    u.onend=done;u.onerror=done;
+    speechSynthesis.speak(u);
+    setTimeout(done,18000);
+   }catch(e){done();}
+  };
+  if(lang==='te'){
+   try{
+    if(currentAudio){currentAudio.pause();currentAudio.currentTime=0;currentAudio=null;}
+    const response=await fetch(WORKER_URL,{
+     method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({text:text,language:'te'})
+    });
+    if(!response.ok)throw new Error('Worker HTTP '+response.status);
+    const data=await response.json();
+    if(s!==session){done();return;}
+    let audioValue=data.audio;
+    if(audioValue&&typeof audioValue==='object')audioValue=audioValue.audio||audioValue.data||audioValue.base64;
+    if(!audioValue)throw new Error(data.error||'No audio returned');
+    let audioSrc;
+    if(typeof audioValue==='string'&&/^(https?:|data:|blob:)/i.test(audioValue))audioSrc=audioValue;
+    else audioSrc='data:audio/mpeg;base64,'+audioValue;
+    currentAudio=new Audio(audioSrc);
+    currentAudio.onended=()=>{currentAudio=null;done();};
+    currentAudio.onerror=()=>{currentAudio=null;fallback();};
+    await currentAudio.play();
+    return;
+   }catch(error){
+    console.warn('Telugu TTS fallback:',error);
+    fallback();
+    return;
+   }
+  }
+  if(!('speechSynthesis' in window)){done();return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang==='hi'?'hi-IN':'en-IN';u.rate=.88;
+  u.onend=done;u.onerror=done;
+  speechSynthesis.speak(u);
+  setTimeout(done,18000);
+ });
 }
 
 function downloadToken(){
