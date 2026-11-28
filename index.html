@@ -4,771 +4,509 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QueueMitra - Voice Queue Assistant</title>
-
+<title>QueueMitra</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f5fb;
-  color: #172033;
-}
-
-header {
-  background: linear-gradient(135deg, #155eef, #6842ef);
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-header h1 { margin: 0; font-size: 28px; }
-header p { margin: 8px 0 0; }
-
-.container {
-  max-width: 760px;
-  margin: 20px auto;
-  padding: 15px;
-}
-
-.panel {
-  background: white;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-}
-
-.language-grid {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 12px;
-}
-
-.lang-btn {
-  border: 2px solid #e5e9f2;
-  background: white;
-  border-radius: 15px;
-  padding: 20px 10px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.lang-btn:hover {
-  border-color: #155eef;
-  background: #f3f7ff;
-}
-
-.chat {
-  height: 480px;
-  overflow-y: auto;
-  padding: 12px;
-  background: #f8faff;
-  border-radius: 14px;
-  margin-bottom: 15px;
-}
-
-.message {
-  margin: 12px 0;
-  padding: 14px;
-  border-radius: 14px;
-  max-width: 90%;
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-
-.bot {
-  background: #e9efff;
-  margin-right: auto;
-}
-
-.user {
-  background: #d8f8e6;
-  margin-left: auto;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.service-card {
-  background: white;
-  border: 2px solid #dce5f5;
-  border-radius: 16px;
-  padding: 18px 10px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  min-height: 100px;
-}
-
-.service-card:hover {
-  border-color: #155eef;
-  background: #f0f5ff;
-}
-
-.service-card span {
-  display: block;
-  font-size: 35px;
-  margin-bottom: 10px;
-}
-
-.controls {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-input {
-  flex: 1;
-  min-width: 180px;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid #ccd5e5;
-  font-size: 16px;
-}
-
-button {
-  cursor: pointer;
-}
-
-.action {
-  background: #155eef;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 13px 18px;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.action:hover { background: #0848c7; }
-
-.secondary {
-  background: #64748b;
-}
-
-.secondary:hover { background: #475569; }
-
-.voice {
-  background: #16a34a;
-}
-
-.voice:hover { background: #15803d; }
-
-.hidden { display: none !important; }
-
-.token {
-  border: 2px dashed #155eef;
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: center;
-  background: #f8faff;
-}
-
-.token h2 { color: #155eef; }
-
-.token-number {
-  font-size: 40px;
-  font-weight: bold;
-  color: #155eef;
-  margin: 15px 0;
-  word-break: break-word;
-}
-
-.note {
-  font-size: 13px;
-  color: #64748b;
-  margin-top: 12px;
-}
-
-footer {
-  text-align: center;
-  color: #64748b;
-  padding: 20px;
-}
-
-@media (max-width: 480px) {
-  .language-grid { grid-template-columns: 1fr; }
-  .service-grid { grid-template-columns: 1fr 1fr; }
-  .chat { height: 430px; }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#172033}
+header{background:linear-gradient(135deg,#155eef,#7254e8);color:white;text-align:center;padding:20px}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0 0}
+.container{max-width:760px;margin:20px auto;padding:12px}
+.panel{background:white;border-radius:22px;padding:20px;box-shadow:0 5px 25px rgba(0,0,0,.05)}
+.language-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lang-btn{border:2px solid #e3e9f5;background:white;border-radius:15px;padding:20px;font-size:18px;font-weight:bold;cursor:pointer}
+.lang-btn:hover{border-color:#155eef}
+.chat{min-height:350px;max-height:550px;overflow-y:auto;padding:12px;background:#f7f9ff;border-radius:18px;margin-bottom:15px}
+.message{margin:12px 0;padding:16px;border-radius:18px;max-width:95%;line-height:1.6;white-space:pre-wrap;font-size:17px}
+.bot{background:#e8efff;margin-right:auto}
+.user{background:#d9f8e8;margin-left:auto}
+.service-grid{display:flex;flex-direction:column;gap:10px;margin:10px 0 16px}
+.service-card{display:flex;align-items:center;gap:15px;text-align:left;width:100%;background:white;border:2px solid #dce5f5;border-radius:15px;padding:15px;cursor:pointer;font-size:18px;font-weight:bold;color:#172033;transition:.15s}
+.service-card:hover{border-color:#155eef;background:#f0f5ff;transform:translateY(-1px)}
+.service-card span{font-size:32px;min-width:45px;text-align:center}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+input{flex:1;min-width:180px;padding:14px;border-radius:12px;border:1px solid #ccd5e5;font-size:16px}
+.action{background:#155eef;color:white;border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:bold;cursor:pointer}
+.action:hover{background:#0848c7}
+.secondary{background:#64748b}
+.secondary:hover{background:#475569}
+.voice{background:#16a34a}
+.hidden{display:none!important}
+.token{border:2px dashed #155eef;border-radius:15px;padding:20px;margin-top:20px;text-align:center;background:#f8faff}
+.token h2{color:#155eef}
+.token-number{font-size:40px;font-weight:bold;color:#155eef;margin:15px 0;overflow-wrap:anywhere}
+.note{font-size:13px;color:#64748b;margin-top:12px}
+footer{text-align:center;color:#64748b;padding:20px}
+@media(max-width:480px){
+.language-grid{grid-template-columns:1fr}
+.container{padding:8px}
+.panel{padding:12px}
+.chat{padding:8px}
+.message{font-size:16px}
+.service-card{padding:13px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-  <h1>🧑‍🤝‍🧑 QueueMitra</h1>
-  <p id="subtitle">Your voice-first queue assistant</p>
+<h1>🤝 QueueMitra</h1>
+<p id="subtitle">Your voice-first queue assistant</p>
 </header>
 
 <div class="container">
-
 <div class="panel">
 
 <div id="languageScreen">
-  <h2 id="languageTitle">Choose Your Language</h2>
-  <div class="language-grid">
-    <button class="lang-btn" onclick="startApp('te')">తెలుగు</button>
-    <button class="lang-btn" onclick="startApp('en')">English</button>
-    <button class="lang-btn" onclick="startApp('hi')">हिन्दी</button>
-  </div>
+<h2 id="languageTitle">Choose Your Language</h2>
+<div class="language-grid">
+<button class="lang-btn" onclick="startApp('te')">తెలుగు</button>
+<button class="lang-btn" onclick="startApp('en')">English</button>
+<button class="lang-btn" onclick="startApp('hi')">हिन्दी</button>
+</div>
 </div>
 
 <div id="appScreen" class="hidden">
-
 <div id="chat" class="chat"></div>
 
-<div id="serviceGrid" class="service-grid hidden"></div>
-
 <div class="controls" id="inputControls">
-  <input id="userInput" type="text" autocomplete="off">
-  <button class="action" id="sendBtn" onclick="sendMessage()">➤</button>
-  <button class="action voice" id="voiceBtn" onclick="startListening()">🎤</button>
+<input id="userInput" type="text" autocomplete="off">
+<button class="action" id="sendBtn" onclick="sendMessage()">➤</button>
+<button class="action voice" id="voiceBtn" onclick="startListening()">🎤</button>
 </div>
 
 <div class="controls" style="margin-top:12px">
-  <button class="action secondary" id="restartBtn" onclick="restart()">🔄</button>
+<button class="action secondary" id="restartBtn" onclick="restart()">🔄</button>
 </div>
 
 <div id="tokenArea"></div>
-
 </div>
 </div>
 </div>
 
-<footer>
-  QueueMitra | Voice-first demo
-</footer>
+<footer>QueueMitra | Voice-first demo</footer>
 
 <script>
-const WORKER_URL =
-"https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
+const WORKER_URL="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
 
-const data = {
-  en: {
-    subtitle: "Your voice-first queue assistant",
-    greeting: "Hello! Welcome to QueueMitra. 😊",
-    chooseService: "Please choose the service you need.",
-    services: ["Hospital", "Bank", "Government Office", "Restaurants", "Other"],
-    name: "What is your name?",
-    placeQuestions: [
-      "Which hospital do you want to visit?",
-      "Which bank do you want to visit?",
-      "Which government office do you want to visit?",
-      "Which restaurant do you want to visit?",
-      "Which service or place do you need?"
-    ],
-    purpose: "What is the purpose of your visit?",
-    confirm: "Please confirm your details:",
-    nameLabel: "Name",
-    serviceLabel: "Service",
-    placeLabel: "Place",
-    purposeLabel: "Purpose",
-    confirmAsk: "Do you want to confirm and generate your token?",
-    yes: "Yes",
-    no: "Change",
-    invalid: "Please enter your answer.",
-    tokenMessage: "Your token has been generated successfully! 🎉",
-    ahead: "Estimated people ahead of you:",
-    wait: "Estimated waiting time:",
-    demo: "This is a simulated queue. The queue and waiting time are not real.",
-    download: "⬇ Download Token",
-    tokenTitle: "QueueMitra Token",
-    tokenName: "Name",
-    tokenService: "Service",
-    tokenPlace: "Place",
-    tokenPurpose: "Purpose",
-    tokenGenerated: "Token generated successfully",
-    restart: "Start Again",
-    listening: "Listening...",
-    voiceError: "Voice input is unavailable. Please type your answer.",
-    select: "Select",
-    tokenPrefix: "QM",
-    continue: "Please enter your answer below."
-  },
-
-  te: {
-    subtitle: "మీ వాయిస్ ద్వారా క్యూ సహాయకుడు",
-    greeting: "నమస్కారం! QueueMitra కు స్వాగతం. 😊",
-    chooseService: "మీకు కావలసిన సేవను ఎంచుకోండి.",
-    services: ["ఆసుపత్రి", "బ్యాంక్", "ప్రభుత్వ కార్యాలయం", "రెస్టారెంట్", "ఇతర"],
-    name: "మీ పేరు ఏమిటి?",
-    placeQuestions: [
-      "మీరు ఏ ఆసుపత్రికి వెళ్లాలనుకుంటున్నారు?",
-      "మీరు ఏ బ్యాంకుకు వెళ్లాలనుకుంటున్నారు?",
-      "మీరు ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?",
-      "మీరు ఏ రెస్టారెంట్‌కు వెళ్లాలనుకుంటున్నారు?",
-      "మీకు ఏ సేవ లేదా ప్రదేశం కావాలి?"
-    ],
-    purpose: "మీరు ఎందుకు వెళ్తున్నారు?",
-    confirm: "దయచేసి మీ వివరాలను పరిశీలించండి:",
-    nameLabel: "పేరు",
-    serviceLabel: "సేవ",
-    placeLabel: "ప్రదేశం",
-    purposeLabel: "కారణం",
-    confirmAsk: "మీ వివరాలను నిర్ధారించి టోకెన్ పొందాలనుకుంటున్నారా?",
-    yes: "అవును",
-    no: "మార్చండి",
-    invalid: "దయచేసి మీ సమాధానాన్ని నమోదు చేయండి.",
-    tokenMessage: "మీ టోకెన్ విజయవంతంగా రూపొందించబడింది! 🎉",
-    ahead: "మీ ముందు ఉన్న వ్యక్తుల అంచనా సంఖ్య:",
-    wait: "అంచనా వేచి ఉండే సమయం:",
-    demo: "ఇది డెమో క్యూ మాత్రమే. క్యూ సంఖ్యలు మరియు సమయం నిజమైనవి కావు.",
-    download: "⬇ టోకెన్ డౌన్‌లోడ్",
-    tokenTitle: "QueueMitra టోకెన్",
-    tokenName: "పేరు",
-    tokenService: "సేవ",
-    tokenPlace: "ప్రదేశం",
-    tokenPurpose: "కారణం",
-    tokenGenerated: "టోకెన్ విజయవంతంగా రూపొందించబడింది",
-    restart: "మళ్లీ ప్రారంభించండి",
-    listening: "వింటున్నాను...",
-    voiceError: "వాయిస్ అందుబాటులో లేదు. దయచేసి టైప్ చేయండి.",
-    select: "ఎంచుకోండి",
-    tokenPrefix: "QM",
-    continue: "దయచేసి క్రింద మీ సమాధానం నమోదు చేయండి."
-  },
-
-  hi: {
-    subtitle: "आपका आवाज़ आधारित कतार सहायक",
-    greeting: "नमस्ते! QueueMitra में आपका स्वागत है। 😊",
-    chooseService: "कृपया अपनी आवश्यक सेवा चुनें।",
-    services: ["अस्पताल", "बैंक", "सरकारी कार्यालय", "रेस्टोरेंट", "अन्य"],
-    name: "आपका नाम क्या है?",
-    placeQuestions: [
-      "आप किस अस्पताल में जाना चाहते हैं?",
-      "आप किस बैंक में जाना चाहते हैं?",
-      "आप किस सरकारी कार्यालय में जाना चाहते हैं?",
-      "आप किस रेस्टोरेंट में जाना चाहते हैं?",
-      "आपको किस सेवा या स्थान की आवश्यकता है?"
-    ],
-    purpose: "आप वहाँ क्यों जाना चाहते हैं?",
-    confirm: "कृपया अपने विवरण की पुष्टि करें:",
-    nameLabel: "नाम",
-    serviceLabel: "सेवा",
-    placeLabel: "स्थान",
-    purposeLabel: "उद्देश्य",
-    confirmAsk: "क्या आप पुष्टि करके अपना टोकन बनाना चाहते हैं?",
-    yes: "हाँ",
-    no: "बदलें",
-    invalid: "कृपया अपना उत्तर दर्ज करें।",
-    tokenMessage: "आपका टोकन सफलतापूर्वक बन गया है! 🎉",
-    ahead: "आपसे आगे अनुमानित लोग:",
-    wait: "अनुमानित प्रतीक्षा समय:",
-    demo: "यह एक सिमुलेटेड कतार है। संख्या और प्रतीक्षा समय वास्तविक नहीं हैं।",
-    download: "⬇ टोकन डाउनलोड करें",
-    tokenTitle: "QueueMitra टोकन",
-    tokenName: "नाम",
-    tokenService: "सेवा",
-    tokenPlace: "स्थान",
-    tokenPurpose: "उद्देश्य",
-    tokenGenerated: "टोकन सफलतापूर्वक बनाया गया",
-    restart: "फिर से शुरू करें",
-    listening: "सुन रहा हूँ...",
-    voiceError: "आवाज़ उपलब्ध नहीं है। कृपया टाइप करें।",
-    select: "चुनें",
-    tokenPrefix: "QM",
-    continue: "कृपया नीचे अपना उत्तर दर्ज करें।"
-  }
+const data={
+en:{
+subtitle:"Your voice-first queue assistant",
+greeting:"Hello! Welcome to QueueMitra. 😊",
+chooseService:"Please choose the service you need.",
+services:["Hospital","Bank","Government Office","Restaurants","Other"],
+name:"What is your name?",
+placeQuestions:[
+"Which hospital do you want to visit?",
+"Which bank do you want to visit?",
+"Which government office do you want to visit?",
+"Which restaurant do you want to visit?",
+"Which service or place do you need?"
+],
+purpose:"What is the purpose of your visit?",
+confirm:"Please confirm your details:",
+nameLabel:"Name",serviceLabel:"Service",placeLabel:"Place",purposeLabel:"Purpose",
+confirmAsk:"Do you want to confirm and generate your token?",
+yes:"Yes",no:"Change",invalid:"Please enter your answer.",
+tokenMessage:"Your token has been generated successfully! 🎉",
+ahead:"Estimated people ahead of you:",
+wait:"Estimated waiting time:",
+demo:"This is a simulated queue. The queue and waiting time are not real.",
+download:"⬇ Download Token",tokenTitle:"QueueMitra Token",
+tokenGenerated:"Token generated successfully",
+restart:"Start Again",listening:"Listening...",
+voiceError:"Voice input is unavailable. Please type your answer.",
+continue:"Please enter your answer below."
+},
+te:{
+subtitle:"మీ వాయిస్ ద్వారా క్యూ సహాయకుడు",
+greeting:"నమస్కారం! QueueMitra కు స్వాగతం. 😊",
+chooseService:"మీకు కావలసిన సేవను ఎంచుకోండి.",
+services:["ఆసుపత్రి","బ్యాంక్","ప్రభుత్వ కార్యాలయం","రెస్టారెంట్","ఇతర"],
+name:"మీ పేరు ఏమిటి?",
+placeQuestions:[
+"మీరు ఏ ఆసుపత్రికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ బ్యాంకుకు వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ ప్రభుత్వ కార్యాలయానికి వెళ్లాలనుకుంటున్నారు?",
+"మీరు ఏ రెస్టారెంట్‌కు వెళ్లాలనుకుంటున్నారు?",
+"మీకు ఏ సేవ లేదా ప్రదేశం కావాలి?"
+],
+purpose:"మీరు ఎందుకు వెళ్తున్నారు?",
+confirm:"దయచేసి మీ వివరాలను పరిశీలించండి:",
+nameLabel:"పేరు",serviceLabel:"సేవ",placeLabel:"ప్రదేశం",purposeLabel:"కారణం",
+confirmAsk:"మీ వివరాలను నిర్ధారించి టోకెన్ పొందాలనుకుంటున్నారా?",
+yes:"అవును",no:"మార్చండి",invalid:"దయచేసి మీ సమాధానాన్ని నమోదు చేయండి.",
+tokenMessage:"మీ టోకెన్ విజయవంతంగా రూపొందించబడింది! 🎉",
+ahead:"మీ ముందు ఉన్న వ్యక్తుల అంచనా సంఖ్య:",
+wait:"అంచనా వేచి ఉండే సమయం:",
+demo:"ఇది డెమో క్యూ మాత్రమే. క్యూ సంఖ్యలు మరియు సమయం నిజమైనవి కావు.",
+download:"⬇ టోకెన్ డౌన్‌లోడ్",tokenTitle:"QueueMitra టోకెన్",
+tokenGenerated:"టోకెన్ విజయవంతంగా రూపొందించబడింది",
+restart:"మళ్లీ ప్రారంభించండి",listening:"వింటున్నాను...",
+voiceError:"వాయిస్ అందుబాటులో లేదు. దయచేసి టైప్ చేయండి.",
+continue:"దయచేసి క్రింద మీ సమాధానం నమోదు చేయండి."
+},
+hi:{
+subtitle:"आपका आवाज़ आधारित कतार सहायक",
+greeting:"नमस्ते! QueueMitra में आपका स्वागत है। 😊",
+chooseService:"कृपया अपनी आवश्यक सेवा चुनें।",
+services:["अस्पताल","बैंक","सरकारी कार्यालय","रेस्टोरेंट","अन्य"],
+name:"आपका नाम क्या है?",
+placeQuestions:[
+"आप किस अस्पताल में जाना चाहते हैं?",
+"आप किस बैंक में जाना चाहते हैं?",
+"आप किस सरकारी कार्यालय में जाना चाहते हैं?",
+"आप किस रेस्टोरेंट में जाना चाहते हैं?",
+"आपको किस सेवा या स्थान की आवश्यकता है?"
+],
+purpose:"आप वहाँ क्यों जाना चाहते हैं?",
+confirm:"कृपया अपने विवरण की पुष्टि करें:",
+nameLabel:"नाम",serviceLabel:"सेवा",placeLabel:"स्थान",purposeLabel:"उद्देश्य",
+confirmAsk:"क्या आप पुष्टि करके अपना टोकन बनाना चाहते हैं?",
+yes:"हाँ",no:"बदलें",invalid:"कृपया अपना उत्तर दर्ज करें।",
+tokenMessage:"आपका टोकन सफलतापूर्वक बन गया है! 🎉",
+ahead:"आपसे आगे अनुमानित लोग:",
+wait:"अनुमानित प्रतीक्षा समय:",
+demo:"यह एक सिमुलेटेड कतार है। संख्या और प्रतीक्षा समय वास्तविक नहीं हैं।",
+download:"⬇ टोकन डाउनलोड करें",tokenTitle:"QueueMitra टोकन",
+tokenGenerated:"टोकन सफलतापूर्वक बनाया गया",
+restart:"फिर से शुरू करें",listening:"सुन रहा हूँ...",
+voiceError:"आवाज़ उपलब्ध नहीं है। कृपया टाइप करें।",
+continue:"कृपया नीचे अपना उत्तर दर्ज करें।"
+}
 };
 
-const serviceIcons = ["🏥", "🏦", "🏛️", "🍽️", "📋"];
+const serviceIcons=["🏥","🏦","🏛️","🍽️","📋"];
+let lang="en",step="",serviceIndex=-1;
+let userData={name:"",service:"",place:"",purpose:""};
+let currentToken="";
 
-let lang = "en";
-let step = "";
-let serviceIndex = -1;
-
-let userData = {
-  name: "",
-  service: "",
-  place: "",
-  purpose: ""
-};
-
-let currentToken = "";
-
-function startApp(language) {
-  lang = language;
-
-  document.getElementById("languageScreen").classList.add("hidden");
-  document.getElementById("appScreen").classList.remove("hidden");
-
-  document.getElementById("subtitle").textContent = data[lang].subtitle;
-  document.getElementById("restartBtn").textContent = "🔄 " + data[lang].restart;
-
-  clearChat();
-  addBot(data[lang].greeting);
-  showServices();
+function startApp(language){
+lang=language;
+document.getElementById("languageScreen").classList.add("hidden");
+document.getElementById("appScreen").classList.remove("hidden");
+document.getElementById("subtitle").textContent=data[lang].subtitle;
+document.getElementById("restartBtn").textContent="🔄 "+data[lang].restart;
+clearChat();
+addBot(data[lang].greeting);
+showServices();
 }
 
-function clearChat() {
-  document.getElementById("chat").innerHTML = "";
-  document.getElementById("tokenArea").innerHTML = "";
+function clearChat(){
+document.getElementById("chat").innerHTML="";
+document.getElementById("tokenArea").innerHTML="";
 }
 
-function addBot(text, speak = true) {
-  const chat = document.getElementById("chat");
-  const div = document.createElement("div");
-  div.className = "message bot";
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-
-  if (speak) speakText(text);
+function addBot(text,speak=true){
+const chat=document.getElementById("chat");
+const div=document.createElement("div");
+div.className="message bot";
+div.textContent=text;
+chat.appendChild(div);
+chat.scrollTop=chat.scrollHeight;
+if(speak)speakText(text);
 }
 
-function addUser(text) {
-  const chat = document.getElementById("chat");
-  const div = document.createElement("div");
-  div.className = "message user";
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+function addUser(text){
+const chat=document.getElementById("chat");
+const div=document.createElement("div");
+div.className="message user";
+div.textContent=text;
+chat.appendChild(div);
+chat.scrollTop=chat.scrollHeight;
 }
 
-function speakText(text) {
-  fetch(WORKER_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      text: text,
-      language: lang
-    })
-  })
-  .then(response => {
-    if (!response.ok) throw new Error("TTS unavailable");
-    return response.blob();
-  })
-  .then(blob => {
-    const audio = new Audio(URL.createObjectURL(blob));
-    audio.play().catch(() => {});
-  })
-  .catch(() => {
-    // Text chat remains usable even if voice is unavailable.
-  });
+function speakText(text){
+fetch(WORKER_URL,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({text:text,language:lang})
+})
+.then(response=>{
+if(!response.ok)throw new Error();
+return response.blob();
+})
+.then(blob=>{
+const audio=new Audio(URL.createObjectURL(blob));
+audio.play().catch(()=>{});
+})
+.catch(()=>{});
 }
 
-function showServices() {
-  step = "service";
-
-  document.getElementById("inputControls").classList.add("hidden");
-
-  addBot(data[lang].chooseService);
-
-  const grid = document.getElementById("serviceGrid");
-  grid.innerHTML = "";
-  grid.classList.remove("hidden");
-
-  data[lang].services.forEach((service, i) => {
-    const button = document.createElement("button");
-    button.className = "service-card";
-    button.innerHTML = "<span>" + serviceIcons[i] + "</span>" + service;
-
-    button.onclick = () => selectService(i);
-    grid.appendChild(button);
-  });
-}
-
-function selectService(i) {
-  serviceIndex = i;
-  userData.service = data[lang].services[i];
-
-  addUser(serviceIcons[i] + " " + userData.service);
-
-  document.getElementById("serviceGrid").classList.add("hidden");
-  document.getElementById("inputControls").classList.remove("hidden");
-
-  step = "name";
-  addBot(data[lang].name);
-  setInputPlaceholder(data[lang].continue);
-}
-
-function setInputPlaceholder(text) {
-  document.getElementById("userInput").placeholder = text;
-}
-
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const value = input.value.trim();
-
-  if (!value) {
-    addBot(data[lang].invalid, false);
-    return;
-  }
-
-  input.value = "";
-  addUser(value);
-
-  processAnswer(value);
-}
-
-function processAnswer(value) {
-  if (step === "name") {
-    userData.name = value;
-    step = "place";
-    addBot(data[lang].placeQuestions[serviceIndex]);
-    return;
-  }
-
-  if (step === "place") {
-    userData.place = value;
-    step = "purpose";
-    addBot(data[lang].purpose);
-    return;
-  }
-
-  if (step === "purpose") {
-    userData.purpose = value;
-    showConfirmation();
-    return;
-  }
-
-  if (step === "confirm") {
-    const normalized = value.toLowerCase();
-
-    const yesWords = ["yes", "అవును", "हाँ", "ha", "haan"];
-    const noWords = ["change", "మార్చండి", "बदलें", "no", "కాదు", "नहीं"];
-
-    if (yesWords.some(word => normalized.includes(word))) {
-      generateToken();
-    } else if (noWords.some(word => normalized.includes(word))) {
-      addBot(data[lang].chooseService);
-      showServices();
-    } else {
-      addBot(data[lang].confirmAsk);
-    }
-  }
-}
-
-function showConfirmation() {
-  step = "confirm";
-
-  const d = data[lang];
-
-  const summary =
-    d.confirm + "\n\n" +
-    d.nameLabel + ": " + userData.name + "\n" +
-    d.serviceLabel + ": " + userData.service + "\n" +
-    d.placeLabel + ": " + userData.place + "\n" +
-    d.purposeLabel + ": " + userData.purpose + "\n\n" +
-    d.confirmAsk + "\n\n" +
-    d.yes + " / " + d.no;
-
-  addBot(summary);
-}
-
-function generateToken() {
-  currentToken = data[lang].tokenPrefix + "-" +
-    Math.floor(1000 + Math.random() * 9000);
-
-  const peopleAhead = Math.floor(Math.random() * 15) + 1;
-  const waitMinutes = peopleAhead * (Math.floor(Math.random() * 4) + 3);
-
-  const d = data[lang];
-
-  addBot(
-    d.tokenMessage + "\n\n" +
-    d.ahead + " " + peopleAhead + "\n" +
-    d.wait + " " + waitMinutes + " " +
-    (lang === "te" ? "నిమిషాలు" :
-     lang === "hi" ? "मिनट" : "minutes") +
-    "\n\n" + d.demo
-  );
-
-  document.getElementById("inputControls").classList.add("hidden");
-
-  createToken();
-}
-
-function createToken() {
-  const d = data[lang];
-
-  const tokenArea = document.getElementById("tokenArea");
-
-  tokenArea.innerHTML = `
-    <div class="token" id="tokenCard">
-      <h2>${d.tokenTitle}</h2>
-      <div class="token-number">${currentToken}</div>
-      <p><strong>${d.tokenName}:</strong> ${escapeHtml(userData.name)}</p>
-      <p><strong>${d.tokenService}:</strong> ${escapeHtml(userData.service)}</p>
-      <p><strong>${d.tokenPlace}:</strong> ${escapeHtml(userData.place)}</p>
-      <p><strong>${d.tokenPurpose}:</strong> ${escapeHtml(userData.purpose)}</p>
-      <p>${d.tokenGenerated}</p>
-      <p class="note">QueueMitra Demo</p>
-    </div>
-
-    <button class="action" style="width:100%;margin-top:15px"
-      onclick="downloadToken()">
-      ${d.download}
-    </button>
-  `;
-}
-
-function escapeHtml(text) {
-  return String(text).replace(/[&<>"']/g, function(char) {
-    return {
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
-    }[char];
-  });
-}
-
-function downloadToken() {
-  const card = document.getElementById("tokenCard");
-
-  const canvas = document.createElement("canvas");
-  canvas.width = 900;
-  canvas.height = 750;
-
-  const ctx = canvas.getContext("2d");
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.strokeStyle = "#155eef";
-  ctx.lineWidth = 5;
-  ctx.strokeRect(30, 30, 840, 690);
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#155eef";
-  ctx.font = "bold 42px Arial";
-  ctx.fillText(data[lang].tokenTitle, 450, 100);
-
-  ctx.font = "bold 65px Arial";
-  ctx.fillText(currentToken, 450, 190);
-
-  ctx.textAlign = "left";
-  ctx.fillStyle = "#172033";
-  ctx.font = "30px Arial";
-
-  const lines = [
-    data[lang].tokenName + ": " + userData.name,
-    data[lang].tokenService + ": " + userData.service,
-    data[lang].tokenPlace + ": " + userData.place,
-    data[lang].tokenPurpose + ": " + userData.purpose
-  ];
-
-  let y = 300;
-
-  lines.forEach(line => {
-    const wrapped = wrapText(ctx, line, 760);
-    wrapped.forEach(text => {
-      ctx.fillText(text, 80, y);
-      y += 45;
-    });
-    y += 15;
-  });
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#155eef";
-  ctx.font = "bold 30px Arial";
-  ctx.fillText("QueueMitra", 450, 650);
-
-  ctx.fillStyle = "#64748b";
-  ctx.font = "22px Arial";
-  ctx.fillText("Demo token", 450, 690);
-
-  canvas.toBlob(blob => {
-    if (!blob) {
-      addBot("Unable to download token. Please try again.", false);
-      return;
-    }
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = currentToken + ".png";
-    link.click();
-    URL.revokeObjectURL(url);
-  }, "image/png");
-}
-
-function wrapText(ctx, text, maxWidth) {
-  const words = text.split(" ");
-  const lines = [];
-  let line = "";
-
-  words.forEach(word => {
-    const test = line ? line + " " + word : word;
-
-    if (ctx.measureText(test).width > maxWidth && line) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = test;
-    }
-  });
-
-  if (line) lines.push(line);
-  return lines;
-}
-
-function startListening() {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    addBot(data[lang].voiceError, false);
-    return;
-  }
-
-  const recognition = new SpeechRecognition();
-
-  recognition.lang =
-    lang === "te" ? "te-IN" :
-    lang === "hi" ? "hi-IN" : "en-IN";
-
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  const voiceButton = document.getElementById("voiceBtn");
-  voiceButton.textContent = "🎤 " + data[lang].listening;
-
-  recognition.onresult = function(event) {
-    const result = event.results[0][0].transcript;
-    document.getElementById("userInput").value = result;
-    sendMessage();
-  };
-
-  recognition.onerror = function() {
-    addBot(data[lang].voiceError, false);
-  };
-
-  recognition.onend = function() {
-    voiceButton.textContent = "🎤";
-  };
-
-  recognition.start();
-}
-
-function restart() {
-  userData = { name: "", service: "", place: "", purpose: "" };
-  serviceIndex = -1;
-  currentToken = "";
-
-  document.getElementById("tokenArea").innerHTML = "";
-  document.getElementById("userInput").value = "";
-
-  clearChat();
-  addBot(data[lang].greeting);
-  showServices();
-}
-
-document.getElementById("userInput").addEventListener("keydown", function(e) {
-  if (e.key === "Enter") sendMessage();
+function showServices(){
+step="service";
+document.getElementById("inputControls").classList.add("hidden");
+
+addBot(data[lang].chooseService);
+
+const chat=document.getElementById("chat");
+const grid=document.createElement("div");
+grid.className="service-grid";
+grid.id="serviceGrid";
+
+data[lang].services.forEach((service,i)=>{
+const button=document.createElement("button");
+button.className="service-card";
+
+const icon=document.createElement("span");
+icon.textContent=serviceIcons[i];
+
+const label=document.createElement("div");
+label.textContent=service;
+
+button.appendChild(icon);
+button.appendChild(label);
+button.onclick=()=>selectService(i);
+grid.appendChild(button);
 });
 
+chat.appendChild(grid);
+chat.scrollTop=chat.scrollHeight;
+}
+
+function selectService(i){
+serviceIndex=i;
+userData.service=data[lang].services[i];
+addUser(serviceIcons[i]+" "+userData.service);
+
+document.getElementById("inputControls").classList.remove("hidden");
+
+step="name";
+addBot(data[lang].name);
+setInputPlaceholder(data[lang].continue);
+}
+
+function setInputPlaceholder(text){
+document.getElementById("userInput").placeholder=text;
+}
+
+function sendMessage(){
+const input=document.getElementById("userInput");
+const value=input.value.trim();
+if(!value){
+addBot(data[lang].invalid,false);
+return;
+}
+input.value="";
+addUser(value);
+processAnswer(value);
+}
+
+function processAnswer(value){
+if(step==="name"){
+userData.name=value;
+step="place";
+addBot(data[lang].placeQuestions[serviceIndex]);
+return;
+}
+if(step==="place"){
+userData.place=value;
+step="purpose";
+addBot(data[lang].purpose);
+return;
+}
+if(step==="purpose"){
+userData.purpose=value;
+showConfirmation();
+return;
+}
+if(step==="confirm"){
+const normalized=value.toLowerCase();
+const yesWords=["yes","అవును","हाँ","haan"];
+const noWords=["change","మార్చండి","बदलें","no","కాదు","नहीं"];
+
+if(yesWords.some(w=>normalized.includes(w))){
+generateToken();
+}else if(noWords.some(w=>normalized.includes(w))){
+userData={name:"",service:"",place:"",purpose:""};
+serviceIndex=-1;
+document.getElementById("tokenArea").innerHTML="";
+showServices();
+}else{
+addBot(data[lang].confirmAsk);
+}
+}
+}
+
+function showConfirmation(){
+step="confirm";
+const d=data[lang];
+const summary=
+d.confirm+"\n\n"+
+d.nameLabel+": "+userData.name+"\n"+
+d.serviceLabel+": "+userData.service+"\n"+
+d.placeLabel+": "+userData.place+"\n"+
+d.purposeLabel+": "+userData.purpose+"\n\n"+
+d.confirmAsk+"\n\n"+d.yes+" / "+d.no;
+addBot(summary);
+}
+
+function generateToken(){
+currentToken=data[lang].tokenPrefix||"QM";
+currentToken="QM-"+Math.floor(1000+Math.random()*9000);
+
+const peopleAhead=Math.floor(Math.random()*15)+1;
+const waitMinutes=peopleAhead*(Math.floor(Math.random()*4)+3);
+const d=data[lang];
+
+addBot(
+d.tokenMessage+"\n\n"+
+d.ahead+" "+peopleAhead+"\n"+
+d.wait+" "+waitMinutes+" "+
+(lang==="te"?"నిమిషాలు":lang==="hi"?"मिनट":"minutes")+
+"\n\n"+d.demo
+);
+
+document.getElementById("inputControls").classList.add("hidden");
+createToken();
+}
+
+function createToken(){
+const d=data[lang];
+const area=document.getElementById("tokenArea");
+
+area.innerHTML=`
+<div class="token" id="tokenCard">
+<h2>${d.tokenTitle}</h2>
+<div class="token-number">${currentToken}</div>
+<p><strong>${d.nameLabel}:</strong> ${escapeHtml(userData.name)}</p>
+<p><strong>${d.serviceLabel}:</strong> ${escapeHtml(userData.service)}</p>
+<p><strong>${d.placeLabel}:</strong> ${escapeHtml(userData.place)}</p>
+<p><strong>${d.purposeLabel}:</strong> ${escapeHtml(userData.purpose)}</p>
+<p>${d.tokenGenerated}</p>
+<p class="note">QueueMitra Demo</p>
+</div>
+<button class="action" style="width:100%;margin-top:15px" onclick="downloadToken()">
+${d.download}
+</button>`;
+}
+
+function escapeHtml(text){
+return String(text).replace(/[&<>"']/g,char=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+}[char]));
+}
+
+function downloadToken(){
+const canvas=document.createElement("canvas");
+canvas.width=900;
+canvas.height=750;
+const ctx=canvas.getContext("2d");
+
+ctx.fillStyle="#ffffff";
+ctx.fillRect(0,0,900,750);
+ctx.strokeStyle="#155eef";
+ctx.lineWidth=5;
+ctx.strokeRect(30,30,840,690);
+
+ctx.textAlign="center";
+ctx.fillStyle="#155eef";
+ctx.font="bold 42px Arial";
+ctx.fillText(data[lang].tokenTitle,450,100);
+ctx.font="bold 65px Arial";
+ctx.fillText(currentToken,450,190);
+
+ctx.textAlign="left";
+ctx.fillStyle="#172033";
+ctx.font="30px Arial";
+
+const lines=[
+data[lang].nameLabel+": "+userData.name,
+data[lang].serviceLabel+": "+userData.service,
+data[lang].placeLabel+": "+userData.place,
+data[lang].purposeLabel+": "+userData.purpose
+];
+
+let y=300;
+lines.forEach(line=>{
+wrapText(ctx,line,760).forEach(text=>{
+ctx.fillText(text,80,y);
+y+=45;
+});
+y+=15;
+});
+
+ctx.textAlign="center";
+ctx.fillStyle="#155eef";
+ctx.font="bold 30px Arial";
+ctx.fillText("QueueMitra",450,650);
+ctx.fillStyle="#64748b";
+ctx.font="22px Arial";
+ctx.fillText("Demo token",450,690);
+
+canvas.toBlob(blob=>{
+if(!blob){
+addBot("Unable to download token. Please try again.",false);
+return;
+}
+const url=URL.createObjectURL(blob);
+const link=document.createElement("a");
+link.href=url;
+link.download=currentToken+".png";
+link.click();
+URL.revokeObjectURL(url);
+},"image/png");
+}
+
+function wrapText(ctx,text,maxWidth){
+const words=text.split(" ");
+const lines=[];
+let line="";
+words.forEach(word=>{
+const test=line?line+" "+word:word;
+if(ctx.measureText(test).width>maxWidth&&line){
+lines.push(line);
+line=word;
+}else{
+line=test;
+}
+});
+if(line)lines.push(line);
+return lines;
+}
+
+function startListening(){
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SpeechRecognition){
+addBot(data[lang].voiceError,false);
+return;
+}
+
+const recognition=new SpeechRecognition();
+recognition.lang=lang==="te"?"te-IN":lang==="hi"?"hi-IN":"en-IN";
+recognition.interimResults=false;
+recognition.maxAlternatives=1;
+
+const button=document.getElementById("voiceBtn");
+button.textContent="🎤 "+data[lang].listening;
+
+recognition.onresult=function(event){
+document.getElementById("userInput").value=event.results[0][0].transcript;
+sendMessage();
+};
+recognition.onerror=function(){
+addBot(data[lang].voiceError,false);
+};
+recognition.onend=function(){
+button.textContent="🎤";
+};
+recognition.start();
+}
+
+function restart(){
+userData={name:"",service:"",place:"",purpose:""};
+serviceIndex=-1;
+currentToken="";
+document.getElementById("tokenArea").innerHTML="";
+document.getElementById("userInput").value="";
+clearChat();
+addBot(data[lang].greeting);
+showServices();
+}
+
+document.getElementById("userInput").addEventListener("keydown",e=>{
+if(e.key==="Enter")sendMessage();
+});
 </script>
 </body>
 </html>
