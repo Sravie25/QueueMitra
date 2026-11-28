@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -209,7 +208,6 @@ header{padding:17px}
 
 </main>
 <footer>QueueMitra • Accessible voice-first queue assistance</footer>
-
 <script>
 const WORKER_URL="https://plain-art-16cdqueuemitra-voice.shravyasrirachonda.workers.dev";
 
@@ -459,7 +457,6 @@ recognition.start();
 document.getElementById("confirmStatus").textContent=T[lang].err;
 }
 }
-
 function retryConfirm(){
 let s=session;
 stopRec();
@@ -527,69 +524,59 @@ function esc(s){
 return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 }
 
-/* Telugu uses Vakyam TTS through the Cloudflare Worker.
-   English and Hindi use the browser speech engine. */
+/* Robust voice playback: Telugu via Worker, with browser fallback.
+   This function always resolves so the question flow cannot get stuck. */
 function speak(text,s){
-return new Promise(async resolve=>{
-if(s!==session){resolve();return}
-
-if(lang==="te"){
-try{
-if(currentAudio){
-currentAudio.pause();
-currentAudio=null;
-}
-
-const response=await fetch(WORKER_URL,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({text:text,language:"te"})
-});
-
-if(!response.ok)throw new Error("Telugu TTS request failed");
-
-const data=await response.json();
-
-if(s!==session){resolve();return}
-if(!data.audio)throw new Error("No audio returned");
-
-currentAudio=new Audio("data:audio/mp3;base64,"+data.audio);
-
-currentAudio.onended=()=>{
-currentAudio=null;
-resolve();
-};
-
-currentAudio.onerror=()=>{
-currentAudio=null;
-resolve();
-};
-
-await currentAudio.play();
-
-}catch(error){
-console.error("Telugu voice error:",error);
-resolve();
-}
-return;
-}
-
-/* Browser speech for English and Hindi */
-if(!("speechSynthesis" in window)){
-resolve();
-return;
-}
-
-speechSynthesis.cancel();
-
-let u=new SpeechSynthesisUtterance(text);
-u.lang=lang==="hi"?"hi-IN":"en-IN";
-u.rate=.88;
-u.onend=()=>resolve();
-u.onerror=()=>resolve();
-speechSynthesis.speak(u);
-setTimeout(resolve,18000);
-});
+ return new Promise(async resolve=>{
+  if(s!==session){resolve();return;}
+  let finished=false;
+  const done=()=>{if(!finished){finished=true;resolve();}};
+  const browserFallback=()=>{
+   if(s!==session){done();return;}
+   try{
+    if(!window.speechSynthesis){done();return;}
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==='te'?'te-IN':lang==='hi'?'hi-IN':'en-IN';
+    u.rate=.88;
+    u.onend=done;
+    u.onerror=done;
+    speechSynthesis.speak(u);
+    setTimeout(done,18000);
+   }catch(e){done();}
+  };
+  if(lang==='te'){
+   try{
+    if(currentAudio){currentAudio.pause();currentAudio=null;}
+    const response=await fetch(WORKER_URL,{
+     method:'POST',headers:{'Content-Type':'application/json'},
+     body:JSON.stringify({text:text,language:'te'})
+    });
+    if(!response.ok)throw new Error('TTS service returned HTTP '+response.status);
+    const data=await response.json();
+    if(s!==session){done();return;}
+    let audioValue=data.audio;
+    if(typeof audioValue==='object'&&audioValue!==null){
+     audioValue=audioValue.audio||audioValue.data||audioValue.base64;
+    }
+    if(!audioValue)throw new Error(data.error||'No audio data returned by Worker');
+    const audioSrc=(typeof audioValue==='string'&&(/^(https?:|data:|blob:)/i).test(audioValue))
+      ?audioValue:'data:audio/'+(data.format||'mp3')+';base64,'+audioValue;
+    currentAudio=new Audio(audioSrc);
+    currentAudio.onended=()=>{currentAudio=null;done();};
+    currentAudio.onerror=()=>{currentAudio=null;browserFallback();};
+    await currentAudio.play();
+    return;
+   }catch(error){
+    if(s!==session){done();return;}
+    const status=document.getElementById('status');
+    if(status)status.textContent='Telugu voice service unavailable. Trying device voice…';
+    browserFallback();
+    return;
+   }
+  }
+  browserFallback();
+ });
 }
 
 function downloadToken(){
